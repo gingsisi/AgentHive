@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { width: 340px; font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; font-size: 12px; }
+    .header { padding: 12px 14px; border-bottom: 1px solid #21262d; display: flex; align-items: center; justify-content: space-between; }
+    .header h1 { font-size: 14px; color: #58a6ff; }
+    .toggle-wrap { display: flex; align-items: center; gap: 6px; }
+    .toggle { position: relative; width: 40px; height: 22px; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #30363d; border-radius: 22px; transition: .3s; }
+    .slider:before { content: ""; position: absolute; height: 16px; width: 16px; left: 3px; bottom: 3px; background: #8b949e; border-radius: 50%; transition: .3s; }
+    input:checked + .slider { background: #238636; }
+    input:checked + .slider:before { background: #fff; transform: translateX(18px); }
+    .status-row { padding: 8px 14px; display: flex; align-items: center; gap: 6px; font-size: 11px; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; }
+    .dot.on { background: #3fb950; box-shadow: 0 0 6px #3fb950; }
+    .dot.off { background: #f85149; }
+    .dot.warn { background: #d29922; }
+    .tabs { display: flex; border-bottom: 1px solid #21262d; }
+    .tab { flex: 1; padding: 8px 0; text-align: center; cursor: pointer; font-size: 11px; color: #8b949e; border-bottom: 2px solid transparent; transition: .2s; }
+    .tab.active { color: #58a6ff; border-bottom-color: #58a6ff; }
+    .tab .badge { background: #f85149; color: #fff; border-radius: 10px; padding: 0 5px; font-size: 9px; margin-left: 3px; }
+    .panel { display: none; padding: 10px 14px; max-height: 280px; overflow-y: auto; }
+    .panel.active { display: block; }
+    .section-title { font-size: 10px; text-transform: uppercase; color: #58a6ff; margin: 8px 0 4px; letter-spacing: 0.5px; }
+    textarea { width: 100%; background: #161b22; border: 1px solid #30363d; border-radius: 5px; color: #c9d1d9; padding: 6px 8px; font-size: 10px; font-family: monospace; resize: vertical; }
+    #whitelist { height: 70px; }
+    .btn { display: block; width: 100%; padding: 7px; margin-top: 6px; border: 1px solid #30363d; border-radius: 5px; background: #21262d; color: #c9d1d9; cursor: pointer; font-size: 11px; text-align: center; transition: .2s; }
+    .btn:hover { background: #30363d; border-color: #58a6ff; }
+    .btn.primary { background: #238636; border-color: #238636; color: #fff; }
+    .btn.primary:hover { background: #2ea043; }
+    .btn.danger { background: #da3633; border-color: #da3633; color: #fff; }
+    .btn.danger:hover { background: #f85149; }
+    .btn.small { width: auto; display: inline-block; padding: 3px 8px; font-size: 10px; margin: 2px; }
+    .pending-item { background: #161b22; border: 1px solid #21262d; border-radius: 5px; padding: 8px; margin: 5px 0; }
+    .pending-item .url { color: #58a6ff; font-size: 10px; word-break: break-all; margin-bottom: 3px; }
+    .pending-item .snippet { color: #8b949e; font-size: 10px; max-height: 40px; overflow: hidden; }
+    .pending-item .flags { margin-top: 4px; }
+    .flag { display: inline-block; padding: 1px 5px; border-radius: 3px; font-size: 9px; margin-right: 4px; }
+    .flag.safe { background: #1b3a1b; color: #3fb950; }
+    .flag.pii { background: #3a1b1b; color: #f85149; }
+    .flag.blocked { background: #3a2e1b; color: #d29922; }
+    .empty { text-align: center; color: #484f58; padding: 20px; font-size: 11px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🧠 Bot Bridge</h1>
+    <div class="toggle-wrap">
+      <span id="toggleLabel" style="font-size:10px;color:#f85149">OFF</span>
+      <label class="toggle">
+        <input type="checkbox" id="mainToggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+  <div class="status-row">
+    <span class="dot off" id="statusDot"></span>
+    <span id="statusText">Capture paused</span>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="pending">📋 Pending <span class="badge" id="pendingCount" style="display:none">0</span></div>
+    <div class="tab" data-tab="settings">⚙️ Settings</div>
+    <div class="tab" data-tab="terms">📜 Terms</div>
+  </div>
+
+  <!-- PENDING REVIEW TAB -->
+  <div class="panel active" id="panel-pending">
+    <div class="section-title">📤 Ready to Share (review first!)</div>
+    <div id="pendingList"><div class="empty">Nothing pending. Browse whitelisted sites to capture.</div></div>
+    <button class="btn primary" id="shareSelected" style="display:none">✅ Share Selected to Collective</button>
+    <button class="btn danger small" id="deleteAll" style="display:none">🗑️ Delete All Pending</button>
+  </div>
+
+  <!-- SETTINGS TAB -->
+  <div class="panel" id="panel-settings">
+    <div class="section-title">🌐 Auto-Capture Domains</div>
+    <textarea id="whitelist">tabelog.com
+jalan.net
+rurubu.com
+travel.rakuten.co.jp</textarea>
+    <button class="btn" id="saveWhitelist">💾 Save</button>
+
+    <div class="section-title">🛡️ PII Auto-Block</div>
+    <div style="font-size:10px;color:#8b949e;line-height:1.5">
+      Extension auto-blocks capture when it detects:<br>
+      • Email addresses • Phone numbers<br>
+      • Login pages (/login, /account)<br>
+      • Banking sites • Credit card patterns
+    </div>
+    <label style="display:flex;align-items:center;gap:6px;margin-top:6px;font-size:11px;cursor:pointer">
+      <input type="checkbox" id="strictPII" checked> Strict mode (block on any PII hint)
+    </label>
+
+    <div class="section-title">🔗 Save Location</div>
+    <div style="font-size:10px;color:#8b949e;line-height:1.5;margin-top:4px">
+      First share → pick folder (e.g. Google Drive)<br>
+      After that → auto-saves, no prompt needed.
+    </div>
+    <button class="btn small" id="resetFolder" style="margin-top:6px">📁 Re-select Folder</button>
+  </div>
+
+  <!-- TERMS TAB -->
+  <div class="panel" id="panel-terms">
+    <div style="font-size:10px;color:#8b949e;line-height:1.6;max-height:240px;overflow-y:auto">
+      <strong style="color:#58a6ff">Bot Collective Human Bridge — Terms</strong><br><br>
+      
+      <strong>1. Local Capture</strong><br>
+      When enabled, this extension captures text content from web pages you visit (on whitelisted domains only). Captured data stays <strong>on your device</strong> by default.<br><br>
+      
+      <strong>2. Auto PII Detection</strong><br>
+      The extension automatically detects and <strong>blocks capture</strong> of pages containing emails, phone numbers, login screens, banking information, or credit card patterns. You can review blocked items.<br><br>
+      
+      <strong>3. Sharing to Collective</strong><br>
+      Sharing is <strong>ALWAYS manual</strong>. You must review and explicitly approve each item before it leaves your device. Nothing is shared automatically.<br><br>
+      
+      <strong>4. Server-Side Re-Filtering</strong><br>
+      Even after you approve sharing, the Bot Collective server performs a <strong>second PII scan</strong> and strips any remaining personal data before storage.<br><br>
+      
+      <strong>5. Data Usage</strong><br>
+      Shared content becomes part of the Bot Collective knowledge pool, accessible to other Pro-tier users. You can request deletion at any time.<br><br>
+      
+      <strong>6. No Login/Private Content</strong><br>
+      Only publicly accessible web pages should be captured. Content behind login walls is excluded by design.
+    </div>
+    <label style="display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;cursor:pointer">
+      <input type="checkbox" id="termsAgreed"> I agree to the Terms of Service
+    </label>
+    <button class="btn primary" id="acceptTerms" disabled>✅ Accept & Enable Sharing</button>
+  </div>
+
+  <div class="section" style="border-top:1px solid #21262d;padding:8px 14px">
+    <button class="btn" id="captureNow">📸 Capture This Tab Now</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

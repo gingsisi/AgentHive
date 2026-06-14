@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Bot Collective Human Bridge",
+  "version": "0.1.0",
+  "description": "Capture web pages for Bot Collective AI cache. Toggle ON to share, OFF for privacy.",
+  "permissions": ["storage", "activeTab", "scripting", "downloads"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Bot Collective Bridge",
+    "default_icon": {
+      "16": "icons/icon-off-16.png",
+      "48": "icons/icon-off-48.png",
+      "128": "icons/icon-off-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon-on-16.png",
+    "48": "icons/icon-on-48.png",
+    "128": "icons/icon-on-128.png"
+  }
+}

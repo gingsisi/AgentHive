@@ -1,0 +1,53 @@
+# ── Python ──
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# ── Virtual environment ──
+venv/
+.venv/
+env/
+.conda/
+pip-wheel-metadata/
+
+# ── Database & Persisted Data ──
+auth.db
+auth.db-journal
+auth.db-wal
+chroma_data/
+*.sqlite3
+*.db
+
+# ── Bridge Capture Data ──
+captures/
+bridge-share-*.json
+bridge-share-*.done
+bridge-share-*.error
+*.done
+*.error
+
+# ── OS / Editor files ──
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# ── Environment / Secrets ──
+.env
+.env.*
+*.local
+
+# ── Large binaries ──
+*.docx
+*.pdf
+
+# ── IDE ──
+*.iml
