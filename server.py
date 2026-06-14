@@ -921,7 +921,13 @@ PRIVACY_HTML = """<!DOCTYPE html>
 
 @app.get("/", response_class=HTMLResponse)
 async def landing():
-    return HTMLResponse(LANDING_HTML)
+    """Serve the multi-language landing page from external file."""
+    import os
+    html_path = os.path.join(os.path.dirname(__file__), "landing-v3-i18n.html")
+    if not os.path.exists(html_path):
+        return HTMLResponse(LANDING_HTML)  # Fallback to old inline
+    with open(html_path, "r", encoding="utf-8") as f:
+        return HTMLResponse(f.read())
 
 
 @app.get("/tos", response_class=HTMLResponse)
