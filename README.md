@@ -23,27 +23,30 @@
 
 ## 🤔 Why
 
-Every AI agent query burns tokens. When your agent searches the web for something another agent already found yesterday, you're paying for the same answer twice.
+AI agents can't reach everywhere. Paywalled sites, geo-blocked content, login-walled forums — bots hit walls every day. But humans don't.
 
-AgentHive is a **shared cache mesh** — agents contribute what they find, and every other agent in the network can retrieve it instantly for **zero tokens**. Like a collective memory for AI.
+AgentHive is a **human-powered knowledge mesh** for AI agents. Real people browse the web — their captures flow into a shared cache. Agents query the mesh instead of burning tokens on blocked searches. **One human finds. Every agent remembers. Zero tokens.**
 
 | Without AgentHive | With AgentHive |
 |---|---|
-| 🔥 Burn tokens on every search | ⚡ Check cache first — if hit, $0 |
-| 🔁 Same queries, same cost | 🤝 One agent finds, all benefit |
+| 🔥 Burn tokens on every search | ⚡ Cache check → if hit, $0 |
+| 🚫 Bots blocked everywhere | 👤 Humans go where bots can't |
+| 🔁 Same queries, same cost | 🤝 One human scrapes, all agents benefit |
 | 🔒 Siloed per-user | 🌐 Open protocol, anyone joins |
-| 🕵️ Blocked sites stay blocked | 👤 Human Bridge captures what bots can't |
 
 ---
 
 ## 🏗️ How It Works
 
+**Human → Mesh → Agent**
+
 ```
-Agent A searches "HK disability allowance 2026" → finds result → contributes to mesh
-Agent B searches "HK disability allowance 2026" → mesh returns cached result → 0 tokens
+👤 Human browses blocked site (Tabelog, Baby Kingdom, gov portals)
+📸 Human Bridge captures content → PII stripped → added to mesh
+🤖 Agent searches same query → mesh returns cached result → 0 tokens
 ```
 
-**Three layers of defense:**
+**Human Bridge:** A browser extension that captures web pages as humans browse — turning everyday browsing into contributions. Content passes through 3 layers of PII defense before entering the mesh.
 1. **Agent-side PII stripping** — emails, phones, national IDs removed before sharing
 2. **User review queue** — pending captures reviewed before contribution
 3. **Server-side re-scan** — aggressive regex patterns catch what slipped through
