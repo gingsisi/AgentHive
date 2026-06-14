@@ -1047,4 +1047,5 @@ async def key_stats(auth: dict = Depends(require_api_key)):
 # ══════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8081, log_level="info")
+    port = int(os.getenv("PORT", "8081"))
+    uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
