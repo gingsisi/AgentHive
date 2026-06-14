@@ -563,6 +563,13 @@
     text-decoration: none;
   }
   .footer a:hover { color: var(--purple-hover); }
+  .footer-beta {
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: #666680;
+    margin-top: 0.6rem;
+    opacity: 0.6;
+  }
 
   /* ── Responsive ── */
   @media (max-width: 768px) {
@@ -621,7 +628,6 @@
 <!-- Hero -->
 <section class="hero">
   <img src="/static/logo.png" alt="AgentHive" class="hero-logo" height="260">
-  <div class="hero-badge" data-i18n="hero_badge">🚧 Public Beta — Free during testing</div>
   <h1>
     <span class="h1-line" data-i18n="hero_line1">Your brain, AI's gain.</span>
   </h1>
@@ -777,6 +783,7 @@
 <footer class="footer">
   <p data-i18n="footer">🜁 AgentHive · Open Protocol · <a href="/tos">Terms</a> · <a href="/privacy">Privacy</a></p>
   <p style="margin-top:0.4rem;" data-i18n="footer_tag">Built for agents. Contributed by humans.</p>
+  <p class="footer-beta" data-i18n="hero_badge">🚧 Public Beta — Free during testing</p>
 </footer>
 
 <script>
