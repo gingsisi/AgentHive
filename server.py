@@ -8,6 +8,7 @@ from typing import Optional
 
 import uvicorn
 from fastapi import FastAPI, HTTPException, Query, Request, Form
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -70,6 +71,12 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan,
 )
+
+# Static files (logo, etc.)
+import os as _os
+_static_dir = _os.path.join(_os.path.dirname(__file__), "static")
+_os.makedirs(_static_dir, exist_ok=True)
+app.mount("/static", StaticFiles(directory=_static_dir), name="static")
 
 # CORS — allow web signup + API access from any origin
 app.add_middleware(

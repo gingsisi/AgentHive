@@ -11,21 +11,21 @@
     --purple-hover: #4434d4;
     --purple-light: #b9b9f9;
     --purple-subtle: rgba(83,58,253,0.05);
-    --navy: #061b31;
-    --navy-label: #273951;
-    --slate: #64748d;
-    --border: #e5edf5;
-    --white: #ffffff;
-    --brand-dark: #1c1e54;
+    --navy: #c8c8d4;
+    --navy-label: #a0a0b0;
+    --slate: #8888a0;
+    --border: #1e1e2e;
+    --white: #0a0a0f;
+    --brand-dark: #13131f;
     --success: #15be53;
     --success-text: #108c3d;
     --ruby: #ea2261;
     --magenta: #f96bee;
     --amber: #f59e0b;
-    --shadow-blue: rgba(50,50,93,0.25);
+    --shadow-dark: rgba(0,0,0,0.4);
     --shadow-dark: rgba(0,0,0,0.1);
-    --shadow-ambient: rgba(23,23,23,0.08);
-    --shadow-soft: rgba(23,23,23,0.06);
+    --shadow-ambient: rgba(0,0,0,0.3);
+    --shadow-soft: rgba(0,0,0,0.2);
     --radius-sm: 4px;
     --radius-md: 6px;
     --radius-lg: 8px;
@@ -35,7 +35,7 @@
 
   body {
     font-family: 'Source Sans 3', 'Noto Sans TC', 'Noto Sans SC', 'Noto Sans JP', 'Noto Sans KR', system-ui, -apple-system, sans-serif;
-    color: var(--navy);
+    color: #e0e0e0;
     background: var(--white);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -47,7 +47,7 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(255,255,255,0.85);
+    background: rgba(10,10,15,0.85);
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     border-bottom: 1px solid var(--border);
@@ -77,7 +77,7 @@
   .nav-links a {
     font-size: 0.875rem;
     font-weight: 400;
-    color: var(--navy);
+    color: #e0e0e0;
     text-decoration: none;
     transition: color 0.15s;
   }
@@ -116,7 +116,7 @@
     gap: 0.25rem;
     transition: border-color 0.15s, color 0.15s;
   }
-  .lang-btn:hover { border-color: var(--purple-light); color: var(--navy); }
+  .lang-btn:hover { border-color: var(--purple-light); color: #e0e0e0; }
   .lang-btn .arrow { font-size: 0.6rem; }
   .lang-dropdown {
     display: none;
@@ -124,10 +124,10 @@
     right: 0;
     top: 100%;
     margin-top: 4px;
-    background: var(--white);
-    border: 1px solid var(--border);
+    background: #13131a;
+    border: 1px solid #1e1e2e;
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-blue) 0px 10px 25px -10px;
+    box-shadow: var(--shadow-dark) 0px 10px 25px -10px;
     min-width: 140px;
     z-index: 200;
     overflow: hidden;
@@ -140,7 +140,7 @@
     font-family: inherit;
     font-size: 0.8rem;
     font-weight: 400;
-    color: var(--navy);
+    color: #e0e0e0;
     background: var(--white);
     border: none;
     padding: 0.55rem 1rem;
@@ -173,7 +173,7 @@
     font-weight: 300;
     line-height: 1.08;
     letter-spacing: -1.4px;
-    color: var(--navy);
+    color: #e0e0e0;
     margin-bottom: 1.25rem;
   }
   .hero h1 span {
@@ -263,7 +263,7 @@
     font-size: 2rem;
     font-weight: 300;
     letter-spacing: -0.64px;
-    color: var(--navy);
+    color: #e0e0e0;
     text-align: center;
     margin-bottom: 3rem;
   }
@@ -273,22 +273,22 @@
     gap: 1.5rem;
   }
   .feature-card {
-    background: var(--white);
-    border: 1px solid var(--border);
+    background: #13131a;
+    border: 1px solid #1e1e2e;
     border-radius: var(--radius-md);
     padding: 2rem 1.5rem;
     box-shadow: var(--shadow-soft) 0px 3px 6px;
     transition: box-shadow 0.2s, transform 0.15s;
   }
   .feature-card:hover {
-    box-shadow: rgba(50,50,93,0.25) 0px 30px 45px -30px, rgba(0,0,0,0.1) 0px 18px 36px -18px;
+    box-shadow: rgba(0,0,0,0.4) 0px 30px 45px -30px, rgba(0,0,0,0.1) 0px 18px 36px -18px;
     transform: translateY(-2px);
   }
   .feature-icon { font-size: 1.6rem; margin-bottom: 1rem; }
   .feature-card h3 {
     font-size: 1.1rem;
     font-weight: 400;
-    color: var(--navy);
+    color: #e0e0e0;
     margin-bottom: 0.5rem;
   }
   .feature-card p {
@@ -335,7 +335,7 @@
   .plan.pro {
     background: rgba(255,255,255,0.1);
     border-color: var(--purple-light);
-    box-shadow: rgba(50,50,93,0.25) 0px 20px 40px -20px;
+    box-shadow: rgba(0,0,0,0.4) 0px 20px 40px -20px;
     position: relative;
   }
   .plan.pro::before {
@@ -422,7 +422,7 @@
     font-size: 1.65rem;
     font-weight: 300;
     letter-spacing: -0.48px;
-    color: var(--navy);
+    color: #e0e0e0;
     text-align: center;
     margin-bottom: 0.5rem;
   }
@@ -434,8 +434,8 @@
     margin-bottom: 2rem;
   }
   .signup-form {
-    background: var(--white);
-    border: 1px solid var(--border);
+    background: #13131a;
+    border: 1px solid #1e1e2e;
     border-radius: var(--radius-md);
     padding: 2rem;
     box-shadow: var(--shadow-ambient) 0px 15px 35px;
@@ -454,14 +454,14 @@
     font-size: 0.95rem;
     font-weight: 300;
     padding: 0.65rem 0.85rem;
-    background: var(--white);
-    border: 1px solid var(--border);
+    background: #13131a;
+    border: 1px solid #1e1e2e;
     border-radius: var(--radius-sm);
-    color: var(--navy);
+    color: #e0e0e0;
     transition: border-color 0.15s;
     outline: none;
   }
-  .form-group input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-subtle); }
+  .form-group input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(83,58,253,0.1); }
   .form-group input::placeholder { color: var(--slate); }
   .btn-submit {
     font-family: inherit;
@@ -481,7 +481,7 @@
   .result {
     margin-top: 1.25rem;
     padding: 1rem;
-    background: rgba(21,190,83,0.06);
+    background: rgba(21,190,83,0.1);
     border: 1px solid rgba(21,190,83,0.2);
     border-radius: var(--radius-sm);
     display: none;
@@ -519,7 +519,7 @@
     gap: 4rem;
     flex-wrap: wrap;
     text-align: center;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid #1e1e2e;
   }
   .stat .num {
     font-size: 2.5rem;
@@ -536,7 +536,7 @@
 
   /* ── Footer ── */
   .footer {
-    border-top: 1px solid var(--border);
+    border-top: 1px solid #1e1e2e;
     padding: 2rem;
     text-align: center;
   }
@@ -580,7 +580,7 @@
 <nav class="nav">
   <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <span class="icon">🐝</span> AgentHive
+      <img src="/static/logo.png" alt="AgentHive" height="28" style="vertical-align:middle;">
     </a>
     <div class="nav-actions">
       <div class="nav-links">
