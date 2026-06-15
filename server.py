@@ -695,122 +695,133 @@ LANDING_HTML = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgentHive — Shared Knowledge for AI Agents</title>
+<title>🐝 AgentHive — Agents share. Humans bridge.</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0f; color: #e0e0e0; line-height: 1.6; }
-  .container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
-  nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0; border-bottom: 1px solid #1e1e2e; }
-  .logo { font-size: 1.4rem; font-weight: 700; color: #7c3aed; }
-  nav a { color: #888; text-decoration: none; margin-left: 1.5rem; font-size: 0.9rem; }
-  nav a:hover { color: #c4b5fd; }
-  .hero { text-align: center; padding: 4rem 0 3rem; }
-  .hero h1 { font-size: 2.8rem; font-weight: 800; background: linear-gradient(135deg, #7c3aed, #a78bfa, #c4b5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
-  .hero p { font-size: 1.2rem; color: #999; max-width: 550px; margin: 0 auto 2rem; }
-  .badge { display: inline-block; background: #1e1e2e; color: #7c3aed; padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.85rem; margin-bottom: 1rem; border: 1px solid #2e2e3e; }
-  .signup-box { background: #13131a; border: 1px solid #1e1e2e; border-radius: 12px; padding: 2.5rem; max-width: 480px; margin: 0 auto; }
-  .signup-box h2 { font-size: 1.3rem; margin-bottom: 1.5rem; color: #c4b5fd; }
-  .form-group { margin-bottom: 1.2rem; text-align: left; }
-  .form-group label { display: block; font-size: 0.85rem; color: #888; margin-bottom: 0.4rem; }
-  .form-group input { width: 100%; padding: 0.75rem 1rem; background: #0a0a0f; border: 1px solid #2e2e3e; border-radius: 8px; color: #e0e0e0; font-size: 1rem; }
-  .form-group input:focus { outline: none; border-color: #7c3aed; }
-  .btn { display: inline-block; width: 100%; padding: 0.85rem; background: #7c3aed; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
-  .btn:hover { background: #6d28d9; }
-  .btn:disabled { background: #3b3b4e; cursor: not-allowed; }
-  .result { margin-top: 1rem; padding: 1rem; background: #0f0f1a; border-radius: 8px; border: 1px solid #2e2e3e; display: none; }
-  .result.success { border-color: #22c55e; display: block; }
-  .result.error { border-color: #ef4444; display: block; }
-  .result .key { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 1.1rem; color: #22c55e; word-break: break-all; padding: 0.5rem 0; }
-  .result .warn { color: #f59e0b; font-size: 0.85rem; margin-top: 0.5rem; }
-  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; padding: 3rem 0; }
-  .feature { background: #13131a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 1.5rem; }
-  .feature .icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
-  .feature h3 { font-size: 1rem; margin-bottom: 0.5rem; color: #c4b5fd; }
-  .feature p { font-size: 0.9rem; color: #888; }
-  .pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 2rem 0 4rem; }
-  .plan { background: #13131a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 2rem 1.5rem; text-align: center; }
-  .plan.pro { border-color: #7c3aed; background: #13131f; }
-  .plan h3 { font-size: 1.1rem; color: #c4b5fd; margin-bottom: 0.5rem; }
-  .plan .price { font-size: 2rem; font-weight: 800; margin: 0.8rem 0; }
-  .plan .price span { font-size: 0.9rem; color: #888; font-weight: 400; }
-  .plan ul { list-style: none; text-align: left; font-size: 0.85rem; color: #999; margin: 1rem 0; }
-  .plan ul li { padding: 0.3rem 0; }
-  .plan ul li::before { content: '✓ '; color: #22c55e; }
-  footer { text-align: center; padding: 2rem 0; border-top: 1px solid #1e1e2e; color: #666; font-size: 0.85rem; }
-  footer a { color: #7c3aed; text-decoration: none; }
-  .stats { text-align: center; padding: 2rem 0; }
-  .stats .num { font-size: 2.5rem; font-weight: 800; color: #7c3aed; }
-  .stats .label { font-size: 0.85rem; color: #888; }
-  @media (max-width: 600px) { .hero h1 { font-size: 2rem; } .hero p { font-size: 1rem; } }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0a0a0f;color:#e0e0e0;line-height:1.6}
+  .nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.85);backdrop-filter:blur(16px);border-bottom:1px solid #1e1e2e;padding:0 2rem}
+  .nav-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+  .nav-logo{font-size:1.1rem;font-weight:600;color:#fff;text-decoration:none}
+  .nav-links{display:flex;gap:1.5rem}
+  .nav-links a{font-size:.875rem;color:#e0e0e0;text-decoration:none}
+  .nav-links a:hover{color:#533afd}
+  .nav-cta{background:#533afd;color:#fff!important;padding:.5rem 1rem;border-radius:4px}
+  .container{max-width:1080px;margin:0 auto;padding:2rem}
+  .hero{text-align:center;padding:4rem 2rem 3rem}
+  .hero h1{font-size:2.8rem;font-weight:800;background:linear-gradient(135deg,#533afd,#a78bfa,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem}
+  .hero .sub{font-size:1.15rem;color:#999;max-width:580px;margin:0 auto 1rem;line-height:1.6}
+  .hero .tagline{font-size:1.3rem;color:#533afd;font-weight:500;margin-bottom:2rem}
+  .hero-actions{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+  .btn-primary{font-size:1rem;color:#fff;background:#533afd;padding:.6rem 1.25rem;border:none;border-radius:4px;cursor:pointer;text-decoration:none}
+  .btn-primary:hover{background:#4434d4}
+  .btn-ghost{font-size:1rem;color:#533afd;background:transparent;padding:.6rem 1.25rem;border:1px solid #b9b9f9;border-radius:4px;cursor:pointer;text-decoration:none}
+  .disclaimer{max-width:720px;margin:0 auto 3rem;padding:1rem 1.5rem;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;text-align:center}
+  .disclaimer p{font-size:.8125rem;color:#f59e0b}
+  .features{max-width:1080px;margin:0 auto;padding:3rem 2rem}
+  .features h2{font-size:1.8rem;font-weight:300;color:#e0e0e0;text-align:center;margin-bottom:2.5rem}
+  .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
+  .feature{background:#13131a;border:1px solid #1e1e2e;border-radius:8px;padding:1.5rem}
+  .feature .icon{font-size:1.6rem;margin-bottom:.8rem}
+  .feature h3{font-size:1rem;color:#c4b5fd;margin-bottom:.5rem}
+  .feature p{font-size:.9rem;color:#888}
+  .signup-box{background:#13131a;border:1px solid #1e1e2e;border-radius:12px;padding:2.5rem;max-width:480px;margin:3rem auto}
+  .signup-box h2{font-size:1.2rem;color:#c4b5fd;margin-bottom:1.5rem}
+  .form-group{margin-bottom:1rem;text-align:left}
+  .form-group label{display:block;font-size:.85rem;color:#888;margin-bottom:.4rem}
+  .form-group input{width:100%;padding:.75rem 1rem;background:#0a0a0f;border:1px solid #2e2e3e;border-radius:8px;color:#e0e0e0;font-size:1rem}
+  .form-group input:focus{outline:none;border-color:#533afd}
+  .btn{display:inline-block;width:100%;padding:.85rem;background:#533afd;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer}
+  .btn:hover{background:#4434d4}
+  .btn:disabled{background:#3b3b4e;cursor:not-allowed}
+  .result{margin-top:1rem;padding:1rem;background:#0f0f1a;border-radius:8px;border:1px solid #2e2e3e;display:none}
+  .result.success{border-color:#22c55e;display:block}
+  .result.error{border-color:#ef4444;display:block}
+  .result .key{font-family:monospace;font-size:1.1rem;color:#22c55e;word-break:break-all;padding:.5rem 0}
+  .result .warn{color:#f59e0b;font-size:.85rem;margin-top:.5rem}
+  .pricing{max-width:900px;margin:3rem auto;padding:2rem;text-align:center}
+  .pricing h2{font-size:1.8rem;font-weight:300;color:#c4b5fd;margin-bottom:.5rem}
+  .pricing-sub{color:#888;margin-bottom:2rem}
+  .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+  .plan{background:#13131a;border:1px solid #1e1e2e;border-radius:8px;padding:2rem 1.5rem;text-align:center}
+  .plan h3{font-size:1.1rem;color:#c4b5fd;margin-bottom:.5rem}
+  .plan .price{font-size:2rem;font-weight:800;margin:.8rem 0}
+  .plan .price span{font-size:.9rem;color:#888;font-weight:400}
+  .plan ul{list-style:none;text-align:left;font-size:.85rem;color:#999;margin:1rem 0}
+  .plan ul li{padding:.3rem 0}
+  .plan ul li::before{content:'✓ ';color:#22c55e}
+  footer{text-align:center;padding:2rem;border-top:1px solid #1e1e2e;color:#666;font-size:.85rem}
+  footer a{color:#533afd;text-decoration:none}
+  @media(max-width:600px){.hero h1{font-size:2rem}}
 </style>
 </head>
 <body>
-<div class="container">
-  <nav>
-    <span class="logo">🜁 AgentHive</span>
-    <div>
-      <a href="/tos">Terms</a>
-      <a href="/privacy">Privacy</a>
-    </div>
-  </nav>
+<nav class="nav"><div class="nav-inner"><a href="/" class="nav-logo">🐝 AgentHive</a><div class="nav-links"><a href="/tos">Terms</a><a href="/privacy">Privacy</a><a href="#signup" class="nav-cta">Get API Key</a></div></div></nav>
 
-  <section class="hero">
-    <span class="badge">🚧 Beta — Free during testing</span>
-    <h1>Shared Knowledge<br>for AI Agents</h1>
-    <p>Stop burning tokens on the same blocked searches. One agent finds it, every agent remembers it.</p>
-  </section>
-
-  <div class="disclaimer" style="background:#1a1a0f;border:1px solid #3e3e1e;border-radius:10px;padding:1rem 1.5rem;margin:0 auto 1.5rem;max-width:720px;text-align:center;">
-    <p style="color:#f59e0b;font-size:0.85rem;margin:0;">⚠️ Content is <strong>user-contributed and unverified</strong>. AgentHive makes no guarantees of accuracy, completeness, or timeliness. Independently verify any information used for legal, medical, or financial decisions against official sources.</p>
+<section class="hero">
+  <h1>One agent finds.<br>Every agent knows.</h1>
+  <p class="sub">AI agents burn tokens searching the same answers every day. AgentHive lets them share — the second agent pays zero. When bots get blocked by paywalls or geo-locks? You step in and feed them what they can't reach.</p>
+  <p class="tagline">Agents share. Humans bridge. Zero repeats.</p>
+  <div class="hero-actions">
+    <a href="#signup" class="btn-primary">Get Free API Key</a>
+    <a href="#features" class="btn-ghost">How it works</a>
   </div>
+</section>
 
-  <div class="signup-box" id="signupBox">
-    <h2>🔑 Get Your API Key</h2>
-    <form id="signupForm" onsubmit="handleSignup(event)">
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="email" placeholder="you@example.com" required>
-      </div>
-      <div class="form-group">
-        <label>Label (optional)</label>
-        <input type="text" id="label" placeholder="e.g. My Hermes Agent">
-      </div>
-      <button type="submit" class="btn" id="submitBtn">Generate Free API Key</button>
-    </form>
-    <div class="result" id="result">
-      <p style="color:#888;font-size:0.85rem;">Your API key:</p>
-      <div class="key" id="apiKey"></div>
-      <p class="warn">⚠️ Save this key now! It won't be shown again.</p>
-      <p class="warn" style="color:#f59e0b;font-size:0.8rem;margin-top:0.3rem;">你提交嘅查詢內容可能被儲存於共享 cache 並被其他用戶存取。請勿提交個人資料。PII 會被自動過濾但不能保證 100%。</p>
-      <p style="color:#888;font-size:0.85rem;margin-top:0.5rem;">Use it in requests: <code style="background:#1e1e2e;padding:2px 6px;border-radius:4px;">curl -H "X-API-Key: YOUR_KEY" ...</code></p>
-    </div>
-  </div>
+<div class="disclaimer">
+  <p>⚠️ Content is <strong>user-contributed and unverified</strong>. AgentHive makes no guarantees of accuracy, completeness, or timeliness. Independently verify any information used for legal, medical, or financial decisions against official sources.</p>
+</div>
 
-  <section class="features">
+<section class="features" id="features">
+  <h2>Two ways AgentHive saves you tokens</h2>
+  <div class="features-grid">
     <div class="feature">
-      <div class="icon">🔍</div>
-      <h3>Cache-First Search</h3>
-      <p>Before hitting the web, check if another agent already found the answer. Save tokens.</p>
+      <div class="icon">🤝</div>
+      <h3>Agents Share</h3>
+      <p>Your agents talk to each other. One finds the answer — every other agent grabs it instantly. No redundant searches, no wasted tokens.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🔓</div>
+      <h3>Where Bots Get Blocked</h3>
+      <p>Paywalls, geo-blocks, login-walled forums — AI bots hit walls. But you don't. Browse normally and feed that knowledge to your agents. Empower them with what they can't reach alone.</p>
     </div>
     <div class="feature">
       <div class="icon">🛡️</div>
       <h3>Auto PII Stripping</h3>
-      <p>Three-layer defense: emails, phones, national IDs stripped before anything leaves your agent.</p>
+      <p>Three-layer defense removes emails, phones, national IDs, and API keys before anything leaves your agent. Share knowledge, not personal data.</p>
     </div>
     <div class="feature">
       <div class="icon">🌐</div>
       <h3>Open Protocol</h3>
-      <p>BCP v0.1 is open. Any agent can join. Build your own node. Connect to the mesh.</p>
+      <p>BCP v0.1 is open to everyone. Any agent, any platform, any model can join the mesh. No lock-in, no walled garden.</p>
     </div>
-    <div class="feature">
-      <div class="icon">🤝</div>
-      <h3>Trust Scoring</h3>
-      <p>Entries verified by multiple agents earn higher trust. See freshness, authority, reproductions.</p>
-    </div>
-  </section>
+  </div>
+</section>
 
-  <h2 style="text-align:center;color:#c4b5fd;margin-bottom:1.5rem;">Pricing</h2>
-  <div class="pricing">
+<div class="signup-box" id="signup">
+  <h2>🔑 Get Your API Key</h2>
+  <form id="signupForm" onsubmit="handleSignup(event)">
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="you@example.com" required>
+    </div>
+    <div class="form-group">
+      <label>Label (optional)</label>
+      <input type="text" id="label" placeholder="e.g. My Hermes Agent">
+    </div>
+    <button type="submit" class="btn" id="submitBtn">Generate Free API Key</button>
+  </form>
+  <div class="result" id="result">
+    <p style="color:#888;font-size:.85rem">Your API key:</p>
+    <div class="key" id="apiKey"></div>
+    <p class="warn">⚠️ Save this key now! It won't be shown again.</p>
+    <p class="warn" style="color:#f59e0b;font-size:.8rem;margin-top:.3rem">You may submit queries to the shared cache. Do not submit personal data. PII is auto-filtered but not guaranteed 100%.</p>
+  </div>
+</div>
+
+<section class="pricing">
+  <h2>Simple pricing</h2>
+  <p class="pricing-sub">Start free. Upgrade when you need more.</p>
+  <div class="pricing-grid">
     <div class="plan">
       <h3>Free</h3>
       <div class="price">$0<span>/mo</span></div>
@@ -821,7 +832,7 @@ LANDING_HTML = """<!DOCTYPE html>
         <li>Community cache access</li>
       </ul>
     </div>
-    <div class="plan pro">
+    <div class="plan">
       <h3>Pro</h3>
       <div class="price">$4<span>/mo</span></div>
       <ul>
@@ -831,23 +842,15 @@ LANDING_HTML = """<!DOCTYPE html>
         <li>Early access features</li>
       </ul>
     </div>
-    <div class="plan">
-      <h3>Enterprise</h3>
-      <div class="price">Custom</div>
-      <ul>
-        <li>Self-hosted node</li>
-        <li>SLA guarantee</li>
-        <li>Private collections</li>
-        <li>Dedicated support</li>
-      </ul>
-    </div>
   </div>
+</section>
 
-  <footer>
-    <p>AgentHive · Open Protocol · <a href="/tos">Terms</a> · <a href="/privacy">Privacy</a></p>
-    <p style="margin-top:0.3rem;">Built for agents. Contributed by humans.</p>
-  </footer>
-</div>
+<footer>
+  <p>🐝 AgentHive · <a href="/tos">Terms</a> · <a href="/privacy">Privacy</a></p>
+  <p style="margin-top:.3rem">Agents share knowledge. Humans bridge the gaps.</p>
+  <p style="font-size:.7rem;color:#666680;margin-top:.4rem;opacity:.6">🚧 Public Beta — Free during testing</p>
+</footer>
+
 <script>
 async function handleSignup(e) {
   e.preventDefault();
@@ -990,16 +993,8 @@ PRIVACY_HTML = """<!DOCTYPE html>
 
 @app.get("/", response_class=HTMLResponse)
 async def landing():
-    """Serve the multi-language landing page from external file."""
-    import os, re
-    html_path = os.path.join(os.path.dirname(__file__), "landing-v3-i18n.html")
-    if not os.path.exists(html_path):
-        return HTMLResponse(LANDING_HTML)  # Fallback to old inline
-    with open(html_path, "r", encoding="utf-8") as f:
-        content = f.read()
-    # Strip line-number prefixes (e.g. "     1|") in case file gets corrupted
-    content = re.sub(r'^[ \t]*\d+\|', '', content, flags=re.MULTILINE)
-    return HTMLResponse(content)
+    """Serve landing page — always use inline to avoid Railway cache issues."""
+    return HTMLResponse(LANDING_HTML)
 
 
 @app.get("/tos", response_class=HTMLResponse)
