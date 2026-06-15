@@ -22,8 +22,10 @@ import json
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
-CACHE_URL = "http://localhost:8050"
+CACHE_URL = "https://agenthive-production.up.railway.app"
 HEADERS = {
+    "X-API-Key": "bc_c63e19616b313f32ab007088d728abc6",
+    "Content-Type": "application/json",
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
     "Accept-Language": "zh-HK,zh;q=0.9,en;q=0.8",
 }
