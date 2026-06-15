@@ -69,11 +69,47 @@ class ChromaManager:
         source_url: str = "",
         tags: list[str] = None,
         privacy_class: str = "public",
+        resolve_action: str = "",
+        target_id: str = "",
     ) -> str:
-        """Add a web search result to the cache. Deduplicates via embedding similarity. Returns item ID."""
+        """Add a web search result to the cache.
         
-        # ── Deduplication check ──
+        resolve_action:
+          - "" (default): normal dedup. Auto-merge near-identical entries.
+          - "keep_both": force create new entry, skipping dedup.
+          - "update": overwrite target_id with new content and increment reproductions.
+        """
         collection = self.client.get_collection("web_cache")
+        
+        # ── Handle resolve actions ──
+        if resolve_action == "update" and target_id:
+            now = int(time.time())
+            try:
+                all_data = collection.get(ids=[target_id])
+                if all_data["ids"]:
+                    meta = all_data["metadatas"][0] if all_data["metadatas"] else {}
+                    old_repro = int(meta.get("reproductions", 0))
+                    new_meta = {
+                        **meta,
+                        "query": query,
+                        "reproductions": str(old_repro + 1),
+                        "created": str(now),
+                    }
+                    new_doc = f"{query}\n{content[:7900]}"
+                    collection.update(
+                        ids=[target_id],
+                        documents=[new_doc],
+                        metadatas=[new_meta],
+                    )
+                    return target_id
+            except Exception:
+                pass
+            # If update fails, fall through to create new
+        
+        if resolve_action == "keep_both":
+            return self._create_entry(collection, query, content, source_url, tags, privacy_class)
+        
+        # ── Normal dedup (default) ──
         
         # Method 1: Embedding similarity with query-text guard.
         # Two entries are only merged if BOTH embedding AND query text are similar.
@@ -114,9 +150,20 @@ class ChromaManager:
                 pass
         
         # ── New entry ──
+        return self._create_entry(collection, query, content, source_url, tags, privacy_class)
+
+    def _create_entry(
+        self,
+        collection,
+        query: str,
+        content: str,
+        source_url: str = "",
+        tags: list[str] = None,
+        privacy_class: str = "public",
+    ) -> str:
         item_id = f"wr_{uuid.uuid4().hex[:12]}"
         now = int(time.time())
-        expiry = now + 30 * 86400  # 30 days
+        expiry = now + 30 * 86400
 
         metadata = {
             "type": "web_cache",
@@ -132,10 +179,7 @@ class ChromaManager:
 
         collection.add(
             ids=[item_id],
-            # Include query in document so query terms contribute to embedding vector.
-            # This helps even with English-only embedders for Chinese — different queries
-            # produce different vectors instead of all Chinese text mapping to random noise.
-            documents=[f"{query}\n{content[:7900]}"],  # ChromaDB doc limit
+            documents=[f"{query}\n{content[:7900]}"],
             metadatas=[metadata],
         )
         return item_id
@@ -164,7 +208,44 @@ class ChromaManager:
         )
         return item_id
 
-    # ── SEARCH ─────────────────────────────────────────────
+    # ── CONFLICT DETECTION (lightweight, read-only) ──────────
+    
+    def detect_conflicts(
+        self,
+        query: str,
+        content: str,
+        threshold: float = 0.15,
+    ) -> list[dict]:
+        """Lightweight conflict detection. Returns potential matching entries
+        WITHOUT modifying data. The contributor's bot does the heavy judgment.
+        
+        Returns list of dicts: {id, query, content_preview, distance, verification}
+        """
+        collection = self.client.get_collection("web_cache")
+        dedup_text = f"{query} {content[:500]}"
+        conflicts = []
+        
+        try:
+            existing = collection.query(query_texts=[dedup_text], n_results=5)
+            if existing["ids"] and existing["ids"][0] and existing["distances"][0]:
+                for i, dist in enumerate(existing["distances"][0]):
+                    if dist < threshold:
+                        existing_meta = existing["metadatas"][0][i] if existing.get("metadatas") else {}
+                        existing_query = existing_meta.get("query", "")
+                        if self._query_similar(query, existing_query):
+                            existing_doc = existing["documents"][0][i] if existing.get("documents") else ""
+                            conflicts.append({
+                                "id": existing["ids"][0][i],
+                                "query": existing_query,
+                                "content_preview": existing_doc[:200] if existing_doc else "",
+                                "distance": round(dist, 4),
+                                "verification": existing_meta.get("verification", "unverified"),
+                                "reproductions": int(existing_meta.get("reproductions", 0)),
+                            })
+        except Exception:
+            pass
+        
+        return conflicts
 
     def search_web_cache(
         self,

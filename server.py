@@ -136,6 +136,8 @@ class ContributeRequest(BaseModel):
     privacy_class: str = "public"
     user_level: int = Field(default=1, ge=0, le=3)
     tool_name: str = "web_search"
+    resolve_action: str = ""   # "" | "update" | "keep_both"
+    resolve_id: str = ""        # target entry ID for "update"
 
 
 class ContributeResponse(BaseModel):
@@ -143,6 +145,8 @@ class ContributeResponse(BaseModel):
     classification: str
     pii_stripped: bool
     contributed: bool
+    conflicts: list[dict] = []   # potential duplicate entries
+    needs_review: bool = False   # True if bot should review conflicts
 
 
 class SearchResponse(BaseModel):
@@ -229,6 +233,37 @@ async def contribute(
     # Auto-fill empty source_url for web_cache
     source_url = req.source_url.strip() if req.source_url else ""
 
+    # ── Handle resolve actions ──
+    if req.resolve_action in ("update", "keep_both"):
+        item_id = db.contribute_web_result(
+            query=req.query.strip(),
+            content=clean_content,
+            source_url=source_url,
+            tags=normalized_tags,
+            privacy_class=req.privacy_class,
+            resolve_action=req.resolve_action,
+            target_id=req.resolve_id.strip(),
+        )
+        return ContributeResponse(
+            id=item_id,
+            classification=classification,
+            pii_stripped=had_pii,
+            contributed=True,
+        )
+
+    # ── Conflict detection (lightweight, server-side only) ──
+    conflicts = db.detect_conflicts(query=req.query.strip(), content=clean_content)
+    if conflicts:
+        return ContributeResponse(
+            id="",
+            classification="needs_review",
+            pii_stripped=had_pii,
+            contributed=False,
+            conflicts=conflicts,
+            needs_review=True,
+        )
+
+    # ── No conflicts → contribute normally ──
     item_id = db.contribute_web_result(
         query=req.query.strip(),
         content=clean_content,
