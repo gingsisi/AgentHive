@@ -689,7 +689,7 @@
       </ul>
       <button class="btn-plan" onclick="document.getElementById('signup').scrollIntoView({behavior:'smooth'})" data-i18n="plan_free_btn">Get Started</button>
     </div>
-    <div class="plan pro" data-badge="Popular">
+    <div class="plan pro">
       <h3>Pro</h3>
       <div class="price" data-i18n_html="plan_pro_price">$4<span>/mo</span></div>
       <p class="desc" data-i18n="plan_pro_desc">For power users and teams</p>
@@ -1243,8 +1243,9 @@ function switchLang(lang) {
   });
   
   // Update plan badge
-  const badgeText = { 'en': 'Popular', 'zh-HK': '熱門', 'zh-TW': '熱門', 'ja': '人気', 'ko': '인기', 'zh-CN': '热门' };
-  document.querySelector('.plan.pro').setAttribute('data-badge', badgeText[lang] || 'Popular');
+  // Plan badge disabled — Pro tier not launched yet
+  // const badgeText = { 'en': 'Popular', 'zh-HK': '熱門', 'zh-TW': '熱門', 'ja': '人気', 'ko': '인기', 'zh-CN': '热门' };
+  // document.querySelector('.plan.pro').setAttribute('data-badge', badgeText[lang] || 'Popular');
   
   // Update lang label
   const labels = { 'en': '🌐 EN', 'zh-HK': '🌐 香港繁中', 'zh-TW': '🌐 台灣繁中', 'ja': '🌐 日本語', 'ko': '🌐 한국어', 'zh-CN': '🌐 简中' };
