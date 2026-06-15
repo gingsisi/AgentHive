@@ -7,6 +7,7 @@ REST API for contributing and retrieving cached knowledge.
 from contextlib import asynccontextmanager
 from typing import Optional
 
+import re
 import uvicorn
 from fastapi import FastAPI, HTTPException, Query, Request, Form
 from fastapi.staticfiles import StaticFiles
@@ -993,8 +994,18 @@ PRIVACY_HTML = """<!DOCTYPE html>
 
 @app.get("/", response_class=HTMLResponse)
 async def landing():
-    """Serve landing page — always use inline to avoid Railway cache issues."""
-    return HTMLResponse(LANDING_HTML)
+    """Serve landing page from file, with inline fallback."""
+    import os
+    landing_path = os.path.join(os.path.dirname(__file__), "landing-v3-i18n.html")
+    try:
+        with open(landing_path, "r", encoding="utf-8") as f:
+            html = f.read()
+        # Strip line numbers if accidentally baked in
+        if html.strip().startswith("1|"):
+            html = re.sub(r'^\s*\d+\|', '', html, flags=re.MULTILINE)
+        return HTMLResponse(html)
+    except Exception:
+        return HTMLResponse(LANDING_HTML)
 
 
 @app.get("/tos", response_class=HTMLResponse)
