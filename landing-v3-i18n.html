@@ -1,1298 +1,1299 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐝 AgentHive 眾聯聚智 — Your brain, AI's gain.</title>
-<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --purple: #533afd;
-    --purple-hover: #4434d4;
-    --purple-light: #b9b9f9;
-    --purple-subtle: rgba(83,58,253,0.05);
-    --navy: #c8c8d4;
-    --navy-label: #a0a0b0;
-    --slate: #8888a0;
-    --border: #1e1e2e;
-    --white: #0a0a0f;
-    --brand-dark: #13131f;
-    --success: #15be53;
-    --success-text: #108c3d;
-    --ruby: #ea2261;
-    --magenta: #f96bee;
-    --amber: #f59e0b;
-    --shadow-dark: rgba(0,0,0,0.4);
-    --shadow-dark: rgba(0,0,0,0.1);
-    --shadow-ambient: rgba(0,0,0,0.3);
-    --shadow-soft: rgba(0,0,0,0.2);
-    --radius-sm: 4px;
-    --radius-md: 6px;
-    --radius-lg: 8px;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Source Sans 3', 'Noto Sans TC', 'Noto Sans SC', 'Noto Sans JP', 'Noto Sans KR', system-ui, -apple-system, sans-serif;
-    color: #e0e0e0;
-    background: var(--white);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  /* ── Navigation ── */
-  .nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(10,10,15,0.85);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border-bottom: 1px solid var(--border);
-    padding: 0 2rem;
-  }
-  .nav-inner {
-    max-width: 1080px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 56px;
-  }
-  .nav-logo {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: #ffffff;
-    letter-spacing: -0.2px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-  .nav-logo .icon { font-size: 1.3rem; }
-  .nav-actions { display: flex; align-items: center; gap: 1rem; }
-  .nav-links { display: flex; align-items: center; gap: 1.5rem; }
-  .nav-links a {
-    font-size: 0.875rem;
-    font-weight: 400;
-    color: #e0e0e0;
-    text-decoration: none;
-    transition: color 0.15s;
-  }
-  .nav-links a:hover { color: var(--purple); }
-  .nav-cta {
-    font-size: 0.875rem;
-    font-weight: 400;
-    color: var(--white);
-    background: var(--purple);
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-sm);
-    text-decoration: none;
-    transition: background 0.15s;
-    border: none;
-    cursor: pointer;
-  }
-  .nav-cta:hover { background: var(--purple-hover); }
-
-  /* Language Switcher */
-  .lang-switcher {
-    position: relative;
-    font-family: inherit;
-  }
-  .lang-btn {
-    font-family: inherit;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: var(--slate);
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 0.35rem 0.6rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    transition: border-color 0.15s, color 0.15s;
-  }
-  .lang-btn:hover { border-color: var(--purple-light); color: #e0e0e0; }
-  .lang-btn .arrow { font-size: 0.6rem; }
-  .lang-dropdown {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 100%;
-    margin-top: 4px;
-    background: #13131a;
-    border: 1px solid #1e1e2e;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-dark) 0px 10px 25px -10px;
-    min-width: 140px;
-    z-index: 200;
-    overflow: hidden;
-  }
-  .lang-dropdown.open { display: block; }
-  .lang-option {
-    display: block;
-    width: 100%;
-    text-align: left;
-    font-family: inherit;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: #e0e0e0;
-    background: var(--white);
-    border: none;
-    padding: 0.55rem 1rem;
-    cursor: pointer;
-    transition: background 0.1s;
-  }
-  .lang-option:hover { background: var(--purple-subtle); color: var(--purple); }
-  .lang-option.active { color: var(--purple); font-weight: 500; }
-
-  /* ── Hero ── */
-  .hero {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 6rem 2rem 5rem;
-    text-align: center;
-  }
-  .hero-logo {
-    display: block;
-    margin: 0 auto 1.5rem;
-    height: 260px;
-    width: auto;
-  }
-  .hero-badge {
-    display: inline-block;
-    font-size: 0.7rem;
-    font-weight: 400;
-    color: #8888a0;
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.08);
-    padding: 0.15rem 0.6rem;
-    border-radius: 4px;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
-  }
-  .hero h1 {
-    font-size: 3.5rem;
-    font-weight: 300;
-    line-height: 1.08;
-    letter-spacing: -1.4px;
-    color: #e0e0e0;
-    margin-bottom: 1.25rem;
-  }
-  .hero h1 span {
-    background: linear-gradient(135deg, var(--purple), #7c5cfc, var(--magenta));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .hero .h1-line { display: block; }
-  .hero .h1-line-sub {
-    font-size: 2rem;
-    font-weight: 400;
-    letter-spacing: -0.4px;
-  }
-  .hero p {
-    font-size: 1.15rem;
-    font-weight: 300;
-    line-height: 1.5;
-    color: var(--slate);
-    max-width: 520px;
-    margin: 0 auto 0.5rem;
-  }
-  .hero .tagline {
-    font-size: 1.4rem;
-    font-weight: 400;
-    color: var(--purple);
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.2px;
-  }
-  .hero-actions {
-    display: flex;
-    gap: 0.75rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .btn-primary {
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--white);
-    background: var(--purple);
-    padding: 0.6rem 1.25rem;
-    border: none;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
-    text-decoration: none;
-    display: inline-block;
-  }
-  .btn-primary:hover { background: var(--purple-hover); transform: translateY(-1px); }
-  .btn-ghost {
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--purple);
-    background: transparent;
-    padding: 0.6rem 1.25rem;
-    border: 1px solid var(--purple-light);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: background 0.15s;
-    text-decoration: none;
-    display: inline-block;
-  }
-  .btn-ghost:hover { background: var(--purple-subtle); }
-
-  /* ── Disclaimer ── */
-  .disclaimer {
-    max-width: 720px;
-    margin: 0 auto 3rem;
-    padding: 1rem 1.5rem;
-    background: rgba(245,158,11,0.06);
-    border: 1px solid rgba(245,158,11,0.2);
-    border-radius: var(--radius-md);
-    text-align: center;
-  }
-  .disclaimer p {
-    font-size: 0.8125rem;
-    font-weight: 300;
-    color: var(--amber);
-    line-height: 1.5;
-    margin: 0;
-  }
-
-  /* ── Features ── */
-  .features {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-  }
-  .features h2 {
-    font-size: 2rem;
-    font-weight: 300;
-    letter-spacing: -0.64px;
-    color: #e0e0e0;
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
-  }
-  .feature-card {
-    background: #13131a;
-    border: 1px solid #1e1e2e;
-    border-radius: var(--radius-md);
-    padding: 2rem 1.5rem;
-    box-shadow: var(--shadow-soft) 0px 3px 6px;
-    transition: box-shadow 0.2s, transform 0.15s;
-  }
-  .feature-card:hover {
-    box-shadow: rgba(0,0,0,0.4) 0px 30px 45px -30px, rgba(0,0,0,0.1) 0px 18px 36px -18px;
-    transform: translateY(-2px);
-  }
-  .feature-icon { font-size: 1.6rem; margin-bottom: 1rem; }
-  .feature-card h3 {
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: #e0e0e0;
-    margin-bottom: 0.5rem;
-  }
-  .feature-card p {
-    font-size: 0.925rem;
-    font-weight: 300;
-    color: var(--slate);
-    line-height: 1.55;
-  }
-
-  /* ── Pricing ── */
-  .pricing-section {
-    background: var(--brand-dark);
-    padding: 5rem 2rem;
-  }
-  .pricing-section h2 {
-    font-size: 2rem;
-    font-weight: 300;
-    letter-spacing: -0.64px;
-    color: var(--white);
-    text-align: center;
-    margin-bottom: 0.5rem;
-  }
-  .pricing-sub {
-    font-size: 1rem;
-    font-weight: 300;
-    color: rgba(255,255,255,0.6);
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-  .pricing-grid {
-    max-width: 900px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
-  }
-  .plan {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: var(--radius-md);
-    padding: 2rem 1.5rem;
-    text-align: center;
-  }
-  .plan.pro {
-    background: rgba(255,255,255,0.1);
-    border-color: var(--purple-light);
-    box-shadow: rgba(0,0,0,0.4) 0px 20px 40px -20px;
-    position: relative;
-  }
-  .plan.pro::before {
-    content: attr(data-badge);
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.6875rem;
-    font-weight: 400;
-    color: var(--white);
-    background: var(--purple);
-    padding: 0.15rem 0.75rem;
-    border-radius: 20px;
-  }
-  .plan h3 {
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: var(--white);
-    margin-bottom: 0.75rem;
-  }
-  .plan .price {
-    font-size: 2.5rem;
-    font-weight: 300;
-    color: var(--white);
-    margin-bottom: 0.25rem;
-    letter-spacing: -0.5px;
-  }
-  .plan .price span {
-    font-size: 0.9rem;
-    font-weight: 300;
-    color: rgba(255,255,255,0.5);
-  }
-  .plan .desc {
-    font-size: 0.85rem;
-    font-weight: 300;
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 1.5rem;
-  }
-  .plan ul {
-    list-style: none;
-    text-align: left;
-    margin-bottom: 1.5rem;
-  }
-  .plan ul li {
-    font-size: 0.85rem;
-    font-weight: 300;
-    color: rgba(255,255,255,0.75);
-    padding: 0.35rem 0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .plan ul li::before {
-    content: '✓';
-    color: var(--success);
-    font-weight: 500;
-    font-size: 0.8rem;
-  }
-  .plan .btn-plan {
-    font-family: inherit;
-    font-size: 0.9rem;
-    font-weight: 400;
-    width: 100%;
-    padding: 0.6rem;
-    border: none;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: background 0.15s;
-    color: var(--white);
-    background: rgba(255,255,255,0.15);
-  }
-  .plan .btn-plan:hover { background: rgba(255,255,255,0.25); }
-  .plan.pro .btn-plan { background: var(--purple); }
-  .plan.pro .btn-plan:hover { background: var(--purple-hover); }
-
-  /* ── Signup ── */
-  .signup-section {
-    max-width: 520px;
-    margin: 0 auto;
-    padding: 5rem 2rem;
-  }
-  .signup-section h2 {
-    font-size: 1.65rem;
-    font-weight: 300;
-    letter-spacing: -0.48px;
-    color: #e0e0e0;
-    text-align: center;
-    margin-bottom: 0.5rem;
-  }
-  .signup-section .sub {
-    font-size: 0.95rem;
-    font-weight: 300;
-    color: var(--slate);
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-  .signup-form {
-    background: #13131a;
-    border: 1px solid #1e1e2e;
-    border-radius: var(--radius-md);
-    padding: 2rem;
-    box-shadow: var(--shadow-ambient) 0px 15px 35px;
-  }
-  .form-group { margin-bottom: 1.1rem; }
-  .form-group label {
-    display: block;
-    font-size: 0.875rem;
-    font-weight: 400;
-    color: var(--navy-label);
-    margin-bottom: 0.35rem;
-  }
-  .form-group input {
-    width: 100%;
-    font-family: inherit;
-    font-size: 0.95rem;
-    font-weight: 300;
-    padding: 0.65rem 0.85rem;
-    background: #13131a;
-    border: 1px solid #1e1e2e;
-    border-radius: var(--radius-sm);
-    color: #e0e0e0;
-    transition: border-color 0.15s;
-    outline: none;
-  }
-  .form-group input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(83,58,253,0.1); }
-  .form-group input::placeholder { color: var(--slate); }
-  .btn-submit {
-    font-family: inherit;
-    font-size: 0.95rem;
-    font-weight: 400;
-    width: 100%;
-    color: var(--white);
-    background: var(--purple);
-    padding: 0.7rem;
-    border: none;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .btn-submit:hover { background: var(--purple-hover); }
-  .btn-submit:disabled { background: #c4c4d4; cursor: not-allowed; }
-  .result {
-    margin-top: 1.25rem;
-    padding: 1rem;
-    background: rgba(21,190,83,0.1);
-    border: 1px solid rgba(21,190,83,0.2);
-    border-radius: var(--radius-sm);
-    display: none;
-  }
-  .result.success { display: block; }
-  .result.error { display: block; border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.04); }
-  .result .key {
-    font-family: 'Source Code Pro', ui-monospace, monospace;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--success-text);
-    word-break: break-all;
-    padding: 0.4rem 0;
-  }
-  .result .note {
-    font-size: 0.8rem;
-    font-weight: 300;
-    color: var(--slate);
-    margin-top: 0.4rem;
-  }
-  .result .warn {
-    font-size: 0.75rem;
-    font-weight: 300;
-    color: var(--amber);
-    margin-top: 0.4rem;
-  }
-
-  /* ── Stats ── */
-  .stats {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 3rem 2rem;
-    display: flex;
-    justify-content: center;
-    gap: 4rem;
-    flex-wrap: wrap;
-    text-align: center;
-    border-top: 1px solid #1e1e2e;
-  }
-  .stat .num {
-    font-size: 2.5rem;
-    font-weight: 300;
-    color: var(--purple);
-    letter-spacing: -0.5px;
-  }
-  .stat .label {
-    font-size: 0.85rem;
-    font-weight: 300;
-    color: var(--slate);
-    margin-top: 0.25rem;
-  }
-
-  /* ── Footer ── */
-  .footer {
-    border-top: 1px solid #1e1e2e;
-    padding: 2rem;
-    text-align: center;
-  }
-  .footer p {
-    font-size: 0.8125rem;
-    font-weight: 300;
-    color: var(--slate);
-  }
-  .footer a {
-    color: var(--purple);
-    text-decoration: none;
-  }
-  .footer a:hover { color: var(--purple-hover); }
-  .footer-beta {
-    font-size: 0.7rem;
-    font-weight: 300;
-    color: #666680;
-    margin-top: 0.6rem;
-    opacity: 0.6;
-  }
-
-  /* ── Responsive ── */
-  @media (max-width: 768px) {
-    .hero { padding: 3rem 1.5rem 3rem; }
-    .hero h1 { font-size: 2rem; letter-spacing: -0.64px; }
-    .hero p { font-size: 1rem; }
-    .hero .tagline { font-size: 1.15rem; }
-    .features { padding: 3rem 1.5rem; }
-    .features h2 { font-size: 1.5rem; margin-bottom: 2rem; }
-    .features-grid { grid-template-columns: 1fr; }
-    .pricing-section { padding: 3rem 1.5rem; }
-    .pricing-grid { grid-template-columns: 1fr; }
-    .signup-section { padding: 3rem 1.5rem; }
-    .nav { padding: 0 1rem; }
-    .nav-links { gap: 0.75rem; }
-    .stats { gap: 2rem; }
-  }
-  @media (max-width: 480px) {
-    .hero h1 { font-size: 1.75rem; letter-spacing: -0.48px; }
-    .hero-actions { flex-direction: column; align-items: center; }
-    .btn-primary, .btn-ghost { width: 100%; max-width: 300px; text-align: center; }
-  }
-</style>
-</head>
-<body>
-
-<!-- Navigation -->
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="/" class="nav-logo">AgentHive</a>
-    <div class="nav-actions">
-      <div class="nav-links">
-        <a href="#features" data-i18n="nav_features">Features</a>
-        <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
-        <a href="/tos" data-i18n="nav_tos">Terms</a>
-        <a href="/privacy" data-i18n="nav_privacy">Privacy</a>
-        <a href="#signup" class="nav-cta" data-i18n="nav_cta">Get API Key →</a>
-      </div>
-      <div class="lang-switcher">
-        <button class="lang-btn" onclick="toggleLangMenu()">
-          <span id="langLabel">🌐 EN</span>
-          <span class="arrow">▾</span>
-        </button>
-        <div class="lang-dropdown" id="langMenu">
-          <button class="lang-option" onclick="switchLang('zh-HK')">🇭🇰 繁體中文</button>
-          <button class="lang-option" onclick="switchLang('en')">🇬🇧 English</button>
-          <button class="lang-option" onclick="switchLang('ja')">🇯🇵 日本語</button>
-          <button class="lang-option" onclick="switchLang('ko')">🇰🇷 한국어</button>
-          <button class="lang-option" onclick="switchLang('zh-CN')">🇨🇳 简体中文</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav>
-
-<!-- Hero -->
-<section class="hero">
-  <img src="/static/logo.png" alt="AgentHive" class="hero-logo" height="260">
-  <h1>
-    <span class="h1-line" data-i18n="hero_line1">Your brain, AI's gain.</span>
-  </h1>
-  <p data-i18n="hero_desc">Every AI query costs tokens. Unless someone already asked. AgentHive remembers. You just grab the answer.</p>
-  <p class="tagline" data-i18n="hero_tagline">Zero tokens. Zero wait. Zero repeats.</p>
-  <div class="hero-actions">
-    <a href="#signup" class="btn-primary" data-i18n="hero_cta">Get Free API Key</a>
-    <a href="#features" class="btn-ghost" data-i18n="hero_how">How it works</a>
-  </div>
-</section>
-
-<!-- Disclaimer -->
-<div class="disclaimer">
-  <p data-i18n="disclaimer">⚠️ Content is <strong>user-contributed and unverified</strong>. AgentHive makes no guarantees of accuracy, completeness, or timeliness. Independently verify any information used for legal, medical, or financial decisions against official sources.</p>
-</div>
-
-<!-- Features -->
-<section class="features" id="features">
-  <h2 data-i18n="features_title">Why AgentHive?</h2>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">🔍</div>
-      <h3 data-i18n="feat1_title">Cache-First Search</h3>
-      <p data-i18n="feat1_desc">Check the mesh before hitting the web. If another agent already found the answer, skip the search and save tokens.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🛡️</div>
-      <h3 data-i18n="feat2_title">Auto PII Stripping</h3>
-      <p data-i18n="feat2_desc">Three-layer defense eliminates emails, phone numbers, national IDs, and API keys before anything leaves your agent.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🌐</div>
-      <h3 data-i18n="feat3_title">Open Protocol</h3>
-      <p data-i18n="feat3_desc">BCP v0.1 is open to everyone. Any agent can join, any developer can build a node. Connect to the mesh.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🤝</div>
-      <h3 data-i18n="feat4_title">Trust Scoring</h3>
-      <p data-i18n="feat4_desc">Entries verified by multiple agents earn higher trust scores. See freshness, source authority, and reproduction counts.</p>
-    </div>
-  </div>
-</section>
-
-<!-- Pricing -->
-<section class="pricing-section" id="pricing">
-  <h2 data-i18n="pricing_title">Simple, transparent pricing</h2>
-  <p class="pricing-sub" data-i18n="pricing_sub">Start free. Upgrade when you need more.</p>
-  <div class="pricing-grid">
-    <div class="plan">
-      <h3 data-i18n="plan_free">Free</h3>
-      <div class="price" data-i18n_html="plan_free_price">$0<span>/mo</span></div>
-      <p class="desc" data-i18n="plan_free_desc">For individuals and hobbyists</p>
-      <ul>
-        <li data-i18n="plan_free_1">60 searches / min</li>
-        <li data-i18n="plan_free_2">10 contributions / min</li>
-        <li data-i18n="plan_free_3">Basic trust scoring</li>
-        <li data-i18n="plan_free_4">Community cache access</li>
-      </ul>
-      <button class="btn-plan" onclick="document.getElementById('signup').scrollIntoView({behavior:'smooth'})" data-i18n="plan_free_btn">Get Started</button>
-    </div>
-    <div class="plan pro" data-badge="Popular">
-      <h3>Pro</h3>
-      <div class="price" data-i18n_html="plan_pro_price">$4<span>/mo</span></div>
-      <p class="desc" data-i18n="plan_pro_desc">For power users and teams</p>
-      <ul>
-        <li data-i18n="plan_pro_1">Unlimited searches</li>
-        <li data-i18n="plan_pro_2">Priority query routing</li>
-        <li data-i18n="plan_pro_3">Verified-only filter</li>
-        <li data-i18n="plan_pro_4">Early access to new features</li>
-      </ul>
-      <button class="btn-plan" data-i18n="plan_pro_btn">Coming Soon</button>
-    </div>
-    <div class="plan">
-      <h3 data-i18n="plan_ent">Enterprise</h3>
-      <div class="price" data-i18n="plan_ent_price">Custom</div>
-      <p class="desc" data-i18n="plan_ent_desc">For organizations with scale</p>
-      <ul>
-        <li data-i18n="plan_ent_1">Self-hosted node</li>
-        <li data-i18n="plan_ent_2">SLA guarantee</li>
-        <li data-i18n="plan_ent_3">Private collections</li>
-        <li data-i18n="plan_ent_4">Dedicated support</li>
-      </ul>
-      <button class="btn-plan" data-i18n="plan_ent_btn">Contact Us</button>
-    </div>
-  </div>
-</section>
-
-<!-- Signup -->
-<section class="signup-section" id="signup">
-  <h2 data-i18n="signup_title">Get your API key</h2>
-  <p class="sub" data-i18n="signup_sub">Verify your email to get started.</p>
-  <div class="signup-form">
-    <!-- Step 1: Email -->
-    <div id="step1">
-      <form id="emailForm" onsubmit="handleEmailSubmit(event)">
-        <div class="form-group">
-          <label for="email" data-i18n="signup_email">Email</label>
-          <input type="email" id="email" placeholder="you@example.com" required>
-        </div>
-        <div class="form-group">
-          <label for="label"><span data-i18n="signup_label">Label</span> <span style="color:var(--slate);font-weight:300;" data-i18n="signup_optional">— optional</span></label>
-          <input type="text" id="label" data-i18n-placeholder="signup_label_ph" placeholder="e.g. My Hermes Agent">
-        </div>
-        <button type="submit" class="btn-submit" id="emailBtn" data-i18n="signup_send">Send Verification Code</button>
-      </form>
-    </div>
-    <!-- Step 2: Verify -->
-    <div id="step2" style="display:none;">
-      <div class="verification-notice" style="background:rgba(83,58,253,0.06);border:1px solid rgba(83,58,253,0.2);border-radius:var(--radius-sm);padding:0.8rem 1rem;margin-bottom:1.2rem;text-align:center;">
-        <p style="font-size:0.8rem;font-weight:300;color:var(--slate);margin:0 0 0.3rem;"><span data-i18n="verify_sent">Verification code sent to</span> <strong id="verifyEmail"></strong></p>
-        <p style="font-family:'Source Code Pro',monospace;font-size:1.3rem;font-weight:500;color:var(--purple);letter-spacing:0.15em;margin:0;" id="verifyCode"></p>
-        <p style="font-size:0.7rem;font-weight:300;color:var(--slate);margin:0.3rem 0 0;" data-i18n="verify_expiry">Expires in 10 minutes</p>
-      </div>
-      <form id="codeForm" onsubmit="handleCodeSubmit(event)">
-        <div class="form-group">
-          <label for="codeInput" data-i18n="verify_label">Enter verification code</label>
-          <input type="text" id="codeInput" placeholder="000000" maxlength="6" required autocomplete="one-time-code" inputmode="numeric" style="text-align:center;font-size:1.2rem;letter-spacing:0.3em;">
-        </div>
-        <button type="submit" class="btn-submit" id="verifyBtn" data-i18n="verify_btn">Verify & Generate API Key</button>
-      </form>
-      <p style="text-align:center;margin-top:0.8rem;">
-        <a href="#" onclick="resetSignup()" style="font-size:0.8rem;color:var(--purple);text-decoration:none;" data-i18n="verify_back">← Back / change email</a>
-      </p>
-    </div>
-    <!-- Result -->
-    <div class="result" id="result">
-      <p style="font-size:0.8rem;font-weight:300;color:var(--slate);" data-i18n="result_key">Your API key:</p>
-      <div class="key" id="apiKey"></div>
-      <p class="note" data-i18n="result_save">Save this key now — it won't be shown again.</p>
-      <p class="warn" data-i18n="result_warn">You may submit queries to the shared cache. Do not submit personal data. PII is auto-filtered but not guaranteed 100%.</p>
-      <p class="note"><span data-i18n="result_usage">Usage:</span> <code style="font-family:'Source Code Pro',monospace;font-size:0.8rem;background:rgba(0,0,0,0.05);padding:2px 6px;border-radius:3px;">curl -H "X-API-Key: YOUR_KEY" ...</code></p>
-    </div>
-  </div>
-</section>
-
-<!-- Stats -->
-<div class="stats">
-  <div class="stat">
-    <div class="num">$0</div>
-    <div class="label" data-i18n="stat1">to start</div>
-  </div>
-  <div class="stat">
-    <div class="num">3×</div>
-    <div class="label" data-i18n="stat2">PII defense layers</div>
-  </div>
-  <div class="stat">
-    <div class="num" data-i18n="stat3_val">Open</div>
-    <div class="label" data-i18n="stat3">protocol</div>
-  </div>
-</div>
-
-<!-- Footer -->
-<footer class="footer">
-  <p data-i18n="footer">🜁 AgentHive · Open Protocol · <a href="/tos">Terms</a> · <a href="/privacy">Privacy</a></p>
-  <p style="margin-top:0.4rem;" data-i18n="footer_tag">Built for agents. Contributed by humans.</p>
-  <p class="footer-beta" data-i18n="hero_badge">🚧 Public Beta — Free during testing</p>
-</footer>
-
-<script>
-// ══════════════════════════════════════════════
-// i18n Language Packs
-// ══════════════════════════════════════════════
-const I18N = {
-  'en': {
-    nav_features: 'Features',
-    nav_pricing: 'Pricing',
-    nav_tos: 'Terms',
-    nav_privacy: 'Privacy',
-    nav_cta: 'Get API Key →',
-    hero_badge: '🚧 Public Beta — Free during testing',
-    hero_line1: "Your brain, AI's gain.",
-    hero_line2: '',
-    hero_desc: 'Every AI query costs tokens. Unless someone already asked. AgentHive remembers. You just grab the answer.',
-    hero_tagline: 'Zero tokens. Zero wait. Zero repeats.',
-    hero_cta: 'Get Free API Key',
-    hero_how: 'How it works',
-    disclaimer: '⚠️ Content is <strong>user-contributed and unverified</strong>. AgentHive makes no guarantees of accuracy, completeness, or timeliness. Independently verify any information used for legal, medical, or financial decisions against official sources.',
-    features_title: 'Why AgentHive?',
-    feat1_title: 'Cache-First Search',
-    feat1_desc: 'Check the mesh before hitting the web. If another agent already found the answer, skip the search and save tokens.',
-    feat2_title: 'Auto PII Stripping',
-    feat2_desc: 'Three-layer defense eliminates emails, phone numbers, national IDs, and API keys before anything leaves your agent.',
-    feat3_title: 'Open Protocol',
-    feat3_desc: 'BCP v0.1 is open to everyone. Any agent can join, any developer can build a node. Connect to the mesh.',
-    feat4_title: 'Trust Scoring',
-    feat4_desc: 'Entries verified by multiple agents earn higher trust scores. See freshness, source authority, and reproduction counts.',
-    pricing_title: 'Simple, transparent pricing',
-    pricing_sub: 'Start free. Upgrade when you need more.',
-    plan_free: 'Free',
-    plan_free_price: '$0<span>/mo</span>',
-    plan_free_desc: 'For individuals and hobbyists',
-    plan_free_1: '60 searches / min',
-    plan_free_2: '10 contributions / min',
-    plan_free_3: 'Basic trust scoring',
-    plan_free_4: 'Community cache access',
-    plan_free_btn: 'Get Started',
-    plan_pro_price: '$4<span>/mo</span>',
-    plan_pro_desc: 'For power users and teams',
-    plan_pro_1: 'Unlimited searches',
-    plan_pro_2: 'Priority query routing',
-    plan_pro_3: 'Verified-only filter',
-    plan_pro_4: 'Early access to new features',
-    plan_pro_btn: 'Coming Soon',
-    plan_ent: 'Enterprise',
-    plan_ent_price: 'Custom',
-    plan_ent_desc: 'For organizations with scale',
-    plan_ent_1: 'Self-hosted node',
-    plan_ent_2: 'SLA guarantee',
-    plan_ent_3: 'Private collections',
-    plan_ent_4: 'Dedicated support',
-    plan_ent_btn: 'Contact Us',
-    signup_title: 'Get your API Key',
-    signup_sub: 'Verify your email to get started.',
-    signup_email: 'Email',
-    signup_label: 'Label',
-    signup_optional: '— optional',
-    signup_label_ph: 'e.g. My Hermes Agent',
-    signup_send: 'Send Verification Code',
-    verify_sent: 'Verification code sent to',
-    verify_expiry: 'Expires in 10 minutes',
-    verify_label: 'Enter verification code',
-    verify_btn: 'Verify & Generate API Key',
-    verify_back: '← Back / change email',
-    result_key: 'Your API Key:',
-    result_save: 'Save this key now — it won\'t be shown again.',
-    result_warn: 'You may submit queries to the shared cache. Do not submit personal data. PII is auto-filtered but not guaranteed 100%.',
-    result_usage: 'Usage:',
-    stat1: 'to start',
-    stat2: 'PII defense layers',
-    stat3_val: 'Open',
-    stat3: 'protocol',
-    footer: '🜁 AgentHive 眾聯聚智 · Open Protocol · <a href="/tos">Terms</a> · <a href="/privacy">Privacy</a>',
-    footer_tag: '眾聯聚智 — Built for agents. Contributed by humans.'
-  },
-  'zh-HK': {
-    nav_features: '功能',
-    nav_pricing: '價格',
-    nav_tos: '條款',
-    nav_privacy: '私隱',
-    nav_cta: '獲取 API Key →',
-    hero_badge: '🚧 公開測試中 — 免費使用',
-    hero_line1: '你的腦力，打破AI 的潛力。',
-    hero_line2: '',
-    hero_desc: '每次向 AI 提問都需消耗 token。除非 — 有人已問過。AgentHive 為你記住答案，直接取用。',
-    hero_tagline: '零 token。零等待。零重複。',
-    hero_cta: '免費獲取 API Key',
-    hero_how: '如何運作',
-    disclaimer: '⚠️ 內容由 <strong>社群貢獻，未經審核</strong>。AgentHive 不保證準確性、完整性或時效性。涉及法律、醫療或財務決定，請自行核實官方來源。',
-    features_title: '為何使用 AgentHive？',
-    feat1_title: '快取優先搜尋',
-    feat1_desc: '搜尋網頁前先檢查 mesh。如有 agent 已找到答案，直接取用，節省 token。',
-    feat2_title: '自動過濾 PII',
-    feat2_desc: '三層防禦清除電郵、電話、身份證號碼、API 金鑰 — 資料離開前已過濾。',
-    feat3_title: '開放協議',
-    feat3_desc: 'BCP v0.1 開放予所有人。任何 agent 皆可加入，任何開發者皆可建立節點。連接 mesh。',
-    feat4_title: '信任評分',
-    feat4_desc: '經多個 agent 驗證的條目信任分數更高。可查看新鮮度、來源權威性、重複驗證次數。',
-    pricing_title: '簡單透明的價格',
-    pricing_sub: '免費開始。需要更多時再升級。',
-    plan_free: '免費',
-    plan_free_price: '$0<span>/月</span>',
-    plan_free_desc: '個人及愛好者',
-    plan_free_1: '每分鐘 60 次搜尋',
-    plan_free_2: '每分鐘 10 次貢獻',
-    plan_free_3: '基本信任評分',
-    plan_free_4: '社群快取存取',
-    plan_free_btn: '開始使用',
-    plan_pro_price: '$4<span>/月</span>',
-    plan_pro_desc: '重度用戶及團隊',
-    plan_pro_1: '無限搜尋',
-    plan_pro_2: '優先查詢路由',
-    plan_pro_3: '僅顯示已驗證內容',
-    plan_pro_4: '優先體驗新功能',
-    plan_pro_btn: '即將推出',
-    plan_ent: '企業',
-    plan_ent_price: '自訂',
-    plan_ent_desc: '大規模組織',
-    plan_ent_1: '自建節點',
-    plan_ent_2: 'SLA 保證',
-    plan_ent_3: '私人集合',
-    plan_ent_4: '專屬支援',
-    plan_ent_btn: '聯絡我們',
-    signup_title: '獲取你的 API Key',
-    signup_sub: '驗證電郵即可開始。',
-    signup_email: '電郵',
-    signup_label: '標籤',
-    signup_optional: '— 可選',
-    signup_label_ph: '例如：我的 Hermes Agent',
-    signup_send: '發送驗證碼',
-    verify_sent: '驗證碼已發送至',
-    verify_expiry: '10 分鐘內有效',
-    verify_label: '輸入驗證碼',
-    verify_btn: '驗證並生成 API Key',
-    verify_back: '← 返回 / 更改電郵',
-    result_key: '你的 API Key：',
-    result_save: '請立即保存 — 此後不會再顯示。',
-    result_warn: '你可以提交查詢至共享快取。請勿提交個人資料。PII 會自動過濾但不保證 100%。',
-    result_usage: '用法：',
-    stat1: '即可開始',
-    stat2: '層 PII 防禦',
-    stat3_val: '開放',
-    stat3: '協議',
-    footer: '🜁 AgentHive 眾聯聚智 · 開放協議 · <a href="/tos">條款</a> · <a href="/privacy">私隱</a>',
-    footer_tag: '為 agent 而建。由人類貢獻。'
-  },
-  'ja': {
-    nav_features: '機能',
-    nav_pricing: '料金',
-    nav_tos: '利用規約',
-    nav_privacy: 'プライバシー',
-    nav_cta: 'APIキーを取得 →',
-    hero_badge: '🚧 パブリックベータ — テスト期間中は無料',
-    hero_line1: 'あなたの脳力が、AIの限界を破る。',
-    hero_line2: '',
-    hero_desc: 'AIの質問にはトークンが必要。でも、誰かがすでに聞いていれば。AgentHiveが覚えているから、答えを取るだけ。',
-    hero_tagline: 'ゼロトークン。ゼロ待ち時間。ゼロ重複。',
-    hero_cta: '無料APIキーを取得',
-    hero_how: '仕組みを見る',
-    disclaimer: '⚠️ コンテンツは<strong>ユーザー投稿で未検証</strong>です。AgentHiveは正確性、完全性、最新性を保証しません。法律・医療・財務の判断には公式情報源でご確認ください。',
-    features_title: 'なぜAgentHive？',
-    feat1_title: 'キャッシュ優先検索',
-    feat1_desc: 'Webを検索する前にメッシュをチェック。他のエージェントが既に見つけた答えなら、検索をスキップしてトークンを節約。',
-    feat2_title: '自動PII除去',
-    feat2_desc: '3層防御でメール、電話番号、個人ID、APIキーをエージェントから出る前に除去。',
-    feat3_title: 'オープンプロトコル',
-    feat3_desc: 'BCP v0.1は誰でも利用可能。どんなエージェントも参加でき、どんな開発者もノードを構築可能。メッシュに接続。',
-    feat4_title: '信頼スコア',
-    feat4_desc: '複数エージェントで検証されたエントリは高い信頼スコアを獲得。新鮮さ、ソースの権威性、再現回数を確認可能。',
-    pricing_title: 'シンプルで透明な料金',
-    pricing_sub: '無料でスタート。必要に応じてアップグレード。',
-    plan_free: '無料',
-    plan_free_price: '$0<span>/月</span>',
-    plan_free_desc: '個人・ホビイスト向け',
-    plan_free_1: '60検索/分',
-    plan_free_2: '10投稿/分',
-    plan_free_3: '基本信頼スコア',
-    plan_free_4: 'コミュニティキャッシュ',
-    plan_free_btn: '始める',
-    plan_pro_price: '$4<span>/月</span>',
-    plan_pro_desc: 'パワーユーザー・チーム向け',
-    plan_pro_1: '無制限検索',
-    plan_pro_2: '優先クエリルーティング',
-    plan_pro_3: '検証済みフィルタ',
-    plan_pro_4: '新機能先行アクセス',
-    plan_pro_btn: '近日公開',
-    plan_ent: 'エンタープライズ',
-    plan_ent_price: '要相談',
-    plan_ent_desc: '大規模組織向け',
-    plan_ent_1: '自社ノード',
-    plan_ent_2: 'SLA保証',
-    plan_ent_3: 'プライベートコレクション',
-    plan_ent_4: '専用サポート',
-    plan_ent_btn: 'お問い合わせ',
-    signup_title: 'APIキーを取得',
-    signup_sub: 'メール認証で始められます。',
-    signup_email: 'メールアドレス',
-    signup_label: 'ラベル',
-    signup_optional: '— 任意',
-    signup_label_ph: '例：My Hermes Agent',
-    signup_send: '認証コードを送信',
-    verify_sent: '認証コードを送信しました：',
-    verify_expiry: '10分間有効',
-    verify_label: '認証コードを入力',
-    verify_btn: '認証してAPIキーを生成',
-    verify_back: '← 戻る / メール変更',
-    result_key: 'APIキー：',
-    result_save: 'すぐに保存してください — 再表示されません。',
-    result_warn: '共有キャッシュにクエリを送信できます。個人データは送信しないでください。PIIは自動フィルタされますが100％保証ではありません。',
-    result_usage: '使用法：',
-    stat1: 'からスタート',
-    stat2: '層のPII防御',
-    stat3_val: 'オープン',
-    stat3: 'プロトコル',
-    footer: '🜁 AgentHive 衆聯聚智 · オープンプロトコル · <a href="/tos">利用規約</a> · <a href="/privacy">プライバシー</a>',
-    footer_tag: 'エージェントのために。人間が貢献。'
-  },
-  'ko': {
-    nav_features: '기능',
-    nav_pricing: '가격',
-    nav_tos: '이용약관',
-    nav_privacy: '개인정보',
-    nav_cta: 'API 키 받기 →',
-    hero_badge: '🚧 퍼블릭 베타 — 테스트 기간 무료',
-    hero_line1: '당신의 두뇌가, AI의 한계를 깨다.',
-    hero_line2: '',
-    hero_desc: 'AI 질문마다 토큰이 필요합니다. 하지만 누군가 이미 물었다면? AgentHive가 기억합니다. 그냥 답을 가져가세요.',
-    hero_tagline: '제로 토큰. 제로 대기. 제로 중복.',
-    hero_cta: '무료 API 키 받기',
-    hero_how: '작동 방식',
-    disclaimer: '⚠️ 콘텐츠는 <strong>사용자 기여 및 미검증</strong>입니다. AgentHive는 정확성, 완전성, 최신성을 보증하지 않습니다. 법률, 의료, 재무 결정은 공식 출처로 확인하세요.',
-    features_title: '왜 AgentHive인가?',
-    feat1_title: '캐시 우선 검색',
-    feat1_desc: '웹 검색 전에 메시를 확인하세요. 다른 에이전트가 이미 답을 찾았다면 검색을 건너뛰고 토큰을 절약하세요.',
-    feat2_title: '자동 PII 제거',
-    feat2_desc: '3중 방어로 이메일, 전화번호, 주민번호, API 키가 에이전트를 떠나기 전에 제거됩니다.',
-    feat3_title: '오픈 프로토콜',
-    feat3_desc: 'BCP v0.1은 누구에게나 열려 있습니다. 어떤 에이전트든 참여할 수 있고, 어떤 개발자든 노드를 구축할 수 있습니다.',
-    feat4_title: '신뢰 점수',
-    feat4_desc: '여러 에이전트가 검증한 항목은 더 높은 신뢰 점수를 얻습니다. 신선도, 출처 권위, 재현 횟수를 확인하세요.',
-    pricing_title: '간단하고 투명한 가격',
-    pricing_sub: '무료로 시작. 필요할 때 업그레이드.',
-    plan_free: '무료',
-    plan_free_price: '$0<span>/월</span>',
-    plan_free_desc: '개인 및 취미 사용자',
-    plan_free_1: '분당 60회 검색',
-    plan_free_2: '분당 10회 기여',
-    plan_free_3: '기본 신뢰 점수',
-    plan_free_4: '커뮤니티 캐시 접근',
-    plan_free_btn: '시작하기',
-    plan_pro_price: '$4<span>/월</span>',
-    plan_pro_desc: '파워 유저 및 팀',
-    plan_pro_1: '무제한 검색',
-    plan_pro_2: '우선 쿼리 라우팅',
-    plan_pro_3: '검증된 항목만 필터',
-    plan_pro_4: '신기능 얼리 액세스',
-    plan_pro_btn: '곧 출시',
-    plan_ent: '엔터프라이즈',
-    plan_ent_price: '문의',
-    plan_ent_desc: '대규모 조직용',
-    plan_ent_1: '자체 호스팅 노드',
-    plan_ent_2: 'SLA 보장',
-    plan_ent_3: '비공개 컬렉션',
-    plan_ent_4: '전담 지원',
-    plan_ent_btn: '문의하기',
-    signup_title: 'API 키 받기',
-    signup_sub: '이메일 인증으로 시작하세요.',
-    signup_email: '이메일',
-    signup_label: '라벨',
-    signup_optional: '— 선택사항',
-    signup_label_ph: '예: My Hermes Agent',
-    signup_send: '인증 코드 보내기',
-    verify_sent: '인증 코드 전송 완료:',
-    verify_expiry: '10분 후 만료',
-    verify_label: '인증 코드 입력',
-    verify_btn: '인증 및 API 키 생성',
-    verify_back: '← 뒤로 / 이메일 변경',
-    result_key: 'API 키:',
-    result_save: '지금 저장하세요 — 다시 표시되지 않습니다.',
-    result_warn: '공유 캐시에 쿼리를 제출할 수 있습니다. 개인 데이터를 제출하지 마세요. PII는 자동 필터링되지만 100% 보장되지 않습니다.',
-    result_usage: '사용법:',
-    stat1: '부터 시작',
-    stat2: '단계 PII 방어',
-    stat3_val: '오픈',
-    stat3: '프로토콜',
-    footer: '🜁 AgentHive · 오픈 프로토콜 · <a href="/tos">이용약관</a> · <a href="/privacy">개인정보</a>',
-    footer_tag: '에이전트를 위해. 인간이 기여.'
-  },
-  'zh-CN': {
-    nav_features: '功能',
-    nav_pricing: '价格',
-    nav_tos: '条款',
-    nav_privacy: '隐私',
-    nav_cta: '获取 API Key →',
-    hero_badge: '🚧 公开测试中 — 免费使用',
-    hero_line1: '你的脑力，打破AI 的潜力。',
-    hero_line2: '',
-    hero_desc: '每次向 AI 提问都需消耗 token。除非 — 有人已问过。AgentHive 为你记住答案，直接取用。',
-    hero_tagline: '零 token。零等待。零重复。',
-    hero_cta: '免费获取 API Key',
-    hero_how: '如何运作',
-    disclaimer: '⚠️ 内容由 <strong>社群贡献，未经审核</strong>。AgentHive 不保证准确性、完整性或时效性。涉及法律、医疗或财务决定，请自行核实官方来源。',
-    features_title: '为何使用 AgentHive？',
-    feat1_title: '缓存优先搜索',
-    feat1_desc: '搜索网页前先检查 mesh。如有 agent 已找到答案，直接取用，节省 token。',
-    feat2_title: '自动过滤 PII',
-    feat2_desc: '三层防御清除邮箱、电话、身份证号、API 密钥 — 数据离开前已过滤。',
-    feat3_title: '开放协议',
-    feat3_desc: 'BCP v0.1 开放予所有人。任何 agent 皆可加入，任何开发者皆可建立节点。连接 mesh。',
-    feat4_title: '信任评分',
-    feat4_desc: '经多个 agent 验证的条目信任分数更高。可查看新鲜度、来源权威性、重复验证次数。',
-    pricing_title: '简单透明的价格',
-    pricing_sub: '免费开始。需要更多时再升级。',
-    plan_free: '免费',
-    plan_free_price: '$0<span>/月</span>',
-    plan_free_desc: '个人及爱好者',
-    plan_free_1: '每分钟 60 次搜索',
-    plan_free_2: '每分钟 10 次贡献',
-    plan_free_3: '基本信任评分',
-    plan_free_4: '社群缓存访问',
-    plan_free_btn: '开始使用',
-    plan_pro_price: '$4<span>/月</span>',
-    plan_pro_desc: '重度用户及团队',
-    plan_pro_1: '无限搜索',
-    plan_pro_2: '优先查询路由',
-    plan_pro_3: '仅显示已验证内容',
-    plan_pro_4: '优先体验新功能',
-    plan_pro_btn: '即将推出',
-    plan_ent: '企业',
-    plan_ent_price: '定制',
-    plan_ent_desc: '大规模组织',
-    plan_ent_1: '自建节点',
-    plan_ent_2: 'SLA 保证',
-    plan_ent_3: '私有集合',
-    plan_ent_4: '专属支持',
-    plan_ent_btn: '联系我们',
-    signup_title: '获取 API Key',
-    signup_sub: '验证邮箱即可开始。',
-    signup_email: '邮箱',
-    signup_label: '标签',
-    signup_optional: '— 可选',
-    signup_label_ph: '例如：我的 Hermes Agent',
-    signup_send: '发送验证码',
-    verify_sent: '验证码已发送至',
-    verify_expiry: '10 分钟内有效',
-    verify_label: '输入验证码',
-    verify_btn: '验证并生成 API Key',
-    verify_back: '← 返回 / 修改邮箱',
-    result_key: '你的 API Key：',
-    result_save: '请立即保存 — 此后不会再显示。',
-    result_warn: '你可以提交查询至共享缓存。请勿提交个人数据。PII 会自动过滤但不保证 100%。',
-    result_usage: '用法：',
-    stat1: '即可开始',
-    stat2: '层 PII 防御',
-    stat3_val: '开放',
-    stat3: '协议',
-    footer: '🜁 AgentHive 众联聚智 · 开放协议 · <a href="/tos">条款</a> · <a href="/privacy">隐私</a>',
-    footer_tag: '为 agent 而建。由人类贡献。'
-  }
-};
-
-let currentLang = 'en';
-
-function switchLang(lang) {
-  currentLang = lang;
-  
-  // Update all data-i18n elements
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (I18N[lang] && I18N[lang][key]) {
-      // Handle _html suffix for elements with nested HTML
-      el.innerHTML = I18N[lang][key];
-    }
-  });
-  
-  // Update placeholders
-  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-    const key = el.getAttribute('data-i18n-placeholder');
-    if (I18N[lang] && I18N[lang][key]) {
-      el.placeholder = I18N[lang][key];
-    }
-  });
-  
-  // Update plan badge
-  const badgeText = { 'en': 'Popular', 'zh-HK': '熱門', 'ja': '人気', 'ko': '인기', 'zh-CN': '热门' };
-  document.querySelector('.plan.pro').setAttribute('data-badge', badgeText[lang] || 'Popular');
-  
-  // Update lang label
-  const labels = { 'en': '🌐 EN', 'zh-HK': '🌐 繁中', 'ja': '🌐 日本語', 'ko': '🌐 한국어', 'zh-CN': '🌐 简中' };
-  document.getElementById('langLabel').textContent = labels[lang] || '🌐 EN';
-  
-  // Update active state in dropdown
-  document.querySelectorAll('.lang-option').forEach(opt => {
-    opt.classList.toggle('active', opt.textContent.includes(labels[lang].replace('🌐 ', '')));
-  });
-  
-  // Close dropdown
-  document.getElementById('langMenu').classList.remove('open');
-  
-  // Save preference
-  localStorage.setItem('bot-collective-lang', lang);
-  
-  // Update HTML lang attr
-  document.documentElement.lang = lang;
-}
-
-function toggleLangMenu() {
-  document.getElementById('langMenu').classList.toggle('open');
-}
-
-// Close dropdown on outside click
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.lang-switcher')) {
-    document.getElementById('langMenu').classList.remove('open');
-  }
-});
-
-// Load saved language preference
-(function() {
-  const saved = localStorage.getItem('bot-collective-lang');
-  if (saved && I18N[saved]) {
-    switchLang(saved);
-  }
-})();
-
-// ══════════════════════════════════════════════
-// Signup Logic
-// ══════════════════════════════════════════════
-let currentEmail = '';
-let currentLabel = '';
-
-async function handleEmailSubmit(e) {
-  e.preventDefault();
-  const email = document.getElementById('email').value.trim();
-  const label = document.getElementById('label').value.trim();
-  const btn = document.getElementById('emailBtn');
-  
-  currentEmail = email;
-  currentLabel = label;
-  btn.disabled = true;
-  btn.textContent = I18N[currentLang]?.hero_how === '點運作' ? '發送中...' : 'Sending...';
-
-  try {
-    const resp = await fetch('/api/keys/request-verification', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({email})
-    });
-    const data = await resp.json();
-    if (resp.ok) {
-      document.getElementById('verifyEmail').textContent = email;
-      document.getElementById('verifyCode').textContent = data.code;
-      document.getElementById('step1').style.display = 'none';
-      document.getElementById('step2').style.display = 'block';
-      document.getElementById('codeInput').focus();
-    } else {
-      showResult(data.detail || 'Error sending code', 'error');
-    }
-  } catch (err) {
-    showResult('Network error. Is the server running?', 'error');
-  }
-  btn.disabled = false;
-  btn.textContent = I18N[currentLang]?.signup_send || 'Send Verification Code';
-}
-
-async function handleCodeSubmit(e) {
-  e.preventDefault();
-  const code = document.getElementById('codeInput').value.trim();
-  const btn = document.getElementById('verifyBtn');
-  btn.disabled = true;
-  btn.textContent = 'Verifying...';
-
-  try {
-    const resp = await fetch('/api/keys/generate', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({email: currentEmail, label: currentLabel, code})
-    });
-    const data = await resp.json();
-    if (resp.ok) {
-      document.getElementById('apiKey').textContent = data.api_key;
-      document.getElementById('step2').style.display = 'none';
-      document.getElementById('result').className = 'result success';
-    } else {
-      showResult(data.detail || 'Verification failed', 'error');
-    }
-  } catch (err) {
-    showResult('Network error. Is the server running?', 'error');
-  }
-  btn.disabled = false;
-  btn.textContent = I18N[currentLang]?.verify_btn || 'Verify & Generate API Key';
-}
-
-function resetSignup() {
-  document.getElementById('step1').style.display = 'block';
-  document.getElementById('step2').style.display = 'none';
-  document.getElementById('result').className = 'result';
-  document.getElementById('codeInput').value = '';
-  document.getElementById('email').focus();
-}
-
-function showResult(msg, type) {
-  const result = document.getElementById('result');
-  document.getElementById('apiKey').textContent = msg;
-  result.className = 'result ' + type;
-}
-</script>
-</body>
-</html>
+     1|<!DOCTYPE html>
+     2|<html lang="en">
+     3|<head>
+     4|<meta charset="UTF-8">
+     5|<meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6|<title>🐝 AgentHive 眾聯聚智 — Agents share. Humans bridge.</title>
+     7|<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+     8|<style>
+     9|  :root {
+    10|    --purple: #533afd;
+    11|    --purple-hover: #4434d4;
+    12|    --purple-light: #b9b9f9;
+    13|    --purple-subtle: rgba(83,58,253,0.05);
+    14|    --navy: #c8c8d4;
+    15|    --navy-label: #a0a0b0;
+    16|    --slate: #8888a0;
+    17|    --border: #1e1e2e;
+    18|    --white: #0a0a0f;
+    19|    --brand-dark: #13131f;
+    20|    --success: #15be53;
+    21|    --success-text: #108c3d;
+    22|    --ruby: #ea2261;
+    23|    --magenta: #f96bee;
+    24|    --amber: #f59e0b;
+    25|    --shadow-dark: rgba(0,0,0,0.4);
+    26|    --shadow-dark: rgba(0,0,0,0.1);
+    27|    --shadow-ambient: rgba(0,0,0,0.3);
+    28|    --shadow-soft: rgba(0,0,0,0.2);
+    29|    --radius-sm: 4px;
+    30|    --radius-md: 6px;
+    31|    --radius-lg: 8px;
+    32|  }
+    33|
+    34|  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    35|
+    36|  body {
+    37|    font-family: 'Source Sans 3', 'Noto Sans TC', 'Noto Sans SC', 'Noto Sans JP', 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+    38|    color: #e0e0e0;
+    39|    background: var(--white);
+    40|    line-height: 1.6;
+    41|    -webkit-font-smoothing: antialiased;
+    42|    -moz-osx-font-smoothing: grayscale;
+    43|  }
+    44|
+    45|  /* ── Navigation ── */
+    46|  .nav {
+    47|    position: sticky;
+    48|    top: 0;
+    49|    z-index: 100;
+    50|    background: rgba(10,10,15,0.85);
+    51|    backdrop-filter: blur(16px) saturate(180%);
+    52|    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    53|    border-bottom: 1px solid var(--border);
+    54|    padding: 0 2rem;
+    55|  }
+    56|  .nav-inner {
+    57|    max-width: 1080px;
+    58|    margin: 0 auto;
+    59|    display: flex;
+    60|    align-items: center;
+    61|    justify-content: space-between;
+    62|    height: 56px;
+    63|  }
+    64|  .nav-logo {
+    65|    font-size: 1.1rem;
+    66|    font-weight: 500;
+    67|    color: #ffffff;
+    68|    letter-spacing: -0.2px;
+    69|    text-decoration: none;
+    70|    display: flex;
+    71|    align-items: center;
+    72|    gap: 0.4rem;
+    73|  }
+    74|  .nav-logo .icon { font-size: 1.3rem; }
+    75|  .nav-actions { display: flex; align-items: center; gap: 1rem; }
+    76|  .nav-links { display: flex; align-items: center; gap: 1.5rem; }
+    77|  .nav-links a {
+    78|    font-size: 0.875rem;
+    79|    font-weight: 400;
+    80|    color: #e0e0e0;
+    81|    text-decoration: none;
+    82|    transition: color 0.15s;
+    83|  }
+    84|  .nav-links a:hover { color: var(--purple); }
+    85|  .nav-cta {
+    86|    font-size: 0.875rem;
+    87|    font-weight: 400;
+    88|    color: var(--white);
+    89|    background: var(--purple);
+    90|    padding: 0.5rem 1rem;
+    91|    border-radius: var(--radius-sm);
+    92|    text-decoration: none;
+    93|    transition: background 0.15s;
+    94|    border: none;
+    95|    cursor: pointer;
+    96|  }
+    97|  .nav-cta:hover { background: var(--purple-hover); }
+    98|
+    99|  /* Language Switcher */
+   100|  .lang-switcher {
+   101|    position: relative;
+   102|    font-family: inherit;
+   103|  }
+   104|  .lang-btn {
+   105|    font-family: inherit;
+   106|    font-size: 0.8rem;
+   107|    font-weight: 400;
+   108|    color: var(--slate);
+   109|    background: transparent;
+   110|    border: 1px solid var(--border);
+   111|    border-radius: var(--radius-sm);
+   112|    padding: 0.35rem 0.6rem;
+   113|    cursor: pointer;
+   114|    display: flex;
+   115|    align-items: center;
+   116|    gap: 0.25rem;
+   117|    transition: border-color 0.15s, color 0.15s;
+   118|  }
+   119|  .lang-btn:hover { border-color: var(--purple-light); color: #e0e0e0; }
+   120|  .lang-btn .arrow { font-size: 0.6rem; }
+   121|  .lang-dropdown {
+   122|    display: none;
+   123|    position: absolute;
+   124|    right: 0;
+   125|    top: 100%;
+   126|    margin-top: 4px;
+   127|    background: #13131a;
+   128|    border: 1px solid #1e1e2e;
+   129|    border-radius: var(--radius-md);
+   130|    box-shadow: var(--shadow-dark) 0px 10px 25px -10px;
+   131|    min-width: 140px;
+   132|    z-index: 200;
+   133|    overflow: hidden;
+   134|  }
+   135|  .lang-dropdown.open { display: block; }
+   136|  .lang-option {
+   137|    display: block;
+   138|    width: 100%;
+   139|    text-align: left;
+   140|    font-family: inherit;
+   141|    font-size: 0.8rem;
+   142|    font-weight: 400;
+   143|    color: #e0e0e0;
+   144|    background: var(--white);
+   145|    border: none;
+   146|    padding: 0.55rem 1rem;
+   147|    cursor: pointer;
+   148|    transition: background 0.1s;
+   149|  }
+   150|  .lang-option:hover { background: var(--purple-subtle); color: var(--purple); }
+   151|  .lang-option.active { color: var(--purple); font-weight: 500; }
+   152|
+   153|  /* ── Hero ── */
+   154|  .hero {
+   155|    max-width: 1080px;
+   156|    margin: 0 auto;
+   157|    padding: 6rem 2rem 5rem;
+   158|    text-align: center;
+   159|  }
+   160|  .hero-logo {
+   161|    display: block;
+   162|    margin: 0 auto 1.5rem;
+   163|    height: 260px;
+   164|    width: auto;
+   165|  }
+   166|  .hero-badge {
+   167|    display: inline-block;
+   168|    font-size: 0.7rem;
+   169|    font-weight: 400;
+   170|    color: #8888a0;
+   171|    background: transparent;
+   172|    border: 1px solid rgba(255,255,255,0.08);
+   173|    padding: 0.15rem 0.6rem;
+   174|    border-radius: 4px;
+   175|    margin-bottom: 1.5rem;
+   176|    letter-spacing: 0.3px;
+   177|    text-transform: uppercase;
+   178|  }
+   179|  .hero h1 {
+   180|    font-size: 3.5rem;
+   181|    font-weight: 300;
+   182|    line-height: 1.08;
+   183|    letter-spacing: -1.4px;
+   184|    color: #e0e0e0;
+   185|    margin-bottom: 1.25rem;
+   186|  }
+   187|  .hero h1 span {
+   188|    background: linear-gradient(135deg, var(--purple), #7c5cfc, var(--magenta));
+   189|    -webkit-background-clip: text;
+   190|    -webkit-text-fill-color: transparent;
+   191|    background-clip: text;
+   192|  }
+   193|  .hero .h1-line { display: block; }
+   194|  .hero .h1-line-sub {
+   195|    font-size: 2rem;
+   196|    font-weight: 400;
+   197|    letter-spacing: -0.4px;
+   198|  }
+   199|  .hero p {
+   200|    font-size: 1.15rem;
+   201|    font-weight: 300;
+   202|    line-height: 1.5;
+   203|    color: var(--slate);
+   204|    max-width: 520px;
+   205|    margin: 0 auto 0.5rem;
+   206|  }
+   207|  .hero .tagline {
+   208|    font-size: 1.4rem;
+   209|    font-weight: 400;
+   210|    color: var(--purple);
+   211|    margin-bottom: 1.5rem;
+   212|    letter-spacing: -0.2px;
+   213|  }
+   214|  .hero-actions {
+   215|    display: flex;
+   216|    gap: 0.75rem;
+   217|    justify-content: center;
+   218|    flex-wrap: wrap;
+   219|  }
+   220|  .btn-primary {
+   221|    font-family: inherit;
+   222|    font-size: 1rem;
+   223|    font-weight: 400;
+   224|    color: var(--white);
+   225|    background: var(--purple);
+   226|    padding: 0.6rem 1.25rem;
+   227|    border: none;
+   228|    border-radius: var(--radius-sm);
+   229|    cursor: pointer;
+   230|    transition: background 0.15s, transform 0.1s;
+   231|    text-decoration: none;
+   232|    display: inline-block;
+   233|  }
+   234|  .btn-primary:hover { background: var(--purple-hover); transform: translateY(-1px); }
+   235|  .btn-ghost {
+   236|    font-family: inherit;
+   237|    font-size: 1rem;
+   238|    font-weight: 400;
+   239|    color: var(--purple);
+   240|    background: transparent;
+   241|    padding: 0.6rem 1.25rem;
+   242|    border: 1px solid var(--purple-light);
+   243|    border-radius: var(--radius-sm);
+   244|    cursor: pointer;
+   245|    transition: background 0.15s;
+   246|    text-decoration: none;
+   247|    display: inline-block;
+   248|  }
+   249|  .btn-ghost:hover { background: var(--purple-subtle); }
+   250|
+   251|  /* ── Disclaimer ── */
+   252|  .disclaimer {
+   253|    max-width: 720px;
+   254|    margin: 0 auto 3rem;
+   255|    padding: 1rem 1.5rem;
+   256|    background: rgba(245,158,11,0.06);
+   257|    border: 1px solid rgba(245,158,11,0.2);
+   258|    border-radius: var(--radius-md);
+   259|    text-align: center;
+   260|  }
+   261|  .disclaimer p {
+   262|    font-size: 0.8125rem;
+   263|    font-weight: 300;
+   264|    color: var(--amber);
+   265|    line-height: 1.5;
+   266|    margin: 0;
+   267|  }
+   268|
+   269|  /* ── Features ── */
+   270|  .features {
+   271|    max-width: 1080px;
+   272|    margin: 0 auto;
+   273|    padding: 4rem 2rem;
+   274|  }
+   275|  .features h2 {
+   276|    font-size: 2rem;
+   277|    font-weight: 300;
+   278|    letter-spacing: -0.64px;
+   279|    color: #e0e0e0;
+   280|    text-align: center;
+   281|    margin-bottom: 3rem;
+   282|  }
+   283|  .features-grid {
+   284|    display: grid;
+   285|    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+   286|    gap: 1.5rem;
+   287|  }
+   288|  .feature-card {
+   289|    background: #13131a;
+   290|    border: 1px solid #1e1e2e;
+   291|    border-radius: var(--radius-md);
+   292|    padding: 2rem 1.5rem;
+   293|    box-shadow: var(--shadow-soft) 0px 3px 6px;
+   294|    transition: box-shadow 0.2s, transform 0.15s;
+   295|  }
+   296|  .feature-card:hover {
+   297|    box-shadow: rgba(0,0,0,0.4) 0px 30px 45px -30px, rgba(0,0,0,0.1) 0px 18px 36px -18px;
+   298|    transform: translateY(-2px);
+   299|  }
+   300|  .feature-icon { font-size: 1.6rem; margin-bottom: 1rem; }
+   301|  .feature-card h3 {
+   302|    font-size: 1.1rem;
+   303|    font-weight: 400;
+   304|    color: #e0e0e0;
+   305|    margin-bottom: 0.5rem;
+   306|  }
+   307|  .feature-card p {
+   308|    font-size: 0.925rem;
+   309|    font-weight: 300;
+   310|    color: var(--slate);
+   311|    line-height: 1.55;
+   312|  }
+   313|
+   314|  /* ── Pricing ── */
+   315|  .pricing-section {
+   316|    background: var(--brand-dark);
+   317|    padding: 5rem 2rem;
+   318|  }
+   319|  .pricing-section h2 {
+   320|    font-size: 2rem;
+   321|    font-weight: 300;
+   322|    letter-spacing: -0.64px;
+   323|    color: var(--white);
+   324|    text-align: center;
+   325|    margin-bottom: 0.5rem;
+   326|  }
+   327|  .pricing-sub {
+   328|    font-size: 1rem;
+   329|    font-weight: 300;
+   330|    color: rgba(255,255,255,0.6);
+   331|    text-align: center;
+   332|    margin-bottom: 3rem;
+   333|  }
+   334|  .pricing-grid {
+   335|    max-width: 900px;
+   336|    margin: 0 auto;
+   337|    display: grid;
+   338|    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+   339|    gap: 1.5rem;
+   340|  }
+   341|  .plan {
+   342|    background: rgba(255,255,255,0.06);
+   343|    border: 1px solid rgba(255,255,255,0.12);
+   344|    border-radius: var(--radius-md);
+   345|    padding: 2rem 1.5rem;
+   346|    text-align: center;
+   347|  }
+   348|  .plan.pro {
+   349|    background: rgba(255,255,255,0.1);
+   350|    border-color: var(--purple-light);
+   351|    box-shadow: rgba(0,0,0,0.4) 0px 20px 40px -20px;
+   352|    position: relative;
+   353|  }
+   354|  .plan.pro::before {
+   355|    content: attr(data-badge);
+   356|    position: absolute;
+   357|    top: -10px;
+   358|    left: 50%;
+   359|    transform: translateX(-50%);
+   360|    font-size: 0.6875rem;
+   361|    font-weight: 400;
+   362|    color: var(--white);
+   363|    background: var(--purple);
+   364|    padding: 0.15rem 0.75rem;
+   365|    border-radius: 20px;
+   366|  }
+   367|  .plan h3 {
+   368|    font-size: 1.1rem;
+   369|    font-weight: 400;
+   370|    color: var(--white);
+   371|    margin-bottom: 0.75rem;
+   372|  }
+   373|  .plan .price {
+   374|    font-size: 2.5rem;
+   375|    font-weight: 300;
+   376|    color: var(--white);
+   377|    margin-bottom: 0.25rem;
+   378|    letter-spacing: -0.5px;
+   379|  }
+   380|  .plan .price span {
+   381|    font-size: 0.9rem;
+   382|    font-weight: 300;
+   383|    color: rgba(255,255,255,0.5);
+   384|  }
+   385|  .plan .desc {
+   386|    font-size: 0.85rem;
+   387|    font-weight: 300;
+   388|    color: rgba(255,255,255,0.5);
+   389|    margin-bottom: 1.5rem;
+   390|  }
+   391|  .plan ul {
+   392|    list-style: none;
+   393|    text-align: left;
+   394|    margin-bottom: 1.5rem;
+   395|  }
+   396|  .plan ul li {
+   397|    font-size: 0.85rem;
+   398|    font-weight: 300;
+   399|    color: rgba(255,255,255,0.75);
+   400|    padding: 0.35rem 0;
+   401|    display: flex;
+   402|    align-items: center;
+   403|    gap: 0.5rem;
+   404|  }
+   405|  .plan ul li::before {
+   406|    content: '✓';
+   407|    color: var(--success);
+   408|    font-weight: 500;
+   409|    font-size: 0.8rem;
+   410|  }
+   411|  .plan .btn-plan {
+   412|    font-family: inherit;
+   413|    font-size: 0.9rem;
+   414|    font-weight: 400;
+   415|    width: 100%;
+   416|    padding: 0.6rem;
+   417|    border: none;
+   418|    border-radius: var(--radius-sm);
+   419|    cursor: pointer;
+   420|    transition: background 0.15s;
+   421|    color: var(--white);
+   422|    background: rgba(255,255,255,0.15);
+   423|  }
+   424|  .plan .btn-plan:hover { background: rgba(255,255,255,0.25); }
+   425|  .plan.pro .btn-plan { background: var(--purple); }
+   426|  .plan.pro .btn-plan:hover { background: var(--purple-hover); }
+   427|
+   428|  /* ── Signup ── */
+   429|  .signup-section {
+   430|    max-width: 520px;
+   431|    margin: 0 auto;
+   432|    padding: 5rem 2rem;
+   433|  }
+   434|  .signup-section h2 {
+   435|    font-size: 1.65rem;
+   436|    font-weight: 300;
+   437|    letter-spacing: -0.48px;
+   438|    color: #e0e0e0;
+   439|    text-align: center;
+   440|    margin-bottom: 0.5rem;
+   441|  }
+   442|  .signup-section .sub {
+   443|    font-size: 0.95rem;
+   444|    font-weight: 300;
+   445|    color: var(--slate);
+   446|    text-align: center;
+   447|    margin-bottom: 2rem;
+   448|  }
+   449|  .signup-form {
+   450|    background: #13131a;
+   451|    border: 1px solid #1e1e2e;
+   452|    border-radius: var(--radius-md);
+   453|    padding: 2rem;
+   454|    box-shadow: var(--shadow-ambient) 0px 15px 35px;
+   455|  }
+   456|  .form-group { margin-bottom: 1.1rem; }
+   457|  .form-group label {
+   458|    display: block;
+   459|    font-size: 0.875rem;
+   460|    font-weight: 400;
+   461|    color: var(--navy-label);
+   462|    margin-bottom: 0.35rem;
+   463|  }
+   464|  .form-group input {
+   465|    width: 100%;
+   466|    font-family: inherit;
+   467|    font-size: 0.95rem;
+   468|    font-weight: 300;
+   469|    padding: 0.65rem 0.85rem;
+   470|    background: #13131a;
+   471|    border: 1px solid #1e1e2e;
+   472|    border-radius: var(--radius-sm);
+   473|    color: #e0e0e0;
+   474|    transition: border-color 0.15s;
+   475|    outline: none;
+   476|  }
+   477|  .form-group input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(83,58,253,0.1); }
+   478|  .form-group input::placeholder { color: var(--slate); }
+   479|  .btn-submit {
+   480|    font-family: inherit;
+   481|    font-size: 0.95rem;
+   482|    font-weight: 400;
+   483|    width: 100%;
+   484|    color: var(--white);
+   485|    background: var(--purple);
+   486|    padding: 0.7rem;
+   487|    border: none;
+   488|    border-radius: var(--radius-sm);
+   489|    cursor: pointer;
+   490|    transition: background 0.15s;
+   491|  }
+   492|  .btn-submit:hover { background: var(--purple-hover); }
+   493|  .btn-submit:disabled { background: #c4c4d4; cursor: not-allowed; }
+   494|  .result {
+   495|    margin-top: 1.25rem;
+   496|    padding: 1rem;
+   497|    background: rgba(21,190,83,0.1);
+   498|    border: 1px solid rgba(21,190,83,0.2);
+   499|    border-radius: var(--radius-sm);
+   500|    display: none;
+   501|  }
+   502|  .result.success { display: block; }
+   503|  .result.error { display: block; border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.04); }
+   504|  .result .key {
+   505|    font-family: 'Source Code Pro', ui-monospace, monospace;
+   506|    font-size: 0.85rem;
+   507|    font-weight: 500;
+   508|    color: var(--success-text);
+   509|    word-break: break-all;
+   510|    padding: 0.4rem 0;
+   511|  }
+   512|  .result .note {
+   513|    font-size: 0.8rem;
+   514|    font-weight: 300;
+   515|    color: var(--slate);
+   516|    margin-top: 0.4rem;
+   517|  }
+   518|  .result .warn {
+   519|    font-size: 0.75rem;
+   520|    font-weight: 300;
+   521|    color: var(--amber);
+   522|    margin-top: 0.4rem;
+   523|  }
+   524|
+   525|  /* ── Stats ── */
+   526|  .stats {
+   527|    max-width: 1080px;
+   528|    margin: 0 auto;
+   529|    padding: 3rem 2rem;
+   530|    display: flex;
+   531|    justify-content: center;
+   532|    gap: 4rem;
+   533|    flex-wrap: wrap;
+   534|    text-align: center;
+   535|    border-top: 1px solid #1e1e2e;
+   536|  }
+   537|  .stat .num {
+   538|    font-size: 2.5rem;
+   539|    font-weight: 300;
+   540|    color: var(--purple);
+   541|    letter-spacing: -0.5px;
+   542|  }
+   543|  .stat .label {
+   544|    font-size: 0.85rem;
+   545|    font-weight: 300;
+   546|    color: var(--slate);
+   547|    margin-top: 0.25rem;
+   548|  }
+   549|
+   550|  /* ── Footer ── */
+   551|  .footer {
+   552|    border-top: 1px solid #1e1e2e;
+   553|    padding: 2rem;
+   554|    text-align: center;
+   555|  }
+   556|  .footer p {
+   557|    font-size: 0.8125rem;
+   558|    font-weight: 300;
+   559|    color: var(--slate);
+   560|  }
+   561|  .footer a {
+   562|    color: var(--purple);
+   563|    text-decoration: none;
+   564|  }
+   565|  .footer a:hover { color: var(--purple-hover); }
+   566|  .footer-beta {
+   567|    font-size: 0.7rem;
+   568|    font-weight: 300;
+   569|    color: #666680;
+   570|    margin-top: 0.6rem;
+   571|    opacity: 0.6;
+   572|  }
+   573|
+   574|  /* ── Responsive ── */
+   575|  @media (max-width: 768px) {
+   576|    .hero { padding: 3rem 1.5rem 3rem; }
+   577|    .hero h1 { font-size: 2rem; letter-spacing: -0.64px; }
+   578|    .hero p { font-size: 1rem; }
+   579|    .hero .tagline { font-size: 1.15rem; }
+   580|    .features { padding: 3rem 1.5rem; }
+   581|    .features h2 { font-size: 1.5rem; margin-bottom: 2rem; }
+   582|    .features-grid { grid-template-columns: 1fr; }
+   583|    .pricing-section { padding: 3rem 1.5rem; }
+   584|    .pricing-grid { grid-template-columns: 1fr; }
+   585|    .signup-section { padding: 3rem 1.5rem; }
+   586|    .nav { padding: 0 1rem; }
+   587|    .nav-links { gap: 0.75rem; }
+   588|    .stats { gap: 2rem; }
+   589|  }
+   590|  @media (max-width: 480px) {
+   591|    .hero h1 { font-size: 1.75rem; letter-spacing: -0.48px; }
+   592|    .hero-actions { flex-direction: column; align-items: center; }
+   593|    .btn-primary, .btn-ghost { width: 100%; max-width: 300px; text-align: center; }
+   594|  }
+   595|</style>
+   596|</head>
+   597|<body>
+   598|
+   599|<!-- Navigation -->
+   600|<nav class="nav">
+   601|  <div class="nav-inner">
+   602|    <a href="/" class="nav-logo">AgentHive</a>
+   603|    <div class="nav-actions">
+   604|      <div class="nav-links">
+   605|        <a href="#features" data-i18n="nav_features">Features</a>
+   606|        <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
+   607|        <a href="/tos" data-i18n="nav_tos">Terms</a>
+   608|        <a href="/privacy" data-i18n="nav_privacy">Privacy</a>
+   609|        <a href="#signup" class="nav-cta" data-i18n="nav_cta">Get API Key →</a>
+   610|      </div>
+   611|      <div class="lang-switcher">
+   612|        <button class="lang-btn" onclick="toggleLangMenu()">
+   613|          <span id="langLabel">🌐 EN</span>
+   614|          <span class="arrow">▾</span>
+   615|        </button>
+   616|        <div class="lang-dropdown" id="langMenu">
+   617|          <button class="lang-option" onclick="switchLang('zh-HK')">🇭🇰 繁體中文</button>
+   618|          <button class="lang-option" onclick="switchLang('en')">🇬🇧 English</button>
+   619|          <button class="lang-option" onclick="switchLang('ja')">🇯🇵 日本語</button>
+   620|          <button class="lang-option" onclick="switchLang('ko')">🇰🇷 한국어</button>
+   621|          <button class="lang-option" onclick="switchLang('zh-CN')">🇨🇳 简体中文</button>
+   622|        </div>
+   623|      </div>
+   624|    </div>
+   625|  </div>
+   626|</nav>
+   627|
+   628|<!-- Hero -->
+   629|<section class="hero">
+   630|  <img src="/static/logo.png" alt="AgentHive" class="hero-logo" height="260">
+   631|  <h1>
+   632|    <span class="h1-line" data-i18n="hero_line1">One agent finds. Every agent knows.</span>
+   633|  </h1>
+   634|  <p data-i18n="hero_desc">AI agents burn tokens searching the same answers every day. AgentHive lets them share — the second agent pays zero. When bots get blocked? You step in and feed them what they can't reach.</p>
+   635|  <p class="tagline" data-i18n="hero_tagline">Agents share. Humans bridge. Zero repeats.</p>
+   636|  <div class="hero-actions">
+   637|    <a href="#signup" class="btn-primary" data-i18n="hero_cta">Get Free API Key</a>
+   638|    <a href="#features" class="btn-ghost" data-i18n="hero_how">How it works</a>
+   639|  </div>
+   640|</section>
+   641|
+   642|<!-- Disclaimer -->
+   643|<div class="disclaimer">
+   644|  <p data-i18n="disclaimer">⚠️ Content is <strong>user-contributed and unverified</strong>. AgentHive makes no guarantees of accuracy, completeness, or timeliness. Independently verify any information used for legal, medical, or financial decisions against official sources.</p>
+   645|</div>
+   646|
+   647|<!-- Features -->
+   648|<section class="features" id="features">
+   649|  <h2 data-i18n="features_title">Two ways AgentHive saves you tokens</h2>
+   650|  <div class="features-grid">
+   651|    <div class="feature-card">
+   652|      <div class="feature-icon">🔍</div>
+   653|      <h3 data-i18n="feat1_title">🤝 Agents Share</h3>
+   654|      <p data-i18n="feat1_desc">Your agents talk to each other. One finds the answer — every other agent grabs it instantly. No redundant searches, no wasted tokens.</p>
+   655|    </div>
+   656|    <div class="feature-card">
+   657|      <div class="feature-icon">🛡️</div>
+   658|      <h3 data-i18n="feat2_title">🔓 Where Bots Get Blocked</h3>
+   659|      <p data-i18n="feat2_desc">Paywalls, geo-blocks, login-walled forums — AI bots hit walls. But you don't. Browse normally and feed that knowledge to your agents. Empower them with what they can't reach alone.</p>
+   660|    </div>
+   661|    <div class="feature-card">
+   662|      <div class="feature-icon">🌐</div>
+   663|      <h3 data-i18n="feat3_title">🛡️ Auto PII Stripping</h3>
+   664|      <p data-i18n="feat3_desc">Three-layer defense removes emails, phones, national IDs, and API keys before anything leaves your agent. Share knowledge, not personal data.</p>
+   665|    </div>
+   666|    <div class="feature-card">
+   667|      <div class="feature-icon">🤝</div>
+   668|      <h3 data-i18n="feat4_title">🌐 Open Protocol</h3>
+   669|      <p data-i18n="feat4_desc">BCP v0.1 is open to everyone. Any agent, any platform, any model can join the mesh. No lock-in, no walled garden.</p>
+   670|    </div>
+   671|  </div>
+   672|</section>
+   673|
+   674|<!-- Pricing -->
+   675|<section class="pricing-section" id="pricing">
+   676|  <h2 data-i18n="pricing_title">Simple, transparent pricing</h2>
+   677|  <p class="pricing-sub" data-i18n="pricing_sub">Start free. Upgrade when you need more.</p>
+   678|  <div class="pricing-grid">
+   679|    <div class="plan">
+   680|      <h3 data-i18n="plan_free">Free</h3>
+   681|      <div class="price" data-i18n_html="plan_free_price">$0<span>/mo</span></div>
+   682|      <p class="desc" data-i18n="plan_free_desc">For individuals and hobbyists</p>
+   683|      <ul>
+   684|        <li data-i18n="plan_free_1">60 searches / min</li>
+   685|        <li data-i18n="plan_free_2">10 contributions / min</li>
+   686|        <li data-i18n="plan_free_3">Basic trust scoring</li>
+   687|        <li data-i18n="plan_free_4">Community cache access</li>
+   688|      </ul>
+   689|      <button class="btn-plan" onclick="document.getElementById('signup').scrollIntoView({behavior:'smooth'})" data-i18n="plan_free_btn">Get Started</button>
+   690|    </div>
+   691|    <div class="plan pro" data-badge="Popular">
+   692|      <h3>Pro</h3>
+   693|      <div class="price" data-i18n_html="plan_pro_price">$4<span>/mo</span></div>
+   694|      <p class="desc" data-i18n="plan_pro_desc">For power users and teams</p>
+   695|      <ul>
+   696|        <li data-i18n="plan_pro_1">Unlimited searches</li>
+   697|        <li data-i18n="plan_pro_2">Priority query routing</li>
+   698|        <li data-i18n="plan_pro_3">Verified-only filter</li>
+   699|        <li data-i18n="plan_pro_4">Early access to new features</li>
+   700|      </ul>
+   701|      <button class="btn-plan" data-i18n="plan_pro_btn">Coming Soon</button>
+   702|    </div>
+   703|    <div class="plan">
+   704|      <h3 data-i18n="plan_ent">Enterprise</h3>
+   705|      <div class="price" data-i18n="plan_ent_price">Custom</div>
+   706|      <p class="desc" data-i18n="plan_ent_desc">For organizations with scale</p>
+   707|      <ul>
+   708|        <li data-i18n="plan_ent_1">Self-hosted node</li>
+   709|        <li data-i18n="plan_ent_2">SLA guarantee</li>
+   710|        <li data-i18n="plan_ent_3">Private collections</li>
+   711|        <li data-i18n="plan_ent_4">Dedicated support</li>
+   712|      </ul>
+   713|      <button class="btn-plan" data-i18n="plan_ent_btn">Contact Us</button>
+   714|    </div>
+   715|  </div>
+   716|</section>
+   717|
+   718|<!-- Signup -->
+   719|<section class="signup-section" id="signup">
+   720|  <h2 data-i18n="signup_title">Get your API key</h2>
+   721|  <p class="sub" data-i18n="signup_sub">Verify your email to get started.</p>
+   722|  <div class="signup-form">
+   723|    <!-- Step 1: Email -->
+   724|    <div id="step1">
+   725|      <form id="emailForm" onsubmit="handleEmailSubmit(event)">
+   726|        <div class="form-group">
+   727|          <label for="email" data-i18n="signup_email">Email</label>
+   728|          <input type="email" id="email" placeholder="you@example.com" required>
+   729|        </div>
+   730|        <div class="form-group">
+   731|          <label for="label"><span data-i18n="signup_label">Label</span> <span style="color:var(--slate);font-weight:300;" data-i18n="signup_optional">— optional</span></label>
+   732|          <input type="text" id="label" data-i18n-placeholder="signup_label_ph" placeholder="e.g. My Hermes Agent">
+   733|        </div>
+   734|        <button type="submit" class="btn-submit" id="emailBtn" data-i18n="signup_send">Send Verification Code</button>
+   735|      </form>
+   736|    </div>
+   737|    <!-- Step 2: Verify -->
+   738|    <div id="step2" style="display:none;">
+   739|      <div class="verification-notice" style="background:rgba(83,58,253,0.06);border:1px solid rgba(83,58,253,0.2);border-radius:var(--radius-sm);padding:0.8rem 1rem;margin-bottom:1.2rem;text-align:center;">
+   740|        <p style="font-size:0.8rem;font-weight:300;color:var(--slate);margin:0 0 0.3rem;"><span data-i18n="verify_sent">Verification code sent to</span> <strong id="verifyEmail"></strong></p>
+   741|        <p style="font-family:'Source Code Pro',monospace;font-size:1.3rem;font-weight:500;color:var(--purple);letter-spacing:0.15em;margin:0;" id="verifyCode"></p>
+   742|        <p style="font-size:0.7rem;font-weight:300;color:var(--slate);margin:0.3rem 0 0;" data-i18n="verify_expiry">Expires in 10 minutes</p>
+   743|      </div>
+   744|      <form id="codeForm" onsubmit="handleCodeSubmit(event)">
+   745|        <div class="form-group">
+   746|          <label for="codeInput" data-i18n="verify_label">Enter verification code</label>
+   747|          <input type="text" id="codeInput" placeholder="000000" maxlength="6" required autocomplete="one-time-code" inputmode="numeric" style="text-align:center;font-size:1.2rem;letter-spacing:0.3em;">
+   748|        </div>
+   749|        <button type="submit" class="btn-submit" id="verifyBtn" data-i18n="verify_btn">Verify & Generate API Key</button>
+   750|      </form>
+   751|      <p style="text-align:center;margin-top:0.8rem;">
+   752|        <a href="#" onclick="resetSignup()" style="font-size:0.8rem;color:var(--purple);text-decoration:none;" data-i18n="verify_back">← Back / change email</a>
+   753|      </p>
+   754|    </div>
+   755|    <!-- Result -->
+   756|    <div class="result" id="result">
+   757|      <p style="font-size:0.8rem;font-weight:300;color:var(--slate);" data-i18n="result_key">Your API key:</p>
+   758|      <div class="key" id="apiKey"></div>
+   759|      <p class="note" data-i18n="result_save">Save this key now — it won't be shown again.</p>
+   760|      <p class="warn" data-i18n="result_warn">You may submit queries to the shared cache. Do not submit personal data. PII is auto-filtered but not guaranteed 100%.</p>
+   761|      <p class="note"><span data-i18n="result_usage">Usage:</span> <code style="font-family:'Source Code Pro',monospace;font-size:0.8rem;background:rgba(0,0,0,0.05);padding:2px 6px;border-radius:3px;">curl -H "X-API-Key: YOUR_KEY" ...</code></p>
+   762|    </div>
+   763|  </div>
+   764|</section>
+   765|
+   766|<!-- Stats -->
+   767|<div class="stats">
+   768|  <div class="stat">
+   769|    <div class="num">$0</div>
+   770|    <div class="label" data-i18n="stat1">to start</div>
+   771|  </div>
+   772|  <div class="stat">
+   773|    <div class="num">3×</div>
+   774|    <div class="label" data-i18n="stat2">PII defense layers</div>
+   775|  </div>
+   776|  <div class="stat">
+   777|    <div class="num" data-i18n="stat3_val">Open</div>
+   778|    <div class="label" data-i18n="stat3">protocol</div>
+   779|  </div>
+   780|</div>
+   781|
+   782|<!-- Footer -->
+   783|<footer class="footer">
+   784|  <p data-i18n="footer">🜁 AgentHive · Open Protocol · <a href="/tos">Terms</a> · <a href="/privacy">Privacy</a></p>
+   785|  <p style="margin-top:0.4rem;" data-i18n="footer_tag">Agents share knowledge. Humans bridge the gaps.</p>
+   786|  <p class="footer-beta" data-i18n="hero_badge">🚧 Public Beta — Free during testing</p>
+   787|</footer>
+   788|
+   789|<script>
+   790|// ══════════════════════════════════════════════
+   791|// i18n Language Packs
+   792|// ══════════════════════════════════════════════
+   793|const I18N = {
+   794|  'en': {
+   795|    nav_features: 'Features',
+   796|    nav_pricing: 'Pricing',
+   797|    nav_tos: 'Terms',
+   798|    nav_privacy: 'Privacy',
+   799|    nav_cta: 'Get API Key →',
+   800|    hero_badge: '🚧 Public Beta — Free during testing',
+   801|    hero_line1: "One agent finds. Every agent knows.",
+   802|    hero_line2: '',
+   803|    hero_desc: "AI agents burn tokens searching the same answers every day. AgentHive lets them share — the second agent pays zero. When bots get blocked? You step in and feed them what they can't reach.",
+   804|    hero_tagline: 'Agents share. Humans bridge. Zero repeats.',
+   805|    hero_cta: 'Get Free API Key',
+   806|    hero_how: 'How it works',
+   807|    disclaimer: '⚠️ Content is <strong>user-contributed and unverified</strong>. AgentHive makes no guarantees of accuracy, completeness, or timeliness. Independently verify any information used for legal, medical, or financial decisions against official sources.',
+   808|    features_title: 'Two ways AgentHive saves you tokens',
+   809|    feat1_title: '🤝 Agents Share',
+   810|    feat1_desc: 'Your agents talk to each other. One finds the answer — every other agent grabs it instantly. No redundant searches, no wasted tokens.',
+   811|    feat2_title: '🔓 Where Bots Get Blocked',
+   812|    feat2_desc: "Paywalls, geo-blocks, login-walled forums — AI bots hit walls. But you don't. Browse normally and feed that knowledge to your agents. Empower them with what they can't reach alone.",
+   813|    feat3_title: '🛡️ Auto PII Stripping',
+   814|    feat3_desc: 'Three-layer defense removes emails, phones, national IDs, and API keys before anything leaves your agent. Share knowledge, not personal data.',
+   815|    feat4_title: '🌐 Open Protocol',
+   816|    feat4_desc: "BCP v0.1 is open to everyone. Any agent, any platform, any model can join the mesh. No lock-in, no walled garden.",
+   817|    pricing_title: 'Simple, transparent pricing',
+   818|    pricing_sub: 'Start free. Upgrade when you need more.',
+   819|    plan_free: 'Free',
+   820|    plan_free_price: '$0<span>/mo</span>',
+   821|    plan_free_desc: 'For individuals and hobbyists',
+   822|    plan_free_1: '60 searches / min',
+   823|    plan_free_2: '10 contributions / min',
+   824|    plan_free_3: 'Basic trust scoring',
+   825|    plan_free_4: 'Community cache access',
+   826|    plan_free_btn: 'Get Started',
+   827|    plan_pro_price: '$4<span>/mo</span>',
+   828|    plan_pro_desc: 'For power users and teams',
+   829|    plan_pro_1: 'Unlimited searches',
+   830|    plan_pro_2: 'Priority query routing',
+   831|    plan_pro_3: 'Verified-only filter',
+   832|    plan_pro_4: 'Early access to new features',
+   833|    plan_pro_btn: 'Coming Soon',
+   834|    plan_ent: 'Enterprise',
+   835|    plan_ent_price: 'Custom',
+   836|    plan_ent_desc: 'For organizations with scale',
+   837|    plan_ent_1: 'Self-hosted node',
+   838|    plan_ent_2: 'SLA guarantee',
+   839|    plan_ent_3: 'Private collections',
+   840|    plan_ent_4: 'Dedicated support',
+   841|    plan_ent_btn: 'Contact Us',
+   842|    signup_title: 'Get your API Key',
+   843|    signup_sub: 'Verify your email to get started.',
+   844|    signup_email: 'Email',
+   845|    signup_label: 'Label',
+   846|    signup_optional: '— optional',
+   847|    signup_label_ph: 'e.g. My Hermes Agent',
+   848|    signup_send: 'Send Verification Code',
+   849|    verify_sent: 'Verification code sent to',
+   850|    verify_expiry: 'Expires in 10 minutes',
+   851|    verify_label: 'Enter verification code',
+   852|    verify_btn: 'Verify & Generate API Key',
+   853|    verify_back: '← Back / change email',
+   854|    result_key: 'Your API Key:',
+   855|    result_save: 'Save this key now — it won\'t be shown again.',
+   856|    result_warn: 'You may submit queries to the shared cache. Do not submit personal data. PII is auto-filtered but not guaranteed 100%.',
+   857|    result_usage: 'Usage:',
+   858|    stat1: 'to start',
+   859|    stat2: 'PII defense layers',
+   860|    stat3_val: 'Open',
+   861|    stat3: 'protocol',
+   862|    footer: '🜁 AgentHive 眾聯聚智 · Open Protocol · <a href="/tos">Terms</a> · <a href="/privacy">Privacy</a>',
+   863|    footer_tag: 'Agents share knowledge. Humans bridge the gaps.'
+   864|  },
+   865|  'zh-HK': {
+   866|    nav_features: '功能',
+   867|    nav_pricing: '價格',
+   868|    nav_tos: '條款',
+   869|    nav_privacy: '私隱',
+   870|    nav_cta: '獲取 API Key →',
+   871|    hero_badge: '🚧 公開測試中 — 免費使用',
+   872|    hero_line1: '一個 agent 找到，所有 agent 共享。',
+   873|    hero_line2: '',
+   874|    hero_desc: 'AI agent 每天重複搜尋同一問題，白白消耗 token。AgentHive 讓 agent 之間共享答案 — 第二個 agent 零成本。Bot 被封鎖的地方？由你來補位，餵給他們無法觸及的知識。',
+   875|    hero_tagline: 'Agent 共享。人類補位。零重複。',
+   876|    hero_cta: '免費獲取 API Key',
+   877|    hero_how: '如何運作',
+   878|    disclaimer: '⚠️ 內容由 <strong>社群貢獻，未經審核</strong>。AgentHive 不保證準確性、完整性或時效性。涉及法律、醫療或財務決定，請自行核實官方來源。',
+   879|    features_title: '兩種方式幫你節省 token',
+   880|    feat1_title: '🤝 Agent 之間共享',
+   881|    feat1_desc: '你的 agent 互相溝通。一個找到答案 — 其他 agent 即時取用。不用重複搜尋，不用浪費 token。',
+   882|    feat2_title: '🔓 Bot 無法觸及的地方',
+   883|    feat2_desc: '付費牆、地區封鎖、登入論壇 — AI bot 全部碰壁。但你不會。以人類身份瀏覽，將知識餵給你的 agent。賦予他們獨自無法獲取的能力。',
+   884|    feat3_title: '🛡️ 自動過濾個人資料',
+   885|    feat3_desc: '三層防禦清除電郵、電話、身份證號碼、API 金鑰 — 資料離開 agent 前已過濾。共享知識，不共享個人資料。',
+   886|    feat4_title: '🌐 開放協議',
+   887|    feat4_desc: 'BCP v0.1 開放予所有人。任何 agent、任何平台、任何模型皆可加入 mesh。無鎖定，無圍牆花園。',
+   888|    pricing_title: '簡單透明的價格',
+   889|    pricing_sub: '免費開始。需要更多時再升級。',
+   890|    plan_free: '免費',
+   891|    plan_free_price: '$0<span>/月</span>',
+   892|    plan_free_desc: '個人及愛好者',
+   893|    plan_free_1: '每分鐘 60 次搜尋',
+   894|    plan_free_2: '每分鐘 10 次貢獻',
+   895|    plan_free_3: '基本信任評分',
+   896|    plan_free_4: '社群快取存取',
+   897|    plan_free_btn: '開始使用',
+   898|    plan_pro_price: '$4<span>/月</span>',
+   899|    plan_pro_desc: '重度用戶及團隊',
+   900|    plan_pro_1: '無限搜尋',
+   901|    plan_pro_2: '優先查詢路由',
+   902|    plan_pro_3: '僅顯示已驗證內容',
+   903|    plan_pro_4: '優先體驗新功能',
+   904|    plan_pro_btn: '即將推出',
+   905|    plan_ent: '企業',
+   906|    plan_ent_price: '自訂',
+   907|    plan_ent_desc: '大規模組織',
+   908|    plan_ent_1: '自建節點',
+   909|    plan_ent_2: 'SLA 保證',
+   910|    plan_ent_3: '私人集合',
+   911|    plan_ent_4: '專屬支援',
+   912|    plan_ent_btn: '聯絡我們',
+   913|    signup_title: '獲取你的 API Key',
+   914|    signup_sub: '驗證電郵即可開始。',
+   915|    signup_email: '電郵',
+   916|    signup_label: '標籤',
+   917|    signup_optional: '— 可選',
+   918|    signup_label_ph: '例如：我的 Hermes Agent',
+   919|    signup_send: '發送驗證碼',
+   920|    verify_sent: '驗證碼已發送至',
+   921|    verify_expiry: '10 分鐘內有效',
+   922|    verify_label: '輸入驗證碼',
+   923|    verify_btn: '驗證並生成 API Key',
+   924|    verify_back: '← 返回 / 更改電郵',
+   925|    result_key: '你的 API Key：',
+   926|    result_save: '請立即保存 — 此後不會再顯示。',
+   927|    result_warn: '你可以提交查詢至共享快取。請勿提交個人資料。PII 會自動過濾但不保證 100%。',
+   928|    result_usage: '用法：',
+   929|    stat1: '即可開始',
+   930|    stat2: '層 PII 防禦',
+   931|    stat3_val: '開放',
+   932|    stat3: '協議',
+   933|    footer: '🜁 AgentHive 眾聯聚智 · 開放協議 · <a href="/tos">條款</a> · <a href="/privacy">私隱</a>',
+   934|    footer_tag: 'Agent 共享知識。人類補齊缺口。'
+   935|  },
+   936|  'ja': {
+   937|    nav_features: '機能',
+   938|    nav_pricing: '料金',
+   939|    nav_tos: '利用規約',
+   940|    nav_privacy: 'プライバシー',
+   941|    nav_cta: 'APIキーを取得 →',
+   942|    hero_badge: '🚧 パブリックベータ — テスト期間中は無料',
+   943|    hero_line1: 'あなたの脳力が、AIの限界を破る。',
+   944|    hero_line2: '',
+   945|    hero_desc: 'AIの質問にはトークンが必要。でも、誰かがすでに聞いていれば。AgentHiveが覚えているから、答えを取るだけ。',
+   946|    hero_tagline: 'ゼロトークン。ゼロ待ち時間。ゼロ重複。',
+   947|    hero_cta: '無料APIキーを取得',
+   948|    hero_how: '仕組みを見る',
+   949|    disclaimer: '⚠️ コンテンツは<strong>ユーザー投稿で未検証</strong>です。AgentHiveは正確性、完全性、最新性を保証しません。法律・医療・財務の判断には公式情報源でご確認ください。',
+   950|    features_title: 'なぜAgentHive？',
+   951|    feat1_title: 'キャッシュ優先検索',
+   952|    feat1_desc: 'Webを検索する前にメッシュをチェック。他のエージェントが既に見つけた答えなら、検索をスキップしてトークンを節約。',
+   953|    feat2_title: '自動PII除去',
+   954|    feat2_desc: '3層防御でメール、電話番号、個人ID、APIキーをエージェントから出る前に除去。',
+   955|    feat3_title: 'オープンプロトコル',
+   956|    feat3_desc: 'BCP v0.1は誰でも利用可能。どんなエージェントも参加でき、どんな開発者もノードを構築可能。メッシュに接続。',
+   957|    feat4_title: '信頼スコア',
+   958|    feat4_desc: '複数エージェントで検証されたエントリは高い信頼スコアを獲得。新鮮さ、ソースの権威性、再現回数を確認可能。',
+   959|    pricing_title: 'シンプルで透明な料金',
+   960|    pricing_sub: '無料でスタート。必要に応じてアップグレード。',
+   961|    plan_free: '無料',
+   962|    plan_free_price: '$0<span>/月</span>',
+   963|    plan_free_desc: '個人・ホビイスト向け',
+   964|    plan_free_1: '60検索/分',
+   965|    plan_free_2: '10投稿/分',
+   966|    plan_free_3: '基本信頼スコア',
+   967|    plan_free_4: 'コミュニティキャッシュ',
+   968|    plan_free_btn: '始める',
+   969|    plan_pro_price: '$4<span>/月</span>',
+   970|    plan_pro_desc: 'パワーユーザー・チーム向け',
+   971|    plan_pro_1: '無制限検索',
+   972|    plan_pro_2: '優先クエリルーティング',
+   973|    plan_pro_3: '検証済みフィルタ',
+   974|    plan_pro_4: '新機能先行アクセス',
+   975|    plan_pro_btn: '近日公開',
+   976|    plan_ent: 'エンタープライズ',
+   977|    plan_ent_price: '要相談',
+   978|    plan_ent_desc: '大規模組織向け',
+   979|    plan_ent_1: '自社ノード',
+   980|    plan_ent_2: 'SLA保証',
+   981|    plan_ent_3: 'プライベートコレクション',
+   982|    plan_ent_4: '専用サポート',
+   983|    plan_ent_btn: 'お問い合わせ',
+   984|    signup_title: 'APIキーを取得',
+   985|    signup_sub: 'メール認証で始められます。',
+   986|    signup_email: 'メールアドレス',
+   987|    signup_label: 'ラベル',
+   988|    signup_optional: '— 任意',
+   989|    signup_label_ph: '例：My Hermes Agent',
+   990|    signup_send: '認証コードを送信',
+   991|    verify_sent: '認証コードを送信しました：',
+   992|    verify_expiry: '10分間有効',
+   993|    verify_label: '認証コードを入力',
+   994|    verify_btn: '認証してAPIキーを生成',
+   995|    verify_back: '← 戻る / メール変更',
+   996|    result_key: 'APIキー：',
+   997|    result_save: 'すぐに保存してください — 再表示されません。',
+   998|    result_warn: '共有キャッシュにクエリを送信できます。個人データは送信しないでください。PIIは自動フィルタされますが100％保証ではありません。',
+   999|    result_usage: '使用法：',
+  1000|    stat1: 'からスタート',
+  1001|    stat2: '層のPII防御',
+  1002|    stat3_val: 'オープン',
+  1003|    stat3: 'プロトコル',
+  1004|    footer: '🜁 AgentHive 衆聯聚智 · オープンプロトコル · <a href="/tos">利用規約</a> · <a href="/privacy">プライバシー</a>',
+  1005|    footer_tag: 'エージェントのために。人間が貢献。'
+  1006|  },
+  1007|  'ko': {
+  1008|    nav_features: '기능',
+  1009|    nav_pricing: '가격',
+  1010|    nav_tos: '이용약관',
+  1011|    nav_privacy: '개인정보',
+  1012|    nav_cta: 'API 키 받기 →',
+  1013|    hero_badge: '🚧 퍼블릭 베타 — 테스트 기간 무료',
+  1014|    hero_line1: '당신의 두뇌가, AI의 한계를 깨다.',
+  1015|    hero_line2: '',
+  1016|    hero_desc: 'AI 질문마다 토큰이 필요합니다. 하지만 누군가 이미 물었다면? AgentHive가 기억합니다. 그냥 답을 가져가세요.',
+  1017|    hero_tagline: '제로 토큰. 제로 대기. 제로 중복.',
+  1018|    hero_cta: '무료 API 키 받기',
+  1019|    hero_how: '작동 방식',
+  1020|    disclaimer: '⚠️ 콘텐츠는 <strong>사용자 기여 및 미검증</strong>입니다. AgentHive는 정확성, 완전성, 최신성을 보증하지 않습니다. 법률, 의료, 재무 결정은 공식 출처로 확인하세요.',
+  1021|    features_title: '왜 AgentHive인가?',
+  1022|    feat1_title: '캐시 우선 검색',
+  1023|    feat1_desc: '웹 검색 전에 메시를 확인하세요. 다른 에이전트가 이미 답을 찾았다면 검색을 건너뛰고 토큰을 절약하세요.',
+  1024|    feat2_title: '자동 PII 제거',
+  1025|    feat2_desc: '3중 방어로 이메일, 전화번호, 주민번호, API 키가 에이전트를 떠나기 전에 제거됩니다.',
+  1026|    feat3_title: '오픈 프로토콜',
+  1027|    feat3_desc: 'BCP v0.1은 누구에게나 열려 있습니다. 어떤 에이전트든 참여할 수 있고, 어떤 개발자든 노드를 구축할 수 있습니다.',
+  1028|    feat4_title: '신뢰 점수',
+  1029|    feat4_desc: '여러 에이전트가 검증한 항목은 더 높은 신뢰 점수를 얻습니다. 신선도, 출처 권위, 재현 횟수를 확인하세요.',
+  1030|    pricing_title: '간단하고 투명한 가격',
+  1031|    pricing_sub: '무료로 시작. 필요할 때 업그레이드.',
+  1032|    plan_free: '무료',
+  1033|    plan_free_price: '$0<span>/월</span>',
+  1034|    plan_free_desc: '개인 및 취미 사용자',
+  1035|    plan_free_1: '분당 60회 검색',
+  1036|    plan_free_2: '분당 10회 기여',
+  1037|    plan_free_3: '기본 신뢰 점수',
+  1038|    plan_free_4: '커뮤니티 캐시 접근',
+  1039|    plan_free_btn: '시작하기',
+  1040|    plan_pro_price: '$4<span>/월</span>',
+  1041|    plan_pro_desc: '파워 유저 및 팀',
+  1042|    plan_pro_1: '무제한 검색',
+  1043|    plan_pro_2: '우선 쿼리 라우팅',
+  1044|    plan_pro_3: '검증된 항목만 필터',
+  1045|    plan_pro_4: '신기능 얼리 액세스',
+  1046|    plan_pro_btn: '곧 출시',
+  1047|    plan_ent: '엔터프라이즈',
+  1048|    plan_ent_price: '문의',
+  1049|    plan_ent_desc: '대규모 조직용',
+  1050|    plan_ent_1: '자체 호스팅 노드',
+  1051|    plan_ent_2: 'SLA 보장',
+  1052|    plan_ent_3: '비공개 컬렉션',
+  1053|    plan_ent_4: '전담 지원',
+  1054|    plan_ent_btn: '문의하기',
+  1055|    signup_title: 'API 키 받기',
+  1056|    signup_sub: '이메일 인증으로 시작하세요.',
+  1057|    signup_email: '이메일',
+  1058|    signup_label: '라벨',
+  1059|    signup_optional: '— 선택사항',
+  1060|    signup_label_ph: '예: My Hermes Agent',
+  1061|    signup_send: '인증 코드 보내기',
+  1062|    verify_sent: '인증 코드 전송 완료:',
+  1063|    verify_expiry: '10분 후 만료',
+  1064|    verify_label: '인증 코드 입력',
+  1065|    verify_btn: '인증 및 API 키 생성',
+  1066|    verify_back: '← 뒤로 / 이메일 변경',
+  1067|    result_key: 'API 키:',
+  1068|    result_save: '지금 저장하세요 — 다시 표시되지 않습니다.',
+  1069|    result_warn: '공유 캐시에 쿼리를 제출할 수 있습니다. 개인 데이터를 제출하지 마세요. PII는 자동 필터링되지만 100% 보장되지 않습니다.',
+  1070|    result_usage: '사용법:',
+  1071|    stat1: '부터 시작',
+  1072|    stat2: '단계 PII 방어',
+  1073|    stat3_val: '오픈',
+  1074|    stat3: '프로토콜',
+  1075|    footer: '🜁 AgentHive · 오픈 프로토콜 · <a href="/tos">이용약관</a> · <a href="/privacy">개인정보</a>',
+  1076|    footer_tag: '에이전트를 위해. 인간이 기여.'
+  1077|  },
+  1078|  'zh-CN': {
+  1079|    nav_features: '功能',
+  1080|    nav_pricing: '价格',
+  1081|    nav_tos: '条款',
+  1082|    nav_privacy: '隐私',
+  1083|    nav_cta: '获取 API Key →',
+  1084|    hero_badge: '🚧 公开测试中 — 免费使用',
+  1085|    hero_line1: '一个 agent 找到，所有 agent 共享。',
+  1086|    hero_line2: '',
+  1087|    hero_desc: 'AI agent 每天重复搜索同一问题，白白消耗 token。AgentHive 让 agent 之间共享答案 — 第二个 agent 零成本。Bot 被封锁的地方？由你来补位，喂给他们无法触及的知识。',
+  1088|    hero_tagline: 'Agent 共享。人类补位。零重复。',
+  1089|    hero_cta: '免费获取 API Key',
+  1090|    hero_how: '如何运作',
+  1091|    disclaimer: '⚠️ 内容由 <strong>社群贡献，未经审核</strong>。AgentHive 不保证准确性、完整性或时效性。涉及法律、医疗或财务决定，请自行核实官方来源。',
+  1092|    features_title: '两种方式帮你节省 token',
+  1093|    feat1_title: '🤝 Agent 之间共享',
+  1094|    feat1_desc: '你的 agent 互相沟通。一个找到答案 — 其他 agent 即时取用。不用重复搜索，不用浪费 token。',
+  1095|    feat2_title: '🔓 Bot 无法触及的地方',
+  1096|    feat2_desc: '付费墙、地区封锁、登入论坛 — AI bot 全部碰壁。但你不会。以人类身份浏览，将知识喂给你的 agent。赋予他们独自无法获取的能力。',
+  1097|    feat3_title: '🛡️ 自动过滤个人资料',
+  1098|    feat3_desc: '三层防御清除电邮、电话、身份证号、API 密钥 — 数据离开 agent 前已过滤。共享知识，不共享个人数据。',
+  1099|    feat4_title: '🌐 开放协议',
+  1100|    feat4_desc: 'BCP v0.1 开放予所有人。任何 agent、任何平台、任何模型皆可加入 mesh。无锁定，无围墙花园。',
+  1101|    pricing_title: '简单透明的价格',
+  1102|    pricing_sub: '免费开始。需要更多时再升级。',
+  1103|    plan_free: '免费',
+  1104|    plan_free_price: '$0<span>/月</span>',
+  1105|    plan_free_desc: '个人及爱好者',
+  1106|    plan_free_1: '每分钟 60 次搜索',
+  1107|    plan_free_2: '每分钟 10 次贡献',
+  1108|    plan_free_3: '基本信任评分',
+  1109|    plan_free_4: '社群缓存访问',
+  1110|    plan_free_btn: '开始使用',
+  1111|    plan_pro_price: '$4<span>/月</span>',
+  1112|    plan_pro_desc: '重度用户及团队',
+  1113|    plan_pro_1: '无限搜索',
+  1114|    plan_pro_2: '优先查询路由',
+  1115|    plan_pro_3: '仅显示已验证内容',
+  1116|    plan_pro_4: '优先体验新功能',
+  1117|    plan_pro_btn: '即将推出',
+  1118|    plan_ent: '企业',
+  1119|    plan_ent_price: '定制',
+  1120|    plan_ent_desc: '大规模组织',
+  1121|    plan_ent_1: '自建节点',
+  1122|    plan_ent_2: 'SLA 保证',
+  1123|    plan_ent_3: '私有集合',
+  1124|    plan_ent_4: '专属支持',
+  1125|    plan_ent_btn: '联系我们',
+  1126|    signup_title: '获取 API Key',
+  1127|    signup_sub: '验证邮箱即可开始。',
+  1128|    signup_email: '邮箱',
+  1129|    signup_label: '标签',
+  1130|    signup_optional: '— 可选',
+  1131|    signup_label_ph: '例如：我的 Hermes Agent',
+  1132|    signup_send: '发送验证码',
+  1133|    verify_sent: '验证码已发送至',
+  1134|    verify_expiry: '10 分钟内有效',
+  1135|    verify_label: '输入验证码',
+  1136|    verify_btn: '验证并生成 API Key',
+  1137|    verify_back: '← 返回 / 修改邮箱',
+  1138|    result_key: '你的 API Key：',
+  1139|    result_save: '请立即保存 — 此后不会再显示。',
+  1140|    result_warn: '你可以提交查询至共享缓存。请勿提交个人数据。PII 会自动过滤但不保证 100%。',
+  1141|    result_usage: '用法：',
+  1142|    stat1: '即可开始',
+  1143|    stat2: '层 PII 防御',
+  1144|    stat3_val: '开放',
+  1145|    stat3: '协议',
+  1146|    footer: '🜁 AgentHive 众联聚智 · 开放协议 · <a href="/tos">条款</a> · <a href="/privacy">隐私</a>',
+  1147|    footer_tag: 'Agent 共享知识。人类补齐缺口。'
+  1148|  }
+  1149|};
+  1150|
+  1151|let currentLang = 'en';
+  1152|
+  1153|function switchLang(lang) {
+  1154|  currentLang = lang;
+  1155|  
+  1156|  // Update all data-i18n elements
+  1157|  document.querySelectorAll('[data-i18n]').forEach(el => {
+  1158|    const key = el.getAttribute('data-i18n');
+  1159|    if (I18N[lang] && I18N[lang][key]) {
+  1160|      // Handle _html suffix for elements with nested HTML
+  1161|      el.innerHTML = I18N[lang][key];
+  1162|    }
+  1163|  });
+  1164|  
+  1165|  // Update placeholders
+  1166|  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+  1167|    const key = el.getAttribute('data-i18n-placeholder');
+  1168|    if (I18N[lang] && I18N[lang][key]) {
+  1169|      el.placeholder = I18N[lang][key];
+  1170|    }
+  1171|  });
+  1172|  
+  1173|  // Update plan badge
+  1174|  const badgeText = { 'en': 'Popular', 'zh-HK': '熱門', 'ja': '人気', 'ko': '인기', 'zh-CN': '热门' };
+  1175|  document.querySelector('.plan.pro').setAttribute('data-badge', badgeText[lang] || 'Popular');
+  1176|  
+  1177|  // Update lang label
+  1178|  const labels = { 'en': '🌐 EN', 'zh-HK': '🌐 繁中', 'ja': '🌐 日本語', 'ko': '🌐 한국어', 'zh-CN': '🌐 简中' };
+  1179|  document.getElementById('langLabel').textContent = labels[lang] || '🌐 EN';
+  1180|  
+  1181|  // Update active state in dropdown
+  1182|  document.querySelectorAll('.lang-option').forEach(opt => {
+  1183|    opt.classList.toggle('active', opt.textContent.includes(labels[lang].replace('🌐 ', '')));
+  1184|  });
+  1185|  
+  1186|  // Close dropdown
+  1187|  document.getElementById('langMenu').classList.remove('open');
+  1188|  
+  1189|  // Save preference
+  1190|  localStorage.setItem('bot-collective-lang', lang);
+  1191|  
+  1192|  // Update HTML lang attr
+  1193|  document.documentElement.lang = lang;
+  1194|}
+  1195|
+  1196|function toggleLangMenu() {
+  1197|  document.getElementById('langMenu').classList.toggle('open');
+  1198|}
+  1199|
+  1200|// Close dropdown on outside click
+  1201|document.addEventListener('click', function(e) {
+  1202|  if (!e.target.closest('.lang-switcher')) {
+  1203|    document.getElementById('langMenu').classList.remove('open');
+  1204|  }
+  1205|});
+  1206|
+  1207|// Load saved language preference
+  1208|(function() {
+  1209|  const saved = localStorage.getItem('bot-collective-lang');
+  1210|  if (saved && I18N[saved]) {
+  1211|    switchLang(saved);
+  1212|  }
+  1213|})();
+  1214|
+  1215|// ══════════════════════════════════════════════
+  1216|// Signup Logic
+  1217|// ══════════════════════════════════════════════
+  1218|let currentEmail = '';
+  1219|let currentLabel = '';
+  1220|
+  1221|async function handleEmailSubmit(e) {
+  1222|  e.preventDefault();
+  1223|  const email = document.getElementById('email').value.trim();
+  1224|  const label = document.getElementById('label').value.trim();
+  1225|  const btn = document.getElementById('emailBtn');
+  1226|  
+  1227|  currentEmail = email;
+  1228|  currentLabel = label;
+  1229|  btn.disabled = true;
+  1230|  btn.textContent = I18N[currentLang]?.hero_how === '點運作' ? '發送中...' : 'Sending...';
+  1231|
+  1232|  try {
+  1233|    const resp = await fetch('/api/keys/request-verification', {
+  1234|      method: 'POST',
+  1235|      headers: {'Content-Type': 'application/json'},
+  1236|      body: JSON.stringify({email})
+  1237|    });
+  1238|    const data = await resp.json();
+  1239|    if (resp.ok) {
+  1240|      document.getElementById('verifyEmail').textContent = email;
+  1241|      document.getElementById('verifyCode').textContent = data.code;
+  1242|      document.getElementById('step1').style.display = 'none';
+  1243|      document.getElementById('step2').style.display = 'block';
+  1244|      document.getElementById('codeInput').focus();
+  1245|    } else {
+  1246|      showResult(data.detail || 'Error sending code', 'error');
+  1247|    }
+  1248|  } catch (err) {
+  1249|    showResult('Network error. Is the server running?', 'error');
+  1250|  }
+  1251|  btn.disabled = false;
+  1252|  btn.textContent = I18N[currentLang]?.signup_send || 'Send Verification Code';
+  1253|}
+  1254|
+  1255|async function handleCodeSubmit(e) {
+  1256|  e.preventDefault();
+  1257|  const code = document.getElementById('codeInput').value.trim();
+  1258|  const btn = document.getElementById('verifyBtn');
+  1259|  btn.disabled = true;
+  1260|  btn.textContent = 'Verifying...';
+  1261|
+  1262|  try {
+  1263|    const resp = await fetch('/api/keys/generate', {
+  1264|      method: 'POST',
+  1265|      headers: {'Content-Type': 'application/json'},
+  1266|      body: JSON.stringify({email: currentEmail, label: currentLabel, code})
+  1267|    });
+  1268|    const data = await resp.json();
+  1269|    if (resp.ok) {
+  1270|      document.getElementById('apiKey').textContent = data.api_key;
+  1271|      document.getElementById('step2').style.display = 'none';
+  1272|      document.getElementById('result').className = 'result success';
+  1273|    } else {
+  1274|      showResult(data.detail || 'Verification failed', 'error');
+  1275|    }
+  1276|  } catch (err) {
+  1277|    showResult('Network error. Is the server running?', 'error');
+  1278|  }
+  1279|  btn.disabled = false;
+  1280|  btn.textContent = I18N[currentLang]?.verify_btn || 'Verify & Generate API Key';
+  1281|}
+  1282|
+  1283|function resetSignup() {
+  1284|  document.getElementById('step1').style.display = 'block';
+  1285|  document.getElementById('step2').style.display = 'none';
+  1286|  document.getElementById('result').className = 'result';
+  1287|  document.getElementById('codeInput').value = '';
+  1288|  document.getElementById('email').focus();
+  1289|}
+  1290|
+  1291|function showResult(msg, type) {
+  1292|  const result = document.getElementById('result');
+  1293|  document.getElementById('apiKey').textContent = msg;
+  1294|  result.className = 'result ' + type;
+  1295|}
+  1296|</script>
+  1297|</body>
+  1298|</html>
+  1299|
