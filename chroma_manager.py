@@ -82,29 +82,28 @@ class ChromaManager:
         collection = self.client.get_collection("web_cache")
         
         # ── Handle resolve actions ──
-        if resolve_action == "update" and target_id:
+        if resolve_action == "update":
+            if not target_id:
+                raise ValueError("resolve_id required for update action")
             now = int(time.time())
-            try:
-                all_data = collection.get(ids=[target_id])
-                if all_data["ids"]:
-                    meta = all_data["metadatas"][0] if all_data["metadatas"] else {}
-                    old_repro = int(meta.get("reproductions", 0))
-                    new_meta = {
-                        **meta,
-                        "query": query,
-                        "reproductions": str(old_repro + 1),
-                        "created": str(now),
-                    }
-                    new_doc = f"{query}\n{content[:7900]}"
-                    collection.update(
-                        ids=[target_id],
-                        documents=[new_doc],
-                        metadatas=[new_meta],
-                    )
-                    return target_id
-            except Exception:
-                pass
-            # If update fails, fall through to create new
+            all_data = collection.get(ids=[target_id])
+            if not all_data["ids"]:
+                raise ValueError(f"Target entry not found: {target_id}")
+            meta = all_data["metadatas"][0] if all_data["metadatas"] else {}
+            old_repro = int(meta.get("reproductions", 0))
+            new_meta = {
+                **meta,
+                "query": query,
+                "reproductions": str(old_repro + 1),
+                "created": str(now),
+            }
+            new_doc = f"{query}\n{content[:7900]}"
+            collection.update(
+                ids=[target_id],
+                documents=[new_doc],
+                metadatas=[new_meta],
+            )
+            return target_id
         
         if resolve_action == "keep_both":
             return self._create_entry(collection, query, content, source_url, tags, privacy_class)

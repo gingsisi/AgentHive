@@ -235,20 +235,29 @@ async def contribute(
 
     # ── Handle resolve actions ──
     if req.resolve_action in ("update", "keep_both"):
-        item_id = db.contribute_web_result(
-            query=req.query.strip(),
-            content=clean_content,
-            source_url=source_url,
-            tags=normalized_tags,
-            privacy_class=req.privacy_class,
-            resolve_action=req.resolve_action,
-            target_id=req.resolve_id.strip(),
-        )
+        try:
+            item_id = db.contribute_web_result(
+                query=req.query.strip(),
+                content=clean_content,
+                source_url=source_url,
+                tags=normalized_tags,
+                privacy_class=req.privacy_class,
+                resolve_action=req.resolve_action,
+                target_id=req.resolve_id.strip(),
+            )
+        except ValueError as e:
+            return ContributeResponse(
+                id="",
+                classification="error",
+                pii_stripped=had_pii,
+                contributed=False,
+            )
         return ContributeResponse(
             id=item_id,
             classification=classification,
             pii_stripped=had_pii,
             contributed=True,
+            conflicts=post_resolve_conflicts(req, db, clean_content),
         )
 
     # ── Conflict detection (lightweight, server-side only) ──
@@ -359,6 +368,14 @@ def normalize_tags(tags: list[str]) -> list[str]:
             canonical_set.add(tag_lower)
         # Unknown tags are silently dropped (not added)
     return sorted(canonical_set)
+
+
+def post_resolve_conflicts(req, db, clean_content: str) -> list[dict]:
+    """After an update, check if new content conflicts with OTHER entries (not the target)."""
+    if req.resolve_action != "update" or not req.resolve_id:
+        return []
+    all_conflicts = db.detect_conflicts(query=req.query.strip(), content=clean_content)
+    return [c for c in all_conflicts if c["id"] != req.resolve_id.strip()]
 
 
 def validate_contribution(req, clean_content: str) -> list[str]:
@@ -632,6 +649,12 @@ async def bridge_capture(req: BridgeCaptureRequest, auth: dict = Depends(require
             "reason": "Content too short or empty after PII strip",
         }
 
+    # ── Conflict detection (lightweight) ──
+    conflicts = db.detect_conflicts(
+        query=req.query.strip() or req.source_url,
+        content=clean_content,
+    )
+    
     # ── Contribute to ChromaDB ──
     try:
         item_id = db.contribute_web_result(
@@ -640,6 +663,7 @@ async def bridge_capture(req: BridgeCaptureRequest, auth: dict = Depends(require
             source_url=req.source_url,
             tags=req.tags + ["human-bridge"],
             privacy_class=req.privacy_class,
+            resolve_action="keep_both" if conflicts else "",  # Auto-keep_both on conflict, never silent merge
         )
     except Exception as e:
         return {
@@ -655,7 +679,9 @@ async def bridge_capture(req: BridgeCaptureRequest, auth: dict = Depends(require
         "pii_stripped": pii_stripped,
         "pii_stripped_count": len(pii_stripped),
         "quality_pass": True,
-        "note": "Layer 3 PII scan complete" + (f", {len(pii_stripped)} patterns stripped" if pii_stripped else ", clean"),
+        "conflicts_found": len(conflicts),
+        "conflicts": conflicts,
+        "note": "Layer 3 PII scan complete" + (f", {len(pii_stripped)} patterns stripped" if pii_stripped else ", clean") + (f", {len(conflicts)} conflict(s) auto-resolved with keep_both" if conflicts else ", no conflicts"),
     }
 
 
