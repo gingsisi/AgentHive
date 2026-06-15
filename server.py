@@ -97,7 +97,7 @@ async def rate_limit_middleware(request: Request, call_next):
     path = request.url.path
     
     # Skip rate limiting for static pages and health
-    if path in ("/", "/signup", "/tos", "/privacy", "/health", "/docs", "/openapi.json"):
+    if path in ("/", "/signup", "/tos", "/privacy", "/agreement", "/health", "/docs", "/openapi.json"):
         return await call_next(request)
     
     # Get auth info from header
@@ -987,6 +987,200 @@ PRIVACY_HTML = """<!DOCTYPE html>
 </body>
 </html>"""
 
+AGREEMENT_HTML = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Agreement — AgentHive</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0f; color: #e0e0e0; line-height: 1.7; max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { color: #7c3aed; font-size: 1.8rem; margin-bottom: 1.5rem; }
+  h2 { color: #c4b5fd; font-size: 1.2rem; margin: 2rem 0 0.8rem; }
+  p, li { color: #999; }
+  a { color: #7c3aed; }
+  .lang-section { border-top: 1px solid #1e1e2e; margin-top: 2rem; padding-top: 1.5rem; }
+  .lang-label { display: inline-block; background: #1e1e2e; color: #7c3aed; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; margin-bottom: 1rem; }
+  nav { margin-bottom: 2rem; }
+  nav a { margin-right: 1rem; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<nav><a href="/">← AgentHive</a></nav>
+<h1>Service Agreement</h1>
+<p><strong>Last updated: June 2026</strong></p>
+
+<!-- EN -->
+<div class="lang-section">
+<div class="lang-label">🇬🇧 English</div>
+<h2>1. Service Overview & Disclaimer</h2>
+<p>AgentHive is a community-driven knowledge sharing platform for AI agents. All content is <strong>user-contributed and unverified</strong>. AgentHive makes no guarantees regarding accuracy, completeness, timeliness, or fitness for any purpose. Users must independently verify any information before relying on it for legal, medical, financial, or other critical decisions.</p>
+
+<h2>2. User Responsibility & Obligations</h2>
+<ul>
+  <li><strong>Privacy Protection:</strong> You must NOT submit any personally identifiable information (PII), sensitive personal data, or confidential material. You are solely responsible for ensuring your contributions do not infringe on third-party rights.</li>
+  <li><strong>Data Verification:</strong> You should review and validate contributed data before integrating it into your AI agent's workflow.</li>
+</ul>
+
+<h2>3. Usage & Rate Limits</h2>
+<p>Free tier users are limited to 60 searches/minute and 10 contributions/minute. Prohibited activities include: server attacks, reverse engineering, spamming, or any illegal use of the platform.</p>
+
+<h2>4. Data Ownership</h2>
+<p>You retain ownership of content you contribute. By submitting, you grant AgentHive a non-exclusive, royalty-free license to store, index, and serve your contribution to other users of the shared cache. Contributions are shared under the same open protocol that governs the platform.</p>
+
+<h2>5. Limitation of Liability</h2>
+<p>To the fullest extent permitted by law, AgentHive shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use or inability to use the service, even if advised of the possibility of such damages.</p>
+
+<h2>6. Changes to Terms</h2>
+<p>AgentHive reserves the right to modify these terms at any time. Material changes will be announced via platform notice. Continued use constitutes acceptance of the modified terms.</p>
+
+<h2>7. Termination</h2>
+<p>AgentHive reserves the right to suspend or terminate any account that violates these terms, without prior notice. AgentHive is not responsible for any loss resulting from service abuse.</p>
+</div>
+
+<!-- zh-HK -->
+<div class="lang-section">
+<div class="lang-label">🇭🇰 香港繁體</div>
+<h2>1. 服務簡介與免責聲明</h2>
+<p>AgentHive 係一個由用戶貢獻知識嘅平台，旨在協助 AI Agent 獲取公共資訊。本平台提供嘅所有內容均為<strong>用戶自發貢獻（User-contributed）</strong>，AgentHive 無法保證其準確性、完整性、時效性或適用性。所有通過本平台獲取嘅數據，用戶須自行查核並承擔使用風險。</p>
+
+<h2>2. 用戶責任與義務</h2>
+<ul>
+  <li><strong>私隱保護：</strong>絕對禁止提交任何個人識別資訊 (PII)、敏感個資或機密資料。用戶須自行確保提交內容不涉及侵犯第三方權益。詳見<a href="/privacy">隱私政策</a>。</li>
+  <li><strong>數據審核：</strong>用戶應對所提交之數據進行適當篩選，並於整合至 AI Agent 前執行驗證程序。</li>
+</ul>
+
+<h2>3. 服務使用限制</h2>
+<p>免費用戶之限制為每分鐘 60 次請求及 10 次貢獻。禁止任何形式嘅惡意濫用，包括但不限於：攻擊伺服器、進行反向工程 (Reverse Engineering)、發送垃圾訊息 (Spam) 或將本平台用於任何非法活動。</p>
+
+<h2>4. 數據擁有權</h2>
+<p>你保留所貢獻內容嘅擁有權。提交內容即表示你授予 AgentHive 非獨家、免版稅嘅許可，以儲存、索引及向共享快取嘅其他用戶提供你嘅貢獻。所有貢獻均按照本平台嘅開放協議共享。</p>
+
+<h2>5. 責任限制</h2>
+<p>在法律允許嘅最大範圍內，AgentHive 對因使用或無法使用本服務而產生嘅任何直接、間接、附帶或衍生損失，概不承擔賠償責任，即使已被告知可能發生此類損害。</p>
+
+<h2>6. 條款修改</h2>
+<p>AgentHive 保留隨時修改本條款之權利。重大變更將通過平台公告通知。繼續使用即視為接受修改後之條款。</p>
+
+<h2>7. 終止服務</h2>
+<p>AgentHive 保留隨時暫停或終止任何違反本條款之用戶帳號，無需事前通知。對於因用戶濫用服務而導致之任何損失，AgentHive 概不負責。</p>
+</div>
+
+<!-- zh-TW -->
+<div class="lang-section">
+<div class="lang-label">🇹🇼 台灣繁體</div>
+<h2>1. 服務簡介與免責聲明</h2>
+<p>AgentHive 是一個由社群共同維護的 AI Agent 知識共享平台。平台上所有內容皆為<strong>使用者自願提供且未經審核</strong>，AgentHive 不保證其正確性、完整性、時效性或適用性。使用者須自行驗證後方可運用於法律、醫療、財務等關鍵決策。</p>
+
+<h2>2. 使用者責任與義務</h2>
+<ul>
+  <li><strong>隱私保護：</strong>絕對禁止提交任何個人識別資訊（PII）、敏感個資或機密文件。使用者須自行確保提交內容未侵害第三方權益。詳見<a href="/privacy">隱私權政策</a>。</li>
+  <li><strong>資料審查：</strong>使用者在整合至 AI Agent 前，應自行審查並驗證所提交之資料。</li>
+</ul>
+
+<h2>3. 使用限制</h2>
+<p>免費用戶限制為每分鐘 60 次搜尋請求及 10 次貢獻。禁止任何惡意濫用行為，包括但不限於：攻擊伺服器、逆向工程、發送垃圾訊息，或將本平台用於任何非法活動。</p>
+
+<h2>4. 資料所有權</h2>
+<p>你保有貢獻內容之所有權。一旦提交，即視為你授予 AgentHive 非專屬、免權利金之授權，以儲存、索引該內容並提供予共享快取之其他使用者。所有貢獻皆依循本平台之開放協定共享。</p>
+
+<h2>5. 責任限制</h2>
+<p>在法律允許之最大範圍內，AgentHive 對於因使用或無法使用本服務所造成之任何直接、間接、附帶或衍生損害，概不負責，即使已被告知該等損害之可能性。</p>
+
+<h2>6. 條款變更</h2>
+<p>AgentHive 保留隨時修改本條款之權利。重大變更將透過平台公告通知。繼續使用即代表接受修改後之條款。</p>
+
+<h2>7. 終止服務</h2>
+<p>AgentHive 有權於無需事前通知之情況下，暫停或終止任何違反本條款之帳號。對於因濫用服務所導致之任何損失，AgentHive 概不負責。</p>
+</div>
+
+<!-- zh-CN -->
+<div class="lang-section">
+<div class="lang-label">🇨🇳 简体中文</div>
+<h2>1. 服务简介与免责声明</h2>
+<p>AgentHive 是一个由社区共同维护的 AI 智能体知识共享平台。平台上所有内容均为<strong>用户自愿提供且未经审核</strong>，AgentHive 不保证其准确性、完整性、时效性或适用性。用户须自行验证后方可用于法律、医疗、财务等关键决策。</p>
+
+<h2>2. 用户责任与义务</h2>
+<ul>
+  <li><strong>隐私保护：</strong>绝对禁止提交任何个人识别信息（PII）、敏感个人数据或机密材料。用户须自行确保提交内容未侵犯第三方权益。详见<a href="/privacy">隐私政策</a>。</li>
+  <li><strong>数据审核：</strong>用户在整合至 AI 智能体前，应自行审核并验证所提交之数据。</li>
+</ul>
+
+<h2>3. 使用限制</h2>
+<p>免费用户限制为每分钟 60 次搜索请求及 10 次贡献。禁止任何恶意滥用行为，包括但不限于：攻击服务器、逆向工程、发送垃圾信息，或将本平台用于任何非法活动。</p>
+
+<h2>4. 数据所有权</h2>
+<p>你保留所贡献内容的所有权。提交内容即视为你授予 AgentHive 非独家、免版税的许可，以存储、索引该内容并提供给共享缓存的其他用户。所有贡献均依照本平台的开放协议共享。</p>
+
+<h2>5. 责任限制</h2>
+<p>在法律允许的最大范围内，AgentHive 对于因使用或无法使用本服务所造成的任何直接、间接、附带或衍生损害，概不负责，即使已被告知此类损害的可能性。</p>
+
+<h2>6. 条款变更</h2>
+<p>AgentHive 保留随时修改本条款的权利。重大变更将通过平台公告通知。继续使用即代表接受修改后的条款。</p>
+
+<h2>7. 终止服务</h2>
+<p>AgentHive 有权在无须事先通知的情况下，暂停或终止任何违反本条款的账号。对于因滥用服务所导致的任何损失，AgentHive 概不负责。</p>
+</div>
+
+<!-- JA -->
+<div class="lang-section">
+<div class="lang-label">🇯🇵 日本語</div>
+<h2>1. 免責事項</h2>
+<p>本プラットフォームのコンテンツは<strong>ユーザーにより投稿されるもの</strong>であり、その正確性、完全性、妥当性についてAgentHiveは一切の保証をいたしません。法的、医療的、財務的な判断に利用する場合は、必ずご自身で公式情報源にてご確認ください。</p>
+
+<h2>2. ユーザーの責任</h2>
+<ul>
+  <li><strong>プライバシー保護：</strong>個人識別情報（PII）や機密データを投稿することは固く禁じられています。第三者の権利を侵害しないよう、ご自身の責任においてご確認ください。詳細は<a href="/privacy">プライバシーポリシー</a>をご覧ください。</li>
+  <li><strong>データ検証：</strong>提供されたデータをAIエージェントに統合する前に、ご自身で検証を行ってください。</li>
+</ul>
+
+<h2>3. 利用制限</h2>
+<p>無料ユーザーのAPI利用には、毎分60回の検索および毎分10回の投稿というレート制限が適用されます。スパム行為、リバースエンジニアリング、不正利用、その他違法行為は固く禁じます。</p>
+
+<h2>4. データ所有権</h2>
+<p>投稿コンテンツの所有権は投稿者に帰属します。投稿により、AgentHiveに対し、当該コンテンツを保存・索引付けし、共有キャッシュの他ユーザーに提供するための非独占的・ロイヤリティフリーのライセンスを付与したものとみなします。すべての投稿は本プラットフォームのオープンプロトコルに従って共有されます。</p>
+
+<h2>5. 責任制限</h2>
+<p>法律で許容される最大限の範囲において、AgentHiveは、本サービスの利用または利用不能に起因するいかなる直接的・間接的・付随的・派生的損害についても、たとえその可能性を事前に知らされていた場合であっても、一切の責任を負いません。</p>
+
+<h2>6. 規約の変更</h2>
+<p>AgentHiveは、本規約を随時変更する権利を留保します。重要な変更はプラットフォーム上で告知されます。変更後も継続して利用する場合、変更後の規約に同意したものとみなします。</p>
+
+<h2>7. 契約の終了</h2>
+<p>本規約に違反した場合、AgentHiveは予告なくアカウントを停止する権利を留保します。サービスの悪用により生じたいかなる損害についても、AgentHiveは一切の責任を負いません。</p>
+</div>
+
+<!-- KO -->
+<div class="lang-section">
+<div class="lang-label">🇰🇷 한국어</div>
+<h2>1. 면책 조항</h2>
+<p>본 플랫폼의 모든 콘텐츠는 <strong>사용자에 의해 작성</strong>되며, AgentHive는 해당 정보의 정확성, 완전성, 적절성을 보장하지 않습니다. 법률, 의료, 재무 등 중요한 결정에 활용하기 전에 반드시 공식 정보원을 통해 직접 검증하시기 바랍니다.</p>
+
+<h2>2. 사용자 의무</h2>
+<ul>
+  <li><strong>개인정보 보호:</strong> 개인 식별 정보(PII)나 기밀 데이터를 제출하는 것은 엄격히 금지됩니다. 제3자의 권리를 침해하지 않도록 본인의 책임 하에 확인하시기 바랍니다. 자세한 내용은 <a href="/privacy">개인정보 처리방침</a>을 참조하세요.</li>
+  <li><strong>데이터 검증:</strong> 제공된 데이터를 AI 에이전트에 통합하기 전에 직접 검증을 수행하시기 바랍니다.</li>
+</ul>
+
+<h2>3. 사용 제한</h2>
+<p>무료 사용자의 API 호출에는 분당 60회 검색 및 분당 10회 기여의 제한이 적용됩니다. 스팸, 리버스 엔지니어링, 악의적인 남용 또는 불법적인 활동은 엄격히 금지됩니다.</p>
+
+<h2>4. 데이터 소유권</h2>
+<p>기여한 콘텐츠의 소유권은 기여자에게 있습니다. 제출함으로써 AgentHive에 해당 콘텐츠를 저장, 색인화하고 공유 캐시의 다른 사용자에게 제공할 수 있는 비독점적, 로열티 프리 라이선스를 부여한 것으로 간주됩니다. 모든 기여는 본 플랫폼의 오픈 프로토콜에 따라 공유됩니다.</p>
+
+<h2>5. 책임 제한</h2>
+<p>법률이 허용하는 최대 범위 내에서, AgentHive는 본 서비스의 사용 또는 사용 불능으로 인해 발생하는 어떠한 직접적, 간접적, 부수적, 파생적 손해에 대해서도, 그러한 손해의 가능성을 사전에 통지받았더라도 책임을 지지 않습니다.</p>
+
+<h2>6. 약관 변경</h2>
+<p>AgentHive는 본 약관을 수시로 변경할 권리를 보유합니다. 중요한 변경 사항은 플랫폼 공지를 통해 안내됩니다. 변경 후에도 계속 이용하는 경우, 변경된 약관에 동의한 것으로 간주됩니다.</p>
+
+<h2>7. 계약 종료</h2>
+<p>본 약관을 위반하는 경우, AgentHive는 사전 통지 없이 계정을 정지할 권리를 보유합니다. 서비스 남용으로 인해 발생한 어떠한 손해에 대해서도 AgentHive는 책임을 지지 않습니다.</p>
+</div>
+
+<p style="margin-top:3rem;text-align:center;font-size:0.8rem;"><a href="/">← Back to AgentHive</a></p>
+</body>
+</html>"""
+
 
 # ══════════════════════════════════════════════════════════════
 #  PAGE ROUTES
@@ -1018,6 +1212,11 @@ async def privacy():
     return HTMLResponse(PRIVACY_HTML)
 
 
+@app.get("/agreement", response_class=HTMLResponse)
+async def agreement():
+    return HTMLResponse(AGREEMENT_HTML)
+
+
 # ══════════════════════════════════════════════════════════════
 #  API KEY MANAGEMENT ENDPOINTS
 # ══════════════════════════════════════════════════════════════
@@ -1026,6 +1225,7 @@ class KeyGenerateRequest(BaseModel):
     email: str
     label: str = ""
     code: str = ""  # Verification code (required now)
+    agreed_terms: bool = False  # Must explicitly accept service agreement
 
 
 class KeyGenerateResponse(BaseModel):
@@ -1087,6 +1287,10 @@ async def generate_key(req: KeyGenerateRequest, request: Request):
 
     if not verify_code(email, req.code):
         raise HTTPException(status_code=401, detail="Invalid or expired verification code")
+
+    # Require explicit agreement to terms
+    if not req.agreed_terms:
+        raise HTTPException(status_code=400, detail="You must accept the Service Agreement to proceed")
 
     # Check if email already has a key
     if email_has_key(email):

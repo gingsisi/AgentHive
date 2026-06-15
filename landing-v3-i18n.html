@@ -708,6 +708,12 @@
           <label for="codeInput" data-i18n="verify_label">Enter verification code</label>
           <input type="text" id="codeInput" placeholder="000000" maxlength="6" required autocomplete="one-time-code" inputmode="numeric" style="text-align:center;font-size:1.2rem;letter-spacing:0.3em;">
         </div>
+        <div class="form-group" style="margin-top:1.2rem;">
+          <label style="display:flex;align-items:flex-start;gap:0.5rem;cursor:pointer;font-size:0.8rem;font-weight:300;color:var(--slate);line-height:1.5;">
+            <input type="checkbox" id="agreeTerms" style="margin-top:0.2rem;accent-color:var(--purple);min-width:16px;">
+            <span id="agreeLabel" data-i18n="signup_agree">I have read and agree to the <a href="/agreement" target="_blank">AgentHive Service Agreement</a>, including the disclaimer, user obligations, and usage limits.</span>
+          </label>
+        </div>
         <button type="submit" class="btn-submit" id="verifyBtn" data-i18n="verify_btn">Verify & Generate API Key</button>
       </form>
       <p style="text-align:center;margin-top:0.8rem;">
@@ -813,6 +819,8 @@ const I18N = {
     verify_label: 'Enter verification code',
     verify_btn: 'Verify & Generate API Key',
     verify_back: '← Back / change email',
+    signup_agree: 'I have read and agree to the <a href="/agreement" target="_blank">AgentHive Service Agreement</a>, including the disclaimer, user obligations, and usage limits.',
+    signup_agree_error: 'You must accept the Service Agreement to proceed.',
     result_key: 'Your API Key:',
     result_save: 'Save this key now — it won\'t be shown again.',
     result_warn: 'You may submit queries to the shared cache. Do not submit personal data. PII is auto-filtered but not guaranteed 100%.',
@@ -884,6 +892,8 @@ const I18N = {
     verify_label: '輸入驗證碼',
     verify_btn: '驗證並生成 API Key',
     verify_back: '← 返回 / 更改電郵',
+    signup_agree: '本人已詳細閱讀並同意遵守<a href="/agreement" target="_blank">《AgentHive 服務條款》</a>中的免責聲明、用戶義務及使用限制。',
+    signup_agree_error: '你必須同意服務條款方可繼續。',
     result_key: '你的 API Key：',
     result_save: '請立即保存 — 此後不會再顯示。',
     result_warn: '你可以提交查詢至共享快取。請勿提交個人資料。PII 會自動過濾但不保證 100%。',
@@ -955,6 +965,8 @@ const I18N = {
     verify_label: '輸入驗證碼',
     verify_btn: '驗證並生成 API Key',
     verify_back: '← 返回 / 更改電郵',
+    signup_agree: '本人已詳細閱讀並同意遵守<a href="/agreement" target="_blank">《AgentHive 服務條款》</a>中的免責聲明、使用者義務及使用限制。',
+    signup_agree_error: '你必須同意服務條款方可繼續。',
     result_key: '你的 API Key：',
     result_save: '請立即保存——此後不會再顯示。',
     result_warn: '你可以提交查詢至共享快取。請勿提交個人資料。PII 會自動過濾但不保證 100%。',
@@ -1026,6 +1038,8 @@ const I18N = {
     verify_label: '認証コードを入力',
     verify_btn: '認証してAPIキーを生成',
     verify_back: '← 戻る / メール変更',
+    signup_agree: '<a href="/agreement" target="_blank">AgentHive利用規約</a>（免責事項、ユーザー義務、利用制限を含む）を読み、同意します。',
+    signup_agree_error: '続行するには利用規約に同意する必要があります。',
     result_key: 'APIキー：',
     result_save: 'すぐに保存してください — 再表示されません。',
     result_warn: '共有キャッシュにクエリを送信できます。個人データは送信しないでください。PIIは自動フィルタされますが100％保証ではありません。',
@@ -1097,6 +1111,8 @@ const I18N = {
     verify_label: '인증 코드 입력',
     verify_btn: '인증 및 API 키 생성',
     verify_back: '← 뒤로 / 이메일 변경',
+    signup_agree: '<a href="/agreement" target="_blank">AgentHive 서비스 이용약관</a>(면책 조항, 사용자 의무, 사용 제한 포함)을 읽고 동의합니다.',
+    signup_agree_error: '계속하려면 이용약관에 동의해야 합니다.',
     result_key: 'API 키:',
     result_save: '지금 저장하세요 — 다시 표시되지 않습니다.',
     result_warn: '공유 캐시에 쿼리를 제출할 수 있습니다. 개인 데이터를 제출하지 마세요. PII는 자동 필터링되지만 100% 보장되지 않습니다.',
@@ -1168,6 +1184,8 @@ const I18N = {
     verify_label: '输入验证码',
     verify_btn: '验证并生成 API Key',
     verify_back: '← 返回 / 修改邮箱',
+    signup_agree: '本人已详细阅读并同意遵守<a href="/agreement" target="_blank">《AgentHive 服务条款》</a>中的免责声明、用户义务及使用限制。',
+    signup_agree_error: '你必须同意服务条款方可继续。',
     result_key: '你的 API Key：',
     result_save: '请立即保存 — 此后不会再显示。',
     result_warn: '你可以提交查询至共享缓存。请勿提交个人数据。PII 会自动过滤但不保证 100%。',
@@ -1290,6 +1308,14 @@ async function handleCodeSubmit(e) {
   e.preventDefault();
   const code = document.getElementById('codeInput').value.trim();
   const btn = document.getElementById('verifyBtn');
+
+  // Check agreement checkbox
+  if (!document.getElementById('agreeTerms').checked) {
+    const errMsg = I18N[currentLang]?.signup_agree_error || 'You must accept the Service Agreement to proceed.';
+    showResult(errMsg, 'error');
+    return;
+  }
+
   btn.disabled = true;
   btn.textContent = 'Verifying...';
 
@@ -1297,7 +1323,7 @@ async function handleCodeSubmit(e) {
     const resp = await fetch('/api/keys/generate', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({email: currentEmail, label: currentLabel, code})
+      body: JSON.stringify({email: currentEmail, label: currentLabel, code, agreed_terms: true})
     });
     const data = await resp.json();
     if (resp.ok) {
