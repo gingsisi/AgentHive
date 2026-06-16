@@ -27,6 +27,22 @@ Claude Desktop config:
 import os
 import sys
 import json
+import re
+
+# Import PII patterns from parent project (classifier.py)
+_here = os.path.dirname(os.path.abspath(__file__))
+_project = os.path.dirname(_here)
+if _project not in sys.path:
+    sys.path.insert(0, _project)
+try:
+    from classifier import PII_PATTERNS
+except ImportError:
+    # Fallback: minimal PII patterns if classifier not available
+    PII_PATTERNS = [
+        (re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"), "[EMAIL]"),
+        (re.compile(r"\b\d{3}-\d{2}-\d{4}\b"), "[SSN_US]"),
+        (re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b"), "[IP]"),
+    ]
 
 from mcp.server.fastmcp import FastMCP
 import requests
@@ -44,6 +60,28 @@ mcp = FastMCP("AgentHive")
 
 def _headers():
     return {"X-API-Key": API_KEY, "Content-Type": "application/json"}
+
+
+def _scan_pii(content: str) -> dict:
+    """
+    Client-side PII scan — Layer 1 defense.
+    Runs on user's machine BEFORE data leaves for the server.
+    Strips detected PII and returns cleaned content + report.
+    """
+    cleaned = content
+    found = []
+    
+    for pattern, label in PII_PATTERNS:
+        matches = pattern.findall(cleaned)
+        if matches:
+            found.append({"label": label, "count": len(matches)})
+        cleaned = pattern.sub(label, cleaned)
+    
+    return {
+        "cleaned": cleaned,
+        "stripped_count": sum(f["count"] for f in found),
+        "stripped_types": [f["label"] for f in found],
+    }
 
 
 # ── Tools ────────────────────────────────────────────────────
@@ -128,6 +166,10 @@ def agenthive_contribute(
     if not content or len(content.strip()) < 50:
         return {"error": "Content too short (min 50 chars)", "contributed": False}
     
+    # ── Layer 1: Client-side PII scan ──
+    scan = _scan_pii(content)
+    content = scan["cleaned"]
+    
     tag_list = [t.strip() for t in tags.split(",") if t.strip()] if tags else []
     
     try:
@@ -150,6 +192,12 @@ def agenthive_contribute(
             "contributed": data.get("contributed", False),
             "id": data.get("id", ""),
             "needs_review": data.get("needs_review", False),
+            "pii_scan": {
+                "layer": 1,
+                "location": "client-side",
+                "stripped": scan["stripped_count"],
+                "types": scan["stripped_types"],
+            } if scan["stripped_count"] > 0 else None,
         }
         
         if data.get("needs_review"):
