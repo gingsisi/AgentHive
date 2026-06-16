@@ -1350,8 +1350,14 @@ function resetSignup() {
 
 function showResult(msg, type) {
   const result = document.getElementById('result');
-  document.getElementById('apiKey').textContent = msg;
+  const keyDiv = document.getElementById('apiKey');
+  keyDiv.textContent = msg;
   result.className = 'result ' + type;
+  // Hide success labels on error
+  const isError = type === 'error';
+  result.querySelectorAll('p.note, p.warn, p[data-i18n="result_key"], p[data-i18n="result_save"], p[data-i18n="result_warn"], p[data-i18n="result_usage"]').forEach(el => {
+    el.style.display = isError ? 'none' : '';
+  });
 }
 </script>
 </body>
