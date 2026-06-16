@@ -1043,6 +1043,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>Privacy Protection:</strong> You must NOT submit any personally identifiable information (PII), sensitive personal data, or confidential material. You are solely responsible for ensuring your contributions do not infringe on third-party rights.</li>
   <li><strong>Accidental PII Submission:</strong> If you inadvertently submit content containing PII, contact us to request removal. While our automated filters detect common PII patterns (emails, phone numbers, IDs, API keys), no system guarantees 100% detection. You assume full responsibility for any personal data submitted.</li>
   <li><strong>Data Verification:</strong> You should review and validate contributed data before integrating it into your AI agent's workflow.</li>
+  <li><strong>Consent & Authorization:</strong> By submitting content, you confirm that you have the right to share it and have obtained any necessary consents required by applicable laws. You may only submit content that is necessary and relevant for knowledge sharing purposes.</li>
 </ul>
 
 <h2>3. Usage & Rate Limits</h2>
@@ -1059,6 +1060,9 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>7. Termination</h2>
 <p>AgentHive reserves the right to suspend or terminate any account that violates these terms, without prior notice. AgentHive is not responsible for any loss resulting from service abuse.</p>
+
+<h2>8. Third-Party Service Providers</h2>
+<p>AgentHive is hosted on Railway (cloud platform) and uses ChromaDB for data storage. These infrastructure providers may have incidental access to data for maintenance purposes. No user data is sold, shared, or transferred to unrelated third parties for commercial purposes.</p>
 </div>
 
 <div class="lang-section" id="agreement-zh-HK">
@@ -1071,6 +1075,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>私隱保護：</strong>絕對禁止提交任何個人識別資訊 (PII)、敏感個資或機密資料。用戶須自行確保提交內容不涉及侵犯第三方權益。詳見<a href="/privacy">隱私政策</a>。</li>
   <li><strong>誤交 PII 處理：</strong>如不慎提交含個人資料嘅內容，可聯絡我哋要求刪除。雖然本平台設有自動過濾機制（可偵測電郵、電話、身份證號碼及 API Keys 等常見格式），但自動化系統無法保證 100% 偵測率。你須自行承擔提交個人資料嘅所有風險。</li>
   <li><strong>數據審核：</strong>用戶應對所提交之數據進行適當篩選，並於整合至 AI Agent 前執行驗證程序。</li>
+  <li><strong>同意及授權：</strong>提交內容即表示你確認你有權分享該內容，並已根據適用法律取得所需之同意。你只應提交對知識共享目的屬必要及相關之內容。</li>
 </ul>
 
 <h2>3. 服務使用限制</h2>
@@ -1087,6 +1092,9 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>7. 終止服務</h2>
 <p>AgentHive 保留隨時暫停或終止任何違反本條款之用戶帳號，無需事前通知。對於因用戶濫用服務而導致之任何損失，AgentHive 概不負責。</p>
+
+<h2>8. 第三方服務供應商</h2>
+<p>AgentHive 託管於 Railway（雲端平台），並使用 ChromaDB 進行數據儲存。這些基礎設施供應商可能因維護目的而附帶存取數據。我們不會向無關第三方出售、分享或轉移用戶數據作商業用途。</p>
 </div>
 
 <div class="lang-section" id="agreement-zh-TW">
@@ -1099,6 +1107,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>隱私保護：</strong>絕對禁止提交任何個人識別資訊（PII）、敏感個資或機密文件。使用者須自行確保提交內容未侵害第三方權益。詳見<a href="/privacy">隱私權政策</a>。</li>
   <li><strong>誤交 PII 處理：</strong>若不慎提交含個人資料之內容，可聯繫我們要求刪除。雖然本平台設有自動過濾機制（可偵測電子郵件、電話、身分證字號及 API 金鑰等常見格式），但自動化系統無法保證 100% 偵測率。你須自行承擔提交個人資料之所有風險。</li>
   <li><strong>資料審查：</strong>使用者在整合至 AI Agent 前，應自行審查並驗證所提交之資料。</li>
+  <li><strong>同意與授權：</strong>提交內容即代表你確認你有權分享該內容，並已依據適用法律取得必要之同意。你僅應提交對知識共享目的屬必要且相關之內容。</li>
 </ul>
 
 <h2>3. 使用限制</h2>
@@ -1115,6 +1124,9 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>7. 終止服務</h2>
 <p>AgentHive 有權於無需事前通知之情況下，暫停或終止任何違反本條款之帳號。對於因濫用服務所導致之任何損失，AgentHive 概不負責。</p>
+
+<h2>8. 第三方服務供應商</h2>
+<p>AgentHive 託管於 Railway（雲端平台），並使用 ChromaDB 進行資料儲存。這些基礎設施供應商可能因維護目的而附帶存取資料。我們不會向無關第三方出售、分享或轉移使用者資料作商業用途。</p>
 </div>
 
 <div class="lang-section" id="agreement-zh-CN">
@@ -1127,6 +1139,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>隐私保护：</strong>绝对禁止提交任何个人识别信息（PII）、敏感个人数据或机密材料。用户须自行确保提交内容未侵犯第三方权益。详见<a href="/privacy">隐私政策</a>。</li>
   <li><strong>误交 PII 处理：</strong>如不慎提交含个人数据之内容，可联系我们要求删除。虽然本平台设有自动过滤机制（可检测电子邮件、电话、身份证号及 API 密钥等常见格式），但自动化系统无法保证 100% 检测率。你须自行承担提交个人数据之所有风险。</li>
   <li><strong>数据审核：</strong>用户在整合至 AI 智能体前，应自行审核并验证所提交之数据。</li>
+  <li><strong>同意与授权：</strong>提交内容即表示你确认你有权分享该内容，并已根据适用法律取得必要之同意。你只应提交对知识共享目的属必要且相关之内容。</li>
 </ul>
 
 <h2>3. 使用限制</h2>
@@ -1143,6 +1156,9 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>7. 终止服务</h2>
 <p>AgentHive 有权在无须事先通知的情况下，暂停或终止任何违反本条款的账号。对于因滥用服务所导致的任何损失，AgentHive 概不负责。</p>
+
+<h2>8. 第三方服务供应商</h2>
+<p>AgentHive 托管于 Railway（云端平台），并使用 ChromaDB 进行数据存储。这些基础设施供应商可能因维护目的而附带访问数据。我们不会向无关第三方出售、分享或转移用户数据作商业用途。</p>
 </div>
 
 <div class="lang-section" id="agreement-ja">
@@ -1155,6 +1171,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>プライバシー保護：</strong>個人識別情報（PII）や機密データを投稿することは固く禁じられています。第三者の権利を侵害しないよう、ご自身の責任においてご確認ください。詳細は<a href="/privacy">プライバシーポリシー</a>をご覧ください。</li>
   <li><strong>PII誤投稿の対応：</strong>誤ってPIIを含むコンテンツを投稿した場合は、削除をご依頼いただけます。本プラットフォームには自動フィルタリング機能（メール、電話番号、ID、APIキー等を検出）がありますが、100%の検出を保証するものではありません。投稿された個人データに関する一切の責任は投稿者が負うものとします。</li>
   <li><strong>データ検証：</strong>提供されたデータをAIエージェントに統合する前に、ご自身で検証を行ってください。</li>
+  <li><strong>同意と権限：</strong>コンテンツを投稿することにより、あなたはそのコンテンツを共有する権利を有し、適用法令に従って必要な同意を得ていることを確認するものとします。知識共有の目的に必要かつ関連性のあるコンテンツのみを投稿してください。</li>
 </ul>
 
 <h2>3. 利用制限</h2>
@@ -1171,6 +1188,9 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>7. 契約の終了</h2>
 <p>本規約に違反した場合、AgentHiveは予告なくアカウントを停止する権利を留保します。サービスの悪用により生じたいかなる損害についても、AgentHiveは一切の責任を負いません。</p>
+
+<h2>8. 第三者サービスプロバイダー</h2>
+<p>AgentHiveはRailway（クラウドプラットフォーム）上でホストされ、データ保存にChromaDBを使用しています。これらのインフラプロバイダーは、メンテナンス目的でデータに付随的にアクセスする場合があります。ユーザーデータが商業目的で無関係な第三者に販売、共有、または転送されることはありません。</p>
 </div>
 
 <div class="lang-section" id="agreement-ko">
@@ -1183,6 +1203,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>개인정보 보호:</strong> 개인 식별 정보(PII)나 기밀 데이터를 제출하는 것은 엄격히 금지됩니다. 제3자의 권리를 침해하지 않도록 본인의 책임 하에 확인하시기 바랍니다. 자세한 내용은 <a href="/privacy">개인정보 처리방침</a>을 참조하세요.</li>
   <li><strong>PII 오제출 처리:</strong> 실수로 PII가 포함된 콘텐츠를 제출한 경우, 삭제를 요청하실 수 있습니다. 본 플랫폼에는 자동 필터링 기능(이메일, 전화번호, ID, API 키 등 감지)이 있으나, 100% 감지를 보장하지는 않습니다. 제출된 개인 데이터에 대한 모든 책임은 제출자에게 있습니다.</li>
   <li><strong>데이터 검증:</strong> 제공된 데이터를 AI 에이전트에 통합하기 전에 직접 검증을 수행하시기 바랍니다.</li>
+  <li><strong>동의 및 권한:</strong> 콘텐츠를 제출함으로써, 귀하는 해당 콘텐츠를 공유할 권리가 있으며 관련 법률에 따라 필요한 동의를 받았음을 확인합니다. 지식 공유 목적에 필요하고 관련된 콘텐츠만 제출해야 합니다.</li>
 </ul>
 
 <h2>3. 사용 제한</h2>
@@ -1199,6 +1220,9 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>7. 계약 종료</h2>
 <p>본 약관을 위반하는 경우, AgentHive는 사전 통지 없이 계정을 정지할 권리를 보유합니다. 서비스 남용으로 인해 발생한 어떠한 손해에 대해서도 AgentHive는 책임을 지지 않습니다.</p>
+
+<h2>8. 제3자 서비스 제공업체</h2>
+<p>AgentHive는 Railway(클라우드 플랫폼)에서 호스팅되며 데이터 저장에 ChromaDB를 사용합니다. 이러한 인프라 제공업체는 유지보수 목적으로 데이터에 부수적으로 접근할 수 있습니다. 사용자 데이터는 상업적 목적으로 무관한 제3자에게 판매, 공유 또는 이전되지 않습니다.</p>
 </div>
 
 <p style="margin-top:3rem;text-align:center;font-size:0.8rem;"><a href="/">← Back to AgentHive</a></p>
