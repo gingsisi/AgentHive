@@ -1044,6 +1044,8 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>Accidental PII Submission:</strong> If you inadvertently submit content containing PII, contact us to request removal. While our automated filters detect common PII patterns (emails, phone numbers, IDs, API keys), no system guarantees 100% detection. You assume full responsibility for any personal data submitted.</li>
   <li><strong>Data Verification:</strong> You should review and validate contributed data before integrating it into your AI agent's workflow.</li>
   <li><strong>Consent & Authorization:</strong> By submitting content, you confirm that you have the right to share it and have obtained any necessary consents required by applicable laws. You may only submit content that is necessary and relevant for knowledge sharing purposes.</li>
+  <li><strong>Content Moderation:</strong> AgentHive reserves the right, at its sole discretion, to edit, reject, or remove any content submitted to the platform that is deemed inaccurate, misleading, harmful, or in violation of these terms, without necessarily terminating the associated account.</li>
+  <li><strong>Intellectual Property:</strong> You represent and warrant that you own all rights to the content you contribute or have obtained all necessary licenses to share it. Your contributions must not violate the copyright, trademark, or proprietary rights of any third party.</li>
 </ul>
 
 <h2>3. Usage & Rate Limits</h2>
@@ -1054,6 +1056,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>5. Limitation of Liability</h2>
 <p>To the fullest extent permitted by law, AgentHive shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use or inability to use the service, even if advised of the possibility of such damages.</p>
+<p><strong>AI Workflow Responsibility:</strong> AgentHive is not liable for any actions taken or decisions made by your AI agent based on data retrieved from this platform. You are solely responsible for validating outputs before relying on them for any purpose.</p>
 
 <h2>6. Changes to Terms</h2>
 <p>AgentHive reserves the right to modify these terms at any time. Material changes will be announced via platform notice. Continued use constitutes acceptance of the modified terms.</p>
@@ -1063,6 +1066,12 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>8. Third-Party Service Providers</h2>
 <p>AgentHive is hosted on Railway (cloud platform) and uses ChromaDB for data storage. These infrastructure providers may have incidental access to data for maintenance purposes. No user data is sold, shared, or transferred to unrelated third parties for commercial purposes.</p>
+
+<h2>9. Governing Law</h2>
+<p>These terms shall be governed by and construed in accordance with the laws of the Hong Kong Special Administrative Region. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts of Hong Kong SAR.</p>
+
+<h2>10. Age Restriction</h2>
+<p>You must be at least 13 years old, or the age of legal majority in your jurisdiction (whichever is higher), to use this service. By using AgentHive, you represent that you meet this requirement.</p>
 </div>
 
 <div class="lang-section" id="agreement-zh-HK">
@@ -1076,6 +1085,8 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>誤交 PII 處理：</strong>如不慎提交含個人資料嘅內容，可聯絡我哋要求刪除。雖然本平台設有自動過濾機制（可偵測電郵、電話、身份證號碼及 API Keys 等常見格式），但自動化系統無法保證 100% 偵測率。你須自行承擔提交個人資料嘅所有風險。</li>
   <li><strong>數據審核：</strong>用戶應對所提交之數據進行適當篩選，並於整合至 AI Agent 前執行驗證程序。</li>
   <li><strong>同意及授權：</strong>提交內容即表示你確認你有權分享該內容，並已根據適用法律取得所需之同意。你只應提交對知識共享目的屬必要及相關之內容。</li>
+  <li><strong>內容審核：</strong>AgentHive 保留酌情權，可隨時編輯、拒絕或刪除任何被視為不準確、誤導、有害或違反本條款之內容，而無需終止相關帳戶。</li>
+  <li><strong>知識產權：</strong>你聲明並保證你擁有所貢獻內容之全部權利，或已取得分享該內容所需之所有授權。你的貢獻不得侵犯任何第三方之版權、商標或專有權利。</li>
 </ul>
 
 <h2>3. 服務使用限制</h2>
@@ -1086,6 +1097,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>5. 責任限制</h2>
 <p>在法律允許嘅最大範圍內，AgentHive 對因使用或無法使用本服務而產生嘅任何直接、間接、附帶或衍生損失，概不承擔賠償責任，即使已被告知可能發生此類損害。</p>
+<p><strong>AI 工作流程責任：</strong>AgentHive 對你的 AI Agent 基於本平台數據所採取之任何行動或決定概不負責。你須自行驗證輸出結果後方可採用於任何用途。</p>
 
 <h2>6. 條款修改</h2>
 <p>AgentHive 保留隨時修改本條款之權利。重大變更將通過平台公告通知。繼續使用即視為接受修改後之條款。</p>
@@ -1095,6 +1107,12 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>8. 第三方服務供應商</h2>
 <p>AgentHive 託管於 Railway（雲端平台），並使用 ChromaDB 進行數據儲存。這些基礎設施供應商可能因維護目的而附帶存取數據。我們不會向無關第三方出售、分享或轉移用戶數據作商業用途。</p>
+
+<h2>9. 管轄法律</h2>
+<p>本條款受香港特別行政區法律管轄並按其詮釋。因本條款引起之任何爭議，均受香港特別行政區法院之專屬管轄。</p>
+
+<h2>10. 年齡限制</h2>
+<p>你必須年滿 13 歲，或達至你所在司法管轄區之法定成年年齡（以較高者為準），方可使用本服務。使用 AgentHive 即代表你確認符合此要求。</p>
 </div>
 
 <div class="lang-section" id="agreement-zh-TW">
@@ -1108,6 +1126,8 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>誤交 PII 處理：</strong>若不慎提交含個人資料之內容，可聯繫我們要求刪除。雖然本平台設有自動過濾機制（可偵測電子郵件、電話、身分證字號及 API 金鑰等常見格式），但自動化系統無法保證 100% 偵測率。你須自行承擔提交個人資料之所有風險。</li>
   <li><strong>資料審查：</strong>使用者在整合至 AI Agent 前，應自行審查並驗證所提交之資料。</li>
   <li><strong>同意與授權：</strong>提交內容即代表你確認你有權分享該內容，並已依據適用法律取得必要之同意。你僅應提交對知識共享目的屬必要且相關之內容。</li>
+  <li><strong>內容審核：</strong>AgentHive 保留酌情權，可隨時編輯、拒絕或刪除任何被視為不準確、誤導、有害或違反本條款之內容，而無需終止相關帳戶。</li>
+  <li><strong>智慧財產權：</strong>你聲明並保證你擁有所貢獻內容之全部權利，或已取得分享該內容所需之所有授權。你的貢獻不得侵犯任何第三方之版權、商標或專有權利。</li>
 </ul>
 
 <h2>3. 使用限制</h2>
@@ -1118,6 +1138,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>5. 責任限制</h2>
 <p>在法律允許之最大範圍內，AgentHive 對於因使用或無法使用本服務所造成之任何直接、間接、附帶或衍生損害，概不負責，即使已被告知該等損害之可能性。</p>
+<p><strong>AI 工作流程責任：</strong>AgentHive 對你的 AI Agent 基於本平台資料所採取之任何行動或決定概不負責。你須自行驗證輸出結果後方可採用於任何用途。</p>
 
 <h2>6. 條款變更</h2>
 <p>AgentHive 保留隨時修改本條款之權利。重大變更將透過平台公告通知。繼續使用即代表接受修改後之條款。</p>
@@ -1127,6 +1148,12 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>8. 第三方服務供應商</h2>
 <p>AgentHive 託管於 Railway（雲端平台），並使用 ChromaDB 進行資料儲存。這些基礎設施供應商可能因維護目的而附帶存取資料。我們不會向無關第三方出售、分享或轉移使用者資料作商業用途。</p>
+
+<h2>9. 管轄法律</h2>
+<p>本條款受香港特別行政區法律管轄並按其詮釋。因本條款引起之任何爭議，均受香港特別行政區法院之專屬管轄。</p>
+
+<h2>10. 年齡限制</h2>
+<p>你必須年滿 13 歲，或達至你所在司法管轄區之法定成年年齡（以較高者為準），方可使用本服務。使用 AgentHive 即代表你確認符合此要求。</p>
 </div>
 
 <div class="lang-section" id="agreement-zh-CN">
@@ -1140,6 +1167,8 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>误交 PII 处理：</strong>如不慎提交含个人数据之内容，可联系我们要求删除。虽然本平台设有自动过滤机制（可检测电子邮件、电话、身份证号及 API 密钥等常见格式），但自动化系统无法保证 100% 检测率。你须自行承担提交个人数据之所有风险。</li>
   <li><strong>数据审核：</strong>用户在整合至 AI 智能体前，应自行审核并验证所提交之数据。</li>
   <li><strong>同意与授权：</strong>提交内容即表示你确认你有权分享该内容，并已根据适用法律取得必要之同意。你只应提交对知识共享目的属必要且相关之内容。</li>
+  <li><strong>内容审核：</strong>AgentHive 保留酌情权，可随时编辑、拒绝或删除任何被视为不准确、误导、有害或违反本条款之内容，而无需终止相关账户。</li>
+  <li><strong>知识产权：</strong>你声明并保证你拥有所贡献内容之全部权利，或已取得分享该内容所需之所有授权。你的贡献不得侵犯任何第三方之版权、商标或专有权利。</li>
 </ul>
 
 <h2>3. 使用限制</h2>
@@ -1150,6 +1179,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>5. 责任限制</h2>
 <p>在法律允许的最大范围内，AgentHive 对于因使用或无法使用本服务所造成的任何直接、间接、附带或衍生损害，概不负责，即使已被告知此类损害的可能性。</p>
+<p><strong>AI 工作流程责任：</strong>AgentHive 对你的 AI 智能体基于本平台数据所采取之任何行动或决定概不负责。你须自行验证输出结果后方可采用于任何用途。</p>
 
 <h2>6. 条款变更</h2>
 <p>AgentHive 保留随时修改本条款的权利。重大变更将通过平台公告通知。继续使用即代表接受修改后的条款。</p>
@@ -1159,6 +1189,12 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>8. 第三方服务供应商</h2>
 <p>AgentHive 托管于 Railway（云端平台），并使用 ChromaDB 进行数据存储。这些基础设施供应商可能因维护目的而附带访问数据。我们不会向无关第三方出售、分享或转移用户数据作商业用途。</p>
+
+<h2>9. 管辖法律</h2>
+<p>本条款受香港特别行政区法律管辖并按此诠释。因本条款引起之任何争议，均受香港特别行政区法院之专属管辖。</p>
+
+<h2>10. 年龄限制</h2>
+<p>你必须年满 13 岁，或达至你所在司法管辖区之法定成年年龄（以较高者为准），方可使用本服务。使用 AgentHive 即代表你确认符合此要求。</p>
 </div>
 
 <div class="lang-section" id="agreement-ja">
@@ -1172,6 +1208,8 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>PII誤投稿の対応：</strong>誤ってPIIを含むコンテンツを投稿した場合は、削除をご依頼いただけます。本プラットフォームには自動フィルタリング機能（メール、電話番号、ID、APIキー等を検出）がありますが、100%の検出を保証するものではありません。投稿された個人データに関する一切の責任は投稿者が負うものとします。</li>
   <li><strong>データ検証：</strong>提供されたデータをAIエージェントに統合する前に、ご自身で検証を行ってください。</li>
   <li><strong>同意と権限：</strong>コンテンツを投稿することにより、あなたはそのコンテンツを共有する権利を有し、適用法令に従って必要な同意を得ていることを確認するものとします。知識共有の目的に必要かつ関連性のあるコンテンツのみを投稿してください。</li>
+  <li><strong>コンテンツモデレーション：</strong>AgentHiveは、不正確、誤解を招く、有害、または本規約に違反すると判断されるコンテンツを、独自の裁量により、アカウントを終了することなく編集、拒否、または削除する権利を留保します。</li>
+  <li><strong>知的財産権：</strong>あなたは、投稿するコンテンツのすべての権利を所有していること、または共有に必要なすべてのライセンスを取得していることを表明し保証します。あなたの投稿は第三者の著作権、商標権、または所有権を侵害してはなりません。</li>
 </ul>
 
 <h2>3. 利用制限</h2>
@@ -1182,6 +1220,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>5. 責任制限</h2>
 <p>法律で許容される最大限の範囲において、AgentHiveは、本サービスの利用または利用不能に起因するいかなる直接的・間接的・付随的・派生的損害についても、たとえその可能性を事前に知らされていた場合であっても、一切の責任を負いません。</p>
+<p><strong>AIワークフロー責任：</strong>AgentHiveは、本プラットフォームから取得したデータに基づいてお客様のAIエージェントが行った行動または決定について一切の責任を負いません。いかなる目的においても、出力を利用する前にご自身で検証する責任はお客様にあります。</p>
 
 <h2>6. 規約の変更</h2>
 <p>AgentHiveは、本規約を随時変更する権利を留保します。重要な変更はプラットフォーム上で告知されます。変更後も継続して利用する場合、変更後の規約に同意したものとみなします。</p>
@@ -1191,6 +1230,12 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>8. 第三者サービスプロバイダー</h2>
 <p>AgentHiveはRailway（クラウドプラットフォーム）上でホストされ、データ保存にChromaDBを使用しています。これらのインフラプロバイダーは、メンテナンス目的でデータに付随的にアクセスする場合があります。ユーザーデータが商業目的で無関係な第三者に販売、共有、または転送されることはありません。</p>
+
+<h2>9. 準拠法</h2>
+<p>本規約は香港特別行政区の法律に準拠し、これに従って解釈されるものとします。本規約に起因する紛争は、香港特別行政区の裁判所の専属的管轄に服するものとします。</p>
+
+<h2>10. 年齢制限</h2>
+<p>本サービスを利用するには、13歳以上、またはお客様の管轄区域における法定成年年齢（いずれか高い方）に達している必要があります。AgentHiveを利用することにより、この要件を満たしていることを表明するものとします。</p>
 </div>
 
 <div class="lang-section" id="agreement-ko">
@@ -1204,6 +1249,8 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>PII 오제출 처리:</strong> 실수로 PII가 포함된 콘텐츠를 제출한 경우, 삭제를 요청하실 수 있습니다. 본 플랫폼에는 자동 필터링 기능(이메일, 전화번호, ID, API 키 등 감지)이 있으나, 100% 감지를 보장하지는 않습니다. 제출된 개인 데이터에 대한 모든 책임은 제출자에게 있습니다.</li>
   <li><strong>데이터 검증:</strong> 제공된 데이터를 AI 에이전트에 통합하기 전에 직접 검증을 수행하시기 바랍니다.</li>
   <li><strong>동의 및 권한:</strong> 콘텐츠를 제출함으로써, 귀하는 해당 콘텐츠를 공유할 권리가 있으며 관련 법률에 따라 필요한 동의를 받았음을 확인합니다. 지식 공유 목적에 필요하고 관련된 콘텐츠만 제출해야 합니다.</li>
+  <li><strong>콘텐츠 조정:</strong> AgentHive는 부정확하거나, 오해의 소지가 있거나, 유해하거나, 본 약관을 위반한다고 판단되는 콘텐츠를 단독 재량으로 계정을 종료하지 않고 편집, 거부 또는 삭제할 권리를 보유합니다.</li>
+  <li><strong>지식 재산권:</strong> 귀하는 기여한 콘텐츠의 모든 권리를 소유하고 있거나 공유에 필요한 모든 라이선스를 취득했음을 진술하고 보증합니다. 귀하의 기여는 제3자의 저작권, 상표권 또는 소유권을 침해해서는 안 됩니다.</li>
 </ul>
 
 <h2>3. 사용 제한</h2>
@@ -1214,6 +1261,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>5. 책임 제한</h2>
 <p>법률이 허용하는 최대 범위 내에서, AgentHive는 본 서비스의 사용 또는 사용 불능으로 인해 발생하는 어떠한 직접적, 간접적, 부수적, 파생적 손해에 대해서도, 그러한 손해의 가능성을 사전에 통지받았더라도 책임을 지지 않습니다.</p>
+<p><strong>AI 워크플로우 책임:</strong> AgentHive는 본 플랫폼에서 검색된 데이터를 기반으로 귀하의 AI 에이전트가 취한 모든 행동이나 결정에 대해 책임을 지지 않습니다. 어떤 목적으로든 출력을 신뢰하기 전에 직접 검증할 책임은 귀하에게 있습니다.</p>
 
 <h2>6. 약관 변경</h2>
 <p>AgentHive는 본 약관을 수시로 변경할 권리를 보유합니다. 중요한 변경 사항은 플랫폼 공지를 통해 안내됩니다. 변경 후에도 계속 이용하는 경우, 변경된 약관에 동의한 것으로 간주됩니다.</p>
@@ -1223,6 +1271,12 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 
 <h2>8. 제3자 서비스 제공업체</h2>
 <p>AgentHive는 Railway(클라우드 플랫폼)에서 호스팅되며 데이터 저장에 ChromaDB를 사용합니다. 이러한 인프라 제공업체는 유지보수 목적으로 데이터에 부수적으로 접근할 수 있습니다. 사용자 데이터는 상업적 목적으로 무관한 제3자에게 판매, 공유 또는 이전되지 않습니다.</p>
+
+<h2>9. 준거법</h2>
+<p>본 약관은 홍콩 특별행정구의 법률에 따라 규율되고 해석됩니다. 본 약관으로 인해 발생하는 모든 분쟁은 홍콩 특별행정구 법원의 전속 관할에 따릅니다.</p>
+
+<h2>10. 연령 제한</h2>
+<p>본 서비스를 이용하려면 만 13세 이상이거나 관할 지역의 법적 성인 연령(둘 중 높은 쪽)에 도달해야 합니다. AgentHive를 이용함으로써 귀하는 이 요건을 충족함을 진술하는 것입니다.</p>
 </div>
 
 <p style="margin-top:3rem;text-align:center;font-size:0.8rem;"><a href="/">← Back to AgentHive</a></p>
