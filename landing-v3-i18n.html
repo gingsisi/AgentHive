@@ -490,7 +490,10 @@
     transition: background 0.15s;
   }
   .btn-submit:hover { background: var(--purple-hover); }
-  .btn-submit:disabled { background: #c4c4d4; cursor: not-allowed; }
+  .btn-submit:disabled { background: #3d3d50; opacity: 0.45; cursor: not-allowed; }
+  /* Agreement links: brighter for dark bg */
+  #agreeLabel a { color: #a89bff; text-decoration: underline; text-underline-offset: 2px; }
+  #agreeLabel a:hover { color: #c5b8ff; }
   .result {
     margin-top: 1.25rem;
     padding: 1rem;
@@ -787,10 +790,10 @@
             <span id="agreeLabel" data-i18n="signup_agree">I have read and agree to the <a href="/agreement" target="_blank">AgentHive Service Agreement</a>, including the disclaimer, user obligations, and usage limits.</span>
           </label>
         </div>
-        <button type="submit" class="btn-submit" id="verifyBtn" data-i18n="verify_btn">Verify & Generate API Key</button>
+        <button type="submit" class="btn-submit" id="verifyBtn" disabled data-i18n="verify_btn">Verify & Generate API Key</button>
       </form>
       <p style="text-align:center;margin-top:0.8rem;">
-        <a href="#" onclick="resetSignup()" style="font-size:0.8rem;color:var(--purple);text-decoration:none;" data-i18n="verify_back">← Back / change email</a>
+        <a href="#" onclick="resetSignup()" style="font-size:0.8rem;color:#a89bff;text-decoration:underline;text-underline-offset:2px;" data-i18n="verify_back">← Back / change email</a>
       </p>
     </div>
     <!-- Result -->
@@ -1438,6 +1441,17 @@ function showResult(msg, type) {
     el.style.display = isError ? 'none' : '';
   });
 }
+
+// Toggle verify button based on agreement checkbox
+document.addEventListener('DOMContentLoaded', function() {
+  const agreeCheckbox = document.getElementById('agreeTerms');
+  const verifyBtn = document.getElementById('verifyBtn');
+  if (agreeCheckbox && verifyBtn) {
+    agreeCheckbox.addEventListener('change', function() {
+      verifyBtn.disabled = !this.checked;
+    });
+  }
+});
 </script>
 </body>
 </html>
