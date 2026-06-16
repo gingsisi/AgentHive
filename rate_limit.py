@@ -51,9 +51,12 @@ class RateLimiter:
 
 
 # Pre-configured limiters
-SEARCH_LIMITER = RateLimiter(rate=1.0, burst=60)       # 60 searches/min for free
-CONTRIBUTE_LIMITER = RateLimiter(rate=0.17, burst=10)  # 10 contributes/min for free
-SIGNUP_LIMITER = RateLimiter(rate=0.05, burst=3)       # 3 signups/min per IP
+# NOTE: Beta period — high limits as anti-abuse only. When paid tier launches, RESTORE:
+#   SEARCH_LIMITER = RateLimiter(rate=1.0, burst=60)       # 60/min free
+#   CONTRIBUTE_LIMITER = RateLimiter(rate=0.17, burst=10)   # 10/min free
+SEARCH_LIMITER = RateLimiter(rate=166.0, burst=10000)     # 10000/min = anti-abuse only
+CONTRIBUTE_LIMITER = RateLimiter(rate=166.0, burst=10000) # 10000/min = anti-abuse only
+SIGNUP_LIMITER = RateLimiter(rate=0.05, burst=3)          # 3 signups/min per IP
 PRO_RATE = 5.0      # Pro tier: 5x rate multiplier
 
 # Tier rate multipliers

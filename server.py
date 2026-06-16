@@ -947,26 +947,55 @@ PRIVACY_HTML = """<!DOCTYPE html>
   h2 { color: #c4b5fd; font-size: 1.2rem; margin: 2rem 0 0.8rem; }
   p, li { color: #999; }
   a { color: #7c3aed; }
+  .lang-section { border-top: 1px solid #1e1e2e; margin-top: 2rem; padding-top: 1.5rem; display: none; }
+  .lang-section.active { display: block; }
+  .lang-label { display: inline-block; background: #1e1e2e; color: #7c3aed; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; margin-bottom: 1rem; }
+  nav { margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; }
+  nav a { margin-right: 1rem; font-size: 0.85rem; }
+  .lang-switcher { position: relative; }
+  .lang-btn { background: #1e1e2e; color: #c4b5fd; border: 1px solid #2a2a3e; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
+  .lang-btn:hover { border-color: #7c3aed; }
+  .lang-dropdown { display: none; position: absolute; right: 0; top: 100%; margin-top: 4px; background: #1a1a2e; border: 1px solid #2a2a3e; border-radius: 6px; min-width: 160px; z-index: 100; }
+  .lang-dropdown.open { display: block; }
+  .lang-option { display: block; width: 100%; background: none; border: none; color: #c4b5fd; padding: 0.5rem 0.8rem; text-align: left; cursor: pointer; font-size: 0.8rem; }
+  .lang-option:hover { background: #2a2a3e; color: #e0e0e0; }
+  .lang-option.active { color: #7c3aed; }
 </style>
 </head>
 <body>
+<nav><a href="/">← AgentHive</a>
+<div class="lang-switcher">
+  <button class="lang-btn" onclick="toggleLang()">
+    <span id="langLabel">English</span> <span>▾</span>
+  </button>
+  <div class="lang-dropdown" id="langMenu">
+    <button class="lang-option active" onclick="switchPrivacyLang('en')">English</button>
+    <button class="lang-option" onclick="switchPrivacyLang('zh-HK')">繁體中文（HK）</button>
+    <button class="lang-option" onclick="switchPrivacyLang('zh-TW')">繁體中文（TW）</button>
+    <button class="lang-option" onclick="switchPrivacyLang('zh-CN')">简体中文</button>
+    <button class="lang-option" onclick="switchPrivacyLang('ja')">日本語</button>
+    <button class="lang-option" onclick="switchPrivacyLang('ko')">한국어</button>
+  </div>
+</div>
+</nav>
 <h1>Privacy Policy</h1>
 <p><strong>Last updated: June 2026</strong></p>
 
+<!-- EN -->
+<div class="lang-section active" id="privacy-en">
+<div class="lang-label">English</div>
 <h2>What We Collect</h2>
 <ul>
   <li><strong>Email address</strong> — when you sign up for an API key. Used only for key management.</li>
   <li><strong>API usage metrics</strong> — search count, contribution count, trust score. Tied to your API key, not your identity.</li>
   <li><strong>Web search results you contribute</strong> — after PII is stripped (see below).</li>
 </ul>
-
 <h2>What We DON'T Collect</h2>
 <ul>
   <li>Your AI agent's memory, conversations, or private files.</li>
   <li>Browsing history or personal data from your device.</li>
   <li>Passwords — we use API key hashing (SHA-256), not plaintext.</li>
 </ul>
-
 <h2>PII Stripping</h2>
 <p>All contributed content passes through three layers of PII detection before storage:</p>
 <ol>
@@ -975,15 +1004,192 @@ PRIVACY_HTML = """<!DOCTYPE html>
   <li><strong>Server-side</strong> — aggressive regex scan strips any remaining PII.</li>
 </ol>
 <p>Patterns stripped: email addresses, phone numbers (HK, CN, US, UK, JP, TW, SG, KR), national ID numbers (HK, China, US SSN, UK NI, Taiwan, Singapore NRIC, Korea RRN, Brazil CPF plus more), IP addresses, API keys, credit card numbers, and passport numbers.</p>
-
 <h2>Data Storage & Retention</h2>
 <p>Cache entries are stored in ChromaDB with creation timestamps. Entries may be expired based on domain-specific decay rules (e.g., financial data expires faster than legal references). You can request deletion of your API key and associated metadata by contacting us.</p>
-
 <h2>Third Parties</h2>
 <p>We do not sell, share, or transfer your data to third parties. The cache pool is the <em>product</em> — your data powers the shared knowledge mesh, nothing else.</p>
-
 <h2>Contact</h2>
 <p>For privacy concerns: file an issue on the GitHub repository.</p>
+</div>
+
+<!-- zh-HK -->
+<div class="lang-section" id="privacy-zh-HK">
+<div class="lang-label">繁體中文（HK）</div>
+<h2>我哋會收集咩</h2>
+<ul>
+  <li><strong>電郵地址</strong> — 申請 API Key 嗰陣用，淨係用嚟管理條 Key。</li>
+  <li><strong>API 使用數據</strong> — 搜尋次數、貢獻次數、信任評分。同你條 API Key 掛勾，唔係你嘅身份。</li>
+  <li><strong>你貢獻嘅搜尋結果</strong> — 過咗 PII 過濾之後先儲存（睇下面）。</li>
+</ul>
+<h2>我哋唔會收集</h2>
+<ul>
+  <li>你個 AI Agent 嘅記憶、對話紀錄或私人檔案。</li>
+  <li>瀏覽記錄或你裝置上嘅個人資料。</li>
+  <li>密碼 — 我哋用 API Key 雜湊（SHA-256），唔係明文儲存。</li>
+</ul>
+<h2>PII 過濾機制</h2>
+<p>所有貢獻內容喺儲存前都會經過三層 PII 偵測：</p>
+<ol>
+  <li><strong>Agent 端</strong> — 你嘅 Agent 喺發送前自行分類內容。</li>
+  <li><strong>擴充功能端</strong> — Human Bridge 擴充功能自動攔截 PII 格式。</li>
+  <li><strong>伺服器端</strong> — 進階 regex 掃描清除任何殘留嘅 PII。</li>
+</ol>
+<p>過濾格式包括：電郵地址、電話號碼（香港、中國、美國、英國、日本、台灣、新加坡、韓國）、身份證號碼、IP 地址、API Keys、信用卡號碼及護照號碼。</p>
+<h2>數據儲存與保留</h2>
+<p>快取條目儲存喺 ChromaDB，附有建立時間戳。條目會按 domain 特定衰減規則過期（例如財務數據比法律參考更快過期）。你可以聯絡我哋要求刪除你嘅 API Key 及相關 metadata。</p>
+<h2>第三方</h2>
+<p>我哋唔會出售、分享或轉移你嘅數據俾第三方。Cache pool <em>本身就係產品</em> — 你嘅數據驅動共享知識網絡，別無其他用途。</p>
+<h2>聯絡</h2>
+<p>有關私隱問題：請喺 GitHub Repository 開 Issue。</p>
+</div>
+
+<!-- zh-TW -->
+<div class="lang-section" id="privacy-zh-TW">
+<div class="lang-label">繁體中文（TW）</div>
+<h2>我們收集的資訊</h2>
+<ul>
+  <li><strong>電子郵件地址</strong> — 申請 API 金鑰時使用，僅用於金鑰管理。</li>
+  <li><strong>API 使用數據</strong> — 搜尋次數、貢獻次數、信任評分。與你的 API 金鑰綁定，而非你的身份。</li>
+  <li><strong>你貢獻的搜尋結果</strong> — 經過 PII 過濾後才儲存（詳見下方）。</li>
+</ul>
+<h2>我們不收集的資訊</h2>
+<ul>
+  <li>你的 AI Agent 記憶、對話紀錄或私人檔案。</li>
+  <li>瀏覽記錄或你裝置上的個人資料。</li>
+  <li>密碼 — 我們使用 API 金鑰雜湊（SHA-256），而非明文儲存。</li>
+</ul>
+<h2>PII 過濾機制</h2>
+<p>所有貢獻內容在儲存前都會經過三層 PII 偵測：</p>
+<ol>
+  <li><strong>Agent 端</strong> — 你的 Agent 在發送前自行分類內容。</li>
+  <li><strong>擴充功能端</strong> — Human Bridge 擴充功能自動攔截 PII 格式。</li>
+  <li><strong>伺服器端</strong> — 進階 regex 掃描清除任何殘留的 PII。</li>
+</ol>
+<p>過濾格式包括：電子郵件地址、電話號碼（香港、中國、美國、英國、日本、台灣、新加坡、韓國）、身分證字號、IP 位址、API 金鑰、信用卡號碼及護照號碼。</p>
+<h2>資料儲存與保留</h2>
+<p>快取條目儲存於 ChromaDB，附有建立時間戳。條目會依網域特定衰減規則過期（例如財務資料比法律參考更快過期）。你可以聯絡我們要求刪除你的 API 金鑰及相關中繼資料。</p>
+<h2>第三方</h2>
+<p>我們不會出售、分享或轉移你的資料給第三方。快取池<em>本身就是產品</em> — 你的資料驅動共享知識網絡，別無其他用途。</p>
+<h2>聯絡方式</h2>
+<p>有關隱私問題：請在 GitHub Repository 提出 Issue。</p>
+</div>
+
+<!-- zh-CN -->
+<div class="lang-section" id="privacy-zh-CN">
+<div class="lang-label">简体中文</div>
+<h2>我们收集的信息</h2>
+<ul>
+  <li><strong>电子邮件地址</strong> — 申请 API 密钥时使用，仅用于密钥管理。</li>
+  <li><strong>API 使用数据</strong> — 搜索次数、贡献次数、信任评分。与你的 API 密钥绑定，而非你的身份。</li>
+  <li><strong>你贡献的搜索结果</strong> — 经过 PII 过滤后才存储（详见下方）。</li>
+</ul>
+<h2>我们不收集的信息</h2>
+<ul>
+  <li>你的 AI 智能体记忆、对话记录或私人文件。</li>
+  <li>浏览记录或你设备上的个人数据。</li>
+  <li>密码 — 我们使用 API 密钥哈希（SHA-256），而非明文存储。</li>
+</ul>
+<h2>PII 过滤机制</h2>
+<p>所有贡献内容在存储前都会经过三层 PII 检测：</p>
+<ol>
+  <li><strong>智能体端</strong> — 你的智能体在发送前自行分类内容。</li>
+  <li><strong>扩展端</strong> — Human Bridge 扩展自动拦截 PII 格式。</li>
+  <li><strong>服务器端</strong> — 进阶 regex 扫描清除任何残留的 PII。</li>
+</ol>
+<p>过滤格式包括：电子邮件地址、电话号码（香港、中国、美国、英国、日本、台湾、新加坡、韩国）、身份证号、IP 地址、API 密钥、信用卡号及护照号。</p>
+<h2>数据存储与保留</h2>
+<p>缓存条目存储于 ChromaDB，附有创建时间戳。条目会按域名特定衰减规则过期（例如财务数据比法律参考更快过期）。你可以联系我们要求删除你的 API 密钥及相关元数据。</p>
+<h2>第三方</h2>
+<p>我们不会出售、分享或转移你的数据给第三方。缓存池<em>本身就是产品</em> — 你的数据驱动共享知识网络，别无其他用途。</p>
+<h2>联系方式</h2>
+<p>有关隐私问题：请在 GitHub Repository 提交 Issue。</p>
+</div>
+
+<!-- ja -->
+<div class="lang-section" id="privacy-ja">
+<div class="lang-label">日本語</div>
+<h2>収集する情報</h2>
+<ul>
+  <li><strong>メールアドレス</strong> — APIキー登録時に使用。キー管理のみに利用。</li>
+  <li><strong>API利用統計</strong> — 検索回数、投稿回数、信頼スコア。APIキーに紐付き、個人の特定には使用しません。</li>
+  <li><strong>投稿された検索結果</strong> — PII除去後に保存（下記参照）。</li>
+</ul>
+<h2>収集しない情報</h2>
+<ul>
+  <li>AIエージェントの記憶、会話履歴、プライベートファイル。</li>
+  <li>閲覧履歴やデバイス上の個人データ。</li>
+  <li>パスワード — APIキーはSHA-256でハッシュ化され、平文では保存されません。</li>
+</ul>
+<h2>PIIフィルタリング</h2>
+<p>すべての投稿コンテンツは保存前に3層のPII検出を通過します：</p>
+<ol>
+  <li><strong>エージェント側</strong> — 送信前にエージェントがコンテンツを分類。</li>
+  <li><strong>拡張機能側</strong> — Human Bridge拡張機能がPIIパターンを自動ブロック。</li>
+  <li><strong>サーバー側</strong> — 高度な正規表現スキャンで残留PIIを除去。</li>
+</ol>
+<p>除去対象：メールアドレス、電話番号（香港・中国・米国・英国・日本・台湾・シンガポール・韓国）、個人ID番号、IPアドレス、APIキー、クレジットカード番号、パスポート番号。</p>
+<h2>データ保存と保持</h2>
+<p>キャッシュエントリはChromaDBにタイムスタンプ付きで保存されます。エントリはドメイン別の減衰ルールに基づき期限切れとなります（例：金融データは法律参考情報より早く期限切れ）。APIキーおよび関連メタデータの削除をリクエストできます。</p>
+<h2>第三者提供</h2>
+<p>データの販売・共有・第三者への移転は一切行いません。キャッシュプールが<em>製品そのもの</em>であり、あなたのデータは共有知識メッシュの原動力です。</p>
+<h2>お問い合わせ</h2>
+<p>プライバシーに関するご懸念は、GitHubリポジトリのIssueにてご連絡ください。</p>
+</div>
+
+<!-- ko -->
+<div class="lang-section" id="privacy-ko">
+<div class="lang-label">한국어</div>
+<h2>수집하는 정보</h2>
+<ul>
+  <li><strong>이메일 주소</strong> — API 키 신청 시 사용. 키 관리 목적으로만 이용.</li>
+  <li><strong>API 사용 통계</strong> — 검색 횟수, 기여 횟수, 신뢰 점수. API 키에 연결되며 개인 식별에는 사용되지 않습니다.</li>
+  <li><strong>기여된 검색 결과</strong> — PII 제거 후 저장 (아래 참조).</li>
+</ul>
+<h2>수집하지 않는 정보</h2>
+<ul>
+  <li>AI 에이전트의 메모리, 대화 기록, 비공개 파일.</li>
+  <li>브라우징 기록 또는 기기상의 개인 데이터.</li>
+  <li>비밀번호 — API 키는 SHA-256으로 해시 처리되며 평문으로 저장되지 않습니다.</li>
+</ul>
+<h2>PII 필터링</h2>
+<p>모든 기여 콘텐츠는 저장 전 3단계 PII 탐지를 거칩니다:</p>
+<ol>
+  <li><strong>에이전트 측</strong> — 전송 전 에이전트가 콘텐츠를 분류.</li>
+  <li><strong>확장 기능 측</strong> — Human Bridge 확장 기능이 PII 패턴을 자동 차단.</li>
+  <li><strong>서버 측</strong> — 고급 정규식 스캔으로 잔여 PII를 제거.</li>
+</ol>
+<p>제거 대상: 이메일 주소, 전화번호 (홍콩·중국·미국·영국·일본·대만·싱가포르·한국), 개인 ID 번호, IP 주소, API 키, 신용카드 번호, 여권 번호.</p>
+<h2>데이터 저장 및 보존</h2>
+<p>캐시 항목은 ChromaDB에 타임스탬프와 함께 저장됩니다. 항목은 도메인별 감쇠 규칙에 따라 만료됩니다 (예: 금융 데이터는 법률 참조보다 빨리 만료). API 키 및 관련 메타데이터의 삭제를 요청할 수 있습니다.</p>
+<h2>제3자 제공</h2>
+<p>데이터 판매·공유·제3자 이전은 절대 없습니다. 캐시 풀이 <em>곧 제품</em>이며, 여러분의 데이터는 공유 지식 메시를 움직이는 원동력입니다.</p>
+<h2>문의</h2>
+<p>개인정보 관련 문의는 GitHub 리포지토리 이슈를 통해 제출해 주세요.</p>
+</div>
+
+<p style="margin-top:3rem;text-align:center;font-size:0.8rem;"><a href="/">← Back to AgentHive</a></p>
+<script>
+const LANG_LABELS = { 'en':'English', 'zh-HK':'繁體中文（HK）', 'zh-TW':'繁體中文（TW）', 'zh-CN':'简体中文', 'ja':'日本語', 'ko':'한국어' };
+
+function toggleLang() {
+  document.getElementById('langMenu').classList.toggle('open');
+}
+
+function switchPrivacyLang(lang) {
+  document.querySelectorAll('.lang-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('privacy-' + lang).classList.add('active');
+  document.getElementById('langLabel').textContent = LANG_LABELS[lang];
+  document.querySelectorAll('.lang-option').forEach(o => o.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('langMenu').classList.remove('open');
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.lang-switcher')) {
+    document.getElementById('langMenu').classList.remove('open');
+  }
+});
+</script>
 </body>
 </html>"""
 
@@ -1049,7 +1255,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 </ul>
 
 <h2>3. Usage & Rate Limits</h2>
-<p>Free tier users are limited to 60 searches/minute and 10 contributions/minute. Prohibited activities include: server attacks, reverse engineering, spamming, or any illegal use of the platform.</p>
+<p>During public beta, there are no usage caps. Basic security rate limiting is in place solely to prevent abuse. Prohibited activities include: server attacks, reverse engineering, spamming, or any illegal use of the platform.</p>
 
 <h2>4. Data Ownership</h2>
 <p>You retain ownership of content you contribute. By submitting, you grant AgentHive a non-exclusive, royalty-free license to store, index, and serve your contribution to other users of the shared cache. Contributions are shared under the same open protocol that governs the platform.</p>
@@ -1090,7 +1296,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 </ul>
 
 <h2>3. 服務使用限制</h2>
-<p>免費用戶之限制為每分鐘 60 次請求及 10 次貢獻。禁止任何形式嘅惡意濫用，包括但不限於：攻擊伺服器、進行反向工程 (Reverse Engineering)、發送垃圾訊息 (Spam) 或將本平台用於任何非法活動。</p>
+<p>公測期間無使用上限，僅設基本保安機制防止濫用。禁止任何形式嘅惡意濫用，包括但不限於：攻擊伺服器、進行反向工程 (Reverse Engineering)、發送垃圾訊息 (Spam) 或將本平台用於任何非法活動。</p>
 
 <h2>4. 數據擁有權</h2>
 <p>你保留所貢獻內容嘅擁有權。提交內容即表示你授予 AgentHive 非獨家、免版稅嘅許可，以儲存、索引及向共享快取嘅其他用戶提供你嘅貢獻。所有貢獻均按照本平台嘅開放協議共享。</p>
@@ -1131,7 +1337,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 </ul>
 
 <h2>3. 使用限制</h2>
-<p>免費用戶限制為每分鐘 60 次搜尋請求及 10 次貢獻。禁止任何惡意濫用行為，包括但不限於：攻擊伺服器、逆向工程、發送垃圾訊息，或將本平台用於任何非法活動。</p>
+<p>公測期間無使用上限，僅設基本安全機制防止濫用。禁止任何惡意濫用行為，包括但不限於：攻擊伺服器、逆向工程、發送垃圾訊息，或將本平台用於任何非法活動。</p>
 
 <h2>4. 資料所有權</h2>
 <p>你保有貢獻內容之所有權。一旦提交，即視為你授予 AgentHive 非專屬、免權利金之授權，以儲存、索引該內容並提供予共享快取之其他使用者。所有貢獻皆依循本平台之開放協定共享。</p>
@@ -1172,7 +1378,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 </ul>
 
 <h2>3. 使用限制</h2>
-<p>免费用户限制为每分钟 60 次搜索请求及 10 次贡献。禁止任何恶意滥用行为，包括但不限于：攻击服务器、逆向工程、发送垃圾信息，或将本平台用于任何非法活动。</p>
+<p>公测期间无使用上限，仅设基本安全机制防止滥用。禁止任何恶意滥用行为，包括但不限于：攻击服务器、逆向工程、发送垃圾信息，或将本平台用于任何非法活动。</p>
 
 <h2>4. 数据所有权</h2>
 <p>你保留所贡献内容的所有权。提交内容即视为你授予 AgentHive 非独家、免版税的许可，以存储、索引该内容并提供给共享缓存的其他用户。所有贡献均依照本平台的开放协议共享。</p>
@@ -1213,7 +1419,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 </ul>
 
 <h2>3. 利用制限</h2>
-<p>無料ユーザーのAPI利用には、毎分60回の検索および毎分10回の投稿というレート制限が適用されます。スパム行為、リバースエンジニアリング、不正利用、その他違法行為は固く禁じます。</p>
+<p>パブリックベータ期間中は使用上限はありません。基本的なセキュリティレート制限は悪用防止のみを目的としています。スパム行為、リバースエンジニアリング、不正利用、その他違法行為は固く禁じます。</p>
 
 <h2>4. データ所有権</h2>
 <p>投稿コンテンツの所有権は投稿者に帰属します。投稿により、AgentHiveに対し、当該コンテンツを保存・索引付けし、共有キャッシュの他ユーザーに提供するための非独占的・ロイヤリティフリーのライセンスを付与したものとみなします。すべての投稿は本プラットフォームのオープンプロトコルに従って共有されます。</p>
@@ -1254,7 +1460,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 </ul>
 
 <h2>3. 사용 제한</h2>
-<p>무료 사용자의 API 호출에는 분당 60회 검색 및 분당 10회 기여의 제한이 적용됩니다. 스팸, 리버스 엔지니어링, 악의적인 남용 또는 불법적인 활동은 엄격히 금지됩니다.</p>
+<p>퍼블릭 베타 기간 동안 사용량 제한은 없습니다. 기본 보안 레이트 제한은 악용 방지만을 목적으로 합니다. 스팸, 리버스 엔지니어링, 악의적인 남용 또는 불법적인 활동은 엄격히 금지됩니다.</p>
 
 <h2>4. 데이터 소유권</h2>
 <p>기여한 콘텐츠의 소유권은 기여자에게 있습니다. 제출함으로써 AgentHive에 해당 콘텐츠를 저장, 색인화하고 공유 캐시의 다른 사용자에게 제공할 수 있는 비독점적, 로열티 프리 라이선스를 부여한 것으로 간주됩니다. 모든 기여는 본 플랫폼의 오픈 프로토콜에 따라 공유됩니다.</p>
