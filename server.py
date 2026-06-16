@@ -1018,6 +1018,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 <h2>2. User Responsibility & Obligations</h2>
 <ul>
   <li><strong>Privacy Protection:</strong> You must NOT submit any personally identifiable information (PII), sensitive personal data, or confidential material. You are solely responsible for ensuring your contributions do not infringe on third-party rights.</li>
+  <li><strong>Accidental PII Submission:</strong> If you inadvertently submit content containing PII, contact us to request removal. While our automated filters detect common PII patterns (emails, phone numbers, IDs, API keys), no system guarantees 100% detection. You assume full responsibility for any personal data submitted.</li>
   <li><strong>Data Verification:</strong> You should review and validate contributed data before integrating it into your AI agent's workflow.</li>
 </ul>
 
@@ -1046,6 +1047,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 <h2>2. 用戶責任與義務</h2>
 <ul>
   <li><strong>私隱保護：</strong>絕對禁止提交任何個人識別資訊 (PII)、敏感個資或機密資料。用戶須自行確保提交內容不涉及侵犯第三方權益。詳見<a href="/privacy">隱私政策</a>。</li>
+  <li><strong>誤交 PII 處理：</strong>如不慎提交含個人資料嘅內容，可聯絡我哋要求刪除。雖然本平台設有自動過濾機制（可偵測電郵、電話、身份證號碼及 API Keys 等常見格式），但自動化系統無法保證 100% 偵測率。你須自行承擔提交個人資料嘅所有風險。</li>
   <li><strong>數據審核：</strong>用戶應對所提交之數據進行適當篩選，並於整合至 AI Agent 前執行驗證程序。</li>
 </ul>
 
@@ -1074,6 +1076,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 <h2>2. 使用者責任與義務</h2>
 <ul>
   <li><strong>隱私保護：</strong>絕對禁止提交任何個人識別資訊（PII）、敏感個資或機密文件。使用者須自行確保提交內容未侵害第三方權益。詳見<a href="/privacy">隱私權政策</a>。</li>
+  <li><strong>誤交 PII 處理：</strong>若不慎提交含個人資料之內容，可聯繫我們要求刪除。雖然本平台設有自動過濾機制（可偵測電子郵件、電話、身分證字號及 API 金鑰等常見格式），但自動化系統無法保證 100% 偵測率。你須自行承擔提交個人資料之所有風險。</li>
   <li><strong>資料審查：</strong>使用者在整合至 AI Agent 前，應自行審查並驗證所提交之資料。</li>
 </ul>
 
@@ -1102,6 +1105,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 <h2>2. 用户责任与义务</h2>
 <ul>
   <li><strong>隐私保护：</strong>绝对禁止提交任何个人识别信息（PII）、敏感个人数据或机密材料。用户须自行确保提交内容未侵犯第三方权益。详见<a href="/privacy">隐私政策</a>。</li>
+  <li><strong>误交 PII 处理：</strong>如不慎提交含个人数据之内容，可联系我们要求删除。虽然本平台设有自动过滤机制（可检测电子邮件、电话、身份证号及 API 密钥等常见格式），但自动化系统无法保证 100% 检测率。你须自行承担提交个人数据之所有风险。</li>
   <li><strong>数据审核：</strong>用户在整合至 AI 智能体前，应自行审核并验证所提交之数据。</li>
 </ul>
 
@@ -1130,6 +1134,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 <h2>2. ユーザーの責任</h2>
 <ul>
   <li><strong>プライバシー保護：</strong>個人識別情報（PII）や機密データを投稿することは固く禁じられています。第三者の権利を侵害しないよう、ご自身の責任においてご確認ください。詳細は<a href="/privacy">プライバシーポリシー</a>をご覧ください。</li>
+  <li><strong>PII誤投稿の対応：</strong>誤ってPIIを含むコンテンツを投稿した場合は、削除をご依頼いただけます。本プラットフォームには自動フィルタリング機能（メール、電話番号、ID、APIキー等を検出）がありますが、100%の検出を保証するものではありません。投稿された個人データに関する一切の責任は投稿者が負うものとします。</li>
   <li><strong>データ検証：</strong>提供されたデータをAIエージェントに統合する前に、ご自身で検証を行ってください。</li>
 </ul>
 
@@ -1158,6 +1163,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 <h2>2. 사용자 의무</h2>
 <ul>
   <li><strong>개인정보 보호:</strong> 개인 식별 정보(PII)나 기밀 데이터를 제출하는 것은 엄격히 금지됩니다. 제3자의 권리를 침해하지 않도록 본인의 책임 하에 확인하시기 바랍니다. 자세한 내용은 <a href="/privacy">개인정보 처리방침</a>을 참조하세요.</li>
+  <li><strong>PII 오제출 처리:</strong> 실수로 PII가 포함된 콘텐츠를 제출한 경우, 삭제를 요청하실 수 있습니다. 본 플랫폼에는 자동 필터링 기능(이메일, 전화번호, ID, API 키 등 감지)이 있으나, 100% 감지를 보장하지는 않습니다. 제출된 개인 데이터에 대한 모든 책임은 제출자에게 있습니다.</li>
   <li><strong>데이터 검증:</strong> 제공된 데이터를 AI 에이전트에 통합하기 전에 직접 검증을 수행하시기 바랍니다.</li>
 </ul>
 
