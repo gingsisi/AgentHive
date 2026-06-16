@@ -609,16 +609,16 @@
       </div>
       <div class="lang-switcher">
         <button class="lang-btn" onclick="toggleLangMenu()">
-          <span id="langLabel">🌐 EN</span>
+          <span id="langLabel">EN</span>
           <span class="arrow">▾</span>
         </button>
         <div class="lang-dropdown" id="langMenu">
-          <button class="lang-option" onclick="switchLang('zh-HK')">🇭🇰 香港繁中</button>
-          <button class="lang-option" onclick="switchLang('zh-TW')">🇹🇼 台灣繁中</button>
-          <button class="lang-option" onclick="switchLang('en')">🇬🇧 English</button>
-          <button class="lang-option" onclick="switchLang('ja')">🇯🇵 日本語</button>
-          <button class="lang-option" onclick="switchLang('ko')">🇰🇷 한국어</button>
-          <button class="lang-option" onclick="switchLang('zh-CN')">🇨🇳 简体中文</button>
+          <button class="lang-option" onclick="switchLang('zh-HK')">繁體中文（HK）</button>
+          <button class="lang-option" onclick="switchLang('zh-TW')">繁體中文（TW）</button>
+          <button class="lang-option" onclick="switchLang('en')">English</button>
+          <button class="lang-option" onclick="switchLang('ja')">日本語</button>
+          <button class="lang-option" onclick="switchLang('ko')">한국어</button>
+          <button class="lang-option" onclick="switchLang('zh-CN')">简体中文</button>
         </div>
       </div>
     </div>
@@ -1227,12 +1227,12 @@ function switchLang(lang) {
   // document.querySelector('.plan.pro').setAttribute('data-badge', badgeText[lang] || 'Popular');
   
   // Update lang label
-  const labels = { 'en': '🌐 EN', 'zh-HK': '🌐 香港繁中', 'zh-TW': '🌐 台灣繁中', 'ja': '🌐 日本語', 'ko': '🌐 한국어', 'zh-CN': '🌐 简中' };
-  document.getElementById('langLabel').textContent = labels[lang] || '🌐 EN';
+  const labels = { 'en': 'EN', 'zh-HK': '繁體中文（HK）', 'zh-TW': '繁體中文（TW）', 'ja': '日本語', 'ko': '한국어', 'zh-CN': '简体中文' };
+  document.getElementById('langLabel').textContent = labels[lang] || 'EN';
   
   // Update active state in dropdown
   document.querySelectorAll('.lang-option').forEach(opt => {
-    opt.classList.toggle('active', opt.textContent.includes(labels[lang].replace('🌐 ', '')));
+    opt.classList.toggle('active', opt.textContent.includes(labels[lang]));
   });
   
   // Close dropdown
