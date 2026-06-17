@@ -1,7 +1,7 @@
 """
 FastAPI Cache Server for AgentsHive.
 REST API for contributing and retrieving cached knowledge.
-# deploy-id: resend-email-6cffb5e-force-v2
+# deploy-id: agentshive-org-verified-20260617
 """
 
 from contextlib import asynccontextmanager
@@ -1613,7 +1613,7 @@ async def request_verification(req: VerificationRequest, request: Request):
     if RESEND_API_KEY:
         try:
             resend.Emails.send({
-                "from": "AgentsHive <onboarding@resend.dev>",
+                "from": "AgentsHive <noreply@agentshive.org>",
                 "to": [email],
                 "subject": "Your AgentsHive Verification Code",
                 "html": f"<p>Your verification code is:</p><h2>{code}</h2><p>It expires in 10 minutes.</p><p>— AgentsHive</p>",
