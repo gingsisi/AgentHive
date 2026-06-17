@@ -1616,7 +1616,7 @@ async def request_verification(req: VerificationRequest, request: Request):
                 "from": "AgentHive <onboarding@resend.dev>",
                 "to": [email],
                 "subject": "Your AgentHive Verification Code",
-                "text": f"Your verification code is: {code}\n\nIt expires in 10 minutes.\n\n— AgentHive",
+                "html": f"<p>Your verification code is:</p><h2>{code}</h2><p>It expires in 10 minutes.</p><p>— AgentHive</p>",
             })
         except Exception as e:
             # Log the actual error for debugging
