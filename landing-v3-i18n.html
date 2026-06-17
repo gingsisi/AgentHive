@@ -1321,7 +1321,7 @@ function switchLang(lang) {
   document.getElementById('langMenu').classList.remove('open');
   
   // Save preference
-  localStorage.setItem('bot-collective-lang', lang);
+   localStorage.setItem('agentshive-lang', lang);
   
   // Update HTML lang attr
   document.documentElement.lang = lang;
@@ -1340,7 +1340,7 @@ document.addEventListener('click', function(e) {
 
 // Load saved language preference
 (function() {
-  const saved = localStorage.getItem('bot-collective-lang');
+  const saved = localStorage.getItem('agentshive-lang');
   if (saved && I18N[saved]) {
     switchLang(saved);
   }

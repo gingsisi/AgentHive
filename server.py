@@ -62,7 +62,7 @@ def require_api_key(x_api_key: str = Header(None, alias="X-API-Key")) -> dict:
     
     info = verify_api_key(x_api_key or "")
     if not info:
-        raise HTTPException(status_code=401, detail="Invalid or missing API key. Get one at https://bot-collective.dev")
+        raise HTTPException(status_code=401, detail="Invalid or missing API key. Get one at https://agentshive.org")
     return info
 
 
@@ -181,7 +181,7 @@ class StatsResponse(BaseModel):
 
 @app.get("/health")
 async def health():
-    return {"status": "ok", "service": "bot-collective-cache"}
+    return {"status": "ok", "service": "agentshive-cache"}
 
 
 @app.get("/stats", response_model=StatsResponse)
