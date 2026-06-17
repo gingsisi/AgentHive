@@ -2,7 +2,7 @@
 # Bump CACHE_BUST to force full rebuild when Railway caches stale files
 FROM python:3.11-slim
 
-ARG CACHE_BUST=2
+ARG CACHE_BUST=3
 
 WORKDIR /app
 COPY requirements.txt .

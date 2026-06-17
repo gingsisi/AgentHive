@@ -1372,7 +1372,14 @@ async function handleEmailSubmit(e) {
     const data = await resp.json();
     if (resp.ok) {
       document.getElementById('verifyEmail').textContent = email;
-      document.getElementById('verifyCode').textContent = data.code;
+      // Hide code display in production (email sent via Resend)
+      const codeNotice = document.querySelector('#step2 .verification-notice');
+      if (data.code) {
+        document.getElementById('verifyCode').textContent = data.code;
+        if (codeNotice) codeNotice.style.display = '';
+      } else {
+        if (codeNotice) codeNotice.style.display = 'none';
+      }
       document.getElementById('step1').style.display = 'none';
       document.getElementById('step2').style.display = 'block';
       document.getElementById('codeInput').focus();
@@ -1451,6 +1458,29 @@ document.addEventListener('DOMContentLoaded', function() {
       verifyBtn.disabled = !this.checked;
     });
   }
+  
+  // Fetch live API key count for counter
+  fetch('/api/stats')
+    .then(r => r.json())
+    .then(data => {
+      const count = data.total_keys || 0;
+      const counter = document.querySelector('[data-i18n="cta_banner_counter"]');
+      if (counter) {
+        // Update all language counters via i18n + DOM
+        counter.setAttribute('data-count', count);
+        // Update visible text only for current language
+        const labels = {
+          'en': 'HiveBuddies joined: ' + count + ' / 1,000',
+          'zh-HK': '已成為蜂友：' + count + ' / 1,000',
+          'zh-TW': '已成為蜂友：' + count + ' / 1,000',
+          'ja': 'ハチ友登録数：' + count + ' / 1,000',
+          'ko': '벌친구 가입: ' + count + ' / 1,000',
+          'zh-CN': '已注册蜂友：' + count + ' / 1,000'
+        };
+        if (labels[currentLang]) counter.textContent = labels[currentLang];
+      }
+    })
+    .catch(() => {}); // Silently fail — counter stays at default
 });
 </script>
 </body>

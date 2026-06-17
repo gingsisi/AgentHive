@@ -31,11 +31,18 @@ from auth import (
 )
 from rate_limit import check_search_limit, check_contribute_limit, check_signup_limit
 
+import os
+
+# ── Resend Email ───────────────────────────────────────────────
+RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
+if RESEND_API_KEY:
+    import resend
+    resend.api_key = RESEND_API_KEY
+    print("✓ Resend email configured")
+
 from fastapi import Header, Depends
 
 # ── GLOBALS ───────────────────────────────────────────────────
-
-import os
 
 db: Optional[ChromaManager] = None
 SYSTEM_KEY = os.getenv("BC_SYSTEM_KEY", "bc_system_bridge_localdev")
@@ -1601,6 +1608,26 @@ async def request_verification(req: VerificationRequest, request: Request):
         raise HTTPException(status_code=409, detail="This email already has an API key.")
 
     code = create_verification_code(email)
+
+    # Production: send via Resend, don't expose code
+    if RESEND_API_KEY:
+        try:
+            resend.Emails.send({
+                "from": "AgentHive <noreply@agenthive.dev>",
+                "to": email,
+                "subject": "Your AgentHive Verification Code",
+                "text": f"Your verification code is: {code}\n\nIt expires in 10 minutes.\n\n— AgentHive 🐝",
+            })
+        except Exception as e:
+            print(f"Resend send failed for {email}: {e}")
+            # Fall through to dev mode — will return code in response
+        else:
+            return VerificationResponse(
+                code="",  # Hidden in production
+                message="Verification code sent to your email.",
+                expires_in=600,
+            )
+
     return VerificationResponse(
         code=code,
         message=f"Verification code generated. For development: your code is {code}",
@@ -1664,6 +1691,23 @@ async def key_stats(auth: dict = Depends(require_api_key)):
         "trust_score": auth.get("trust_score", 0.0),
         "note": "Full stats available via /search and /contribute history"
     }
+
+
+# ══════════════════════════════════════════════════════════════
+#  PUBLIC STATS
+# ══════════════════════════════════════════════════════════════
+
+@app.get("/api/stats")
+async def public_stats():
+    """Public stats: total API keys issued (for landing page counter)."""
+    import sqlite3
+    try:
+        conn = sqlite3.connect(os.path.join(os.path.dirname(__file__), "auth.db"))
+        count = conn.execute("SELECT COUNT(*) FROM api_keys").fetchone()[0]
+        conn.close()
+        return {"total_keys": count}
+    except Exception as e:
+        return {"total_keys": 0, "error": str(e)}
 
 
 # ══════════════════════════════════════════════════════════════
