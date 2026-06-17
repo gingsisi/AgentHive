@@ -353,6 +353,13 @@ CANONICAL_TAGS = {
     "china": ["china", "mainland", "china", "大陸", "內地"],
     "international": ["international", "global", "overseas"],
     
+    # Lifestyle tags
+    "travel": ["travel", "tourism", "trip", "japan", "kyushu", "fukuoka", "旅遊", "旅行", "日本", "九州"],
+    "food": ["food", "dining", "restaurant", "cuisine", "美食", "食", "拉麵", "壽司"],
+    "shopping": ["shopping", "retail", "mall", "購物", "商場", "outlet"],
+    "transport": ["transport", "train", "jr", "shinkansen", "transit", "交通", "鐵路", "新幹線"],
+    "lifestyle": ["lifestyle", "hobby", "culture", "生活", "文化"],
+    
     # Meta
     "temporary": ["temporary", "covid", "pilot", "臨時", "特別安排"],
     "evergreen": ["evergreen", "fundamental", "basics"],
