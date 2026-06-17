@@ -1619,9 +1619,14 @@ async def request_verification(req: VerificationRequest, request: Request):
                 "html": f"<p>Your verification code is:</p><h2>{code}</h2><p>It expires in 10 minutes.</p><p>— AgentHive</p>",
             })
         except Exception as e:
-            # Log the actual error for debugging
-            print(f"Resend send failed for {email}: {type(e).__name__}: {e}")
-            # Fall through to dev mode — will return code in response
+            # TEMP: return error in response for debugging
+            err_msg = f"{type(e).__name__}: {e}"
+            print(f"Resend send failed for {email}: {err_msg}")
+            return VerificationResponse(
+                code="",
+                message=f"Email send failed: {err_msg[:100]}",
+                expires_in=600,
+            )
         else:
             return VerificationResponse(
                 code="",  # Hidden in production
