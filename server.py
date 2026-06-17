@@ -352,58 +352,62 @@ async def contribute_skill(req: ContributeRequest):
 
 # ── DATA QUALITY VALIDATION ─────────────────────────────────
 
-# Canonical tag list — contributions MUST use these (or mapped to them)
-CANONICAL_TAGS = {
-    # Domain tags
-    "welfare": ["welfare", "disability", "swd", "cssa", "allowance", "津貼", "社署", "傷殘"],
-    "tax": ["tax", "ird", "inland-revenue", "稅", "稅務"],
-    "education": ["education", "school", "edb", "學校", "教育", "小一", "升學"],
-    "medical": ["medical", "clinical", "asd", "adhd", "hospital", "clinic", "醫療", "自閉", "醫院"],
-    "law": ["law", "legal", "ordinance", "法例", "cap", "條例"],
-    "finance": ["finance", "stock", "investment", "港股", "美股", "投資"],
-    "policy": ["policy", "government", "circular", "政策"],
-    "housing": ["housing", "property", "mortgage", "樓", "房屋"],
-    "immigration": ["immigration", "visa", "passport", "移民"],
-    
-    # Technical tags
-    "tech-dev": ["godot", "python", "api", "code", "programming", "dev"],
-    "tech-creative": ["zbrush", "blender", "3d-print", "design", "stl"],
-    "ai-ml": ["ai", "ml", "llm", "machine-learning", "deep-learning"],
-    
-    # Geo tags
-    "hong-kong": ["hong-kong", "hk", "香港"],
-    "china": ["china", "mainland", "china", "大陸", "內地"],
-    "international": ["international", "global", "overseas"],
-    
-    # Lifestyle tags
-    "travel": ["travel", "tourism", "trip", "japan", "kyushu", "fukuoka", "train", "jr", "shinkansen", "旅遊", "旅行", "日本", "九州", "鐵路"],
-    "food": ["food", "dining", "restaurant", "cuisine", "美食", "食", "拉麵", "壽司"],
-    "shopping": ["shopping", "retail", "mall", "購物", "商場", "outlet"],
-    "transport": ["transport", "transit", "bus", "metro", "交通", "運輸"],
-    "lifestyle": ["lifestyle", "culture", "生活", "文化"],
-    
-    # High-traffic consumer tags (AI agent hotspot queries)
-    "gaming": ["gaming", "game", "遊戲", "攻略", "rpg", "boss", "quest", "mod", "modding", "unity", "unreal", "console", "steam", "walkthrough", "speedrun", "esport", "電競"],
-    "health": ["health", "fitness", "nutrition", "diet", "protein", "workout", "gym", "exercise", "wellness", "健康", "健身", "營養", "飲食", "減肥"],
-    "hobby": ["hobby", "entertainment", "movie", "film", "anime", "figure", "diy", "craft", "collection", "cosplay", "娛樂", "動漫", "模型", "玩具", "收藏"],
-    "family": ["family", "parenting", "parent", "kids", "children", "childcare", "家庭", "親子", "育兒", "論壇", "sensory", "特殊教育", "sen"],
-    
-    # Meta
-    "temporary": ["temporary", "covid", "pilot", "臨時", "特別安排"],
-    "evergreen": ["evergreen", "fundamental", "basics"],
-}
+# Canonical tag definitions — loaded from JSON with mtime-based caching
+# Edit references/canonical_tags.json directly, git commit + push to deploy.
+# DO NOT edit via Railway admin panel (ephemeral storage — lost on redeploy).
 
-# Reverse mapping: any variant → canonical
-TAG_ALIASES: dict[str, str] = {}
-for canonical, aliases in CANONICAL_TAGS.items():
-    TAG_ALIASES[canonical.lower()] = canonical
-    for alias in aliases:
-        TAG_ALIASES[alias.lower()] = canonical
+import json as _json
+
+_TAG_FILE = os.path.join(os.path.dirname(__file__), "references", "canonical_tags.json")
+_TAG_CACHE: dict = {}  # {"aliases": {str → str}, "decay": {str → int}, "version": int, "mtime": float}
+
+def _load_tags(force: bool = False) -> dict:
+    """Load canonical tags from JSON. Uses mtime-based cache (reloads if file changed)."""
+    global _TAG_CACHE
+    try:
+        mtime = os.path.getmtime(_TAG_FILE)
+        if not force and _TAG_CACHE.get("mtime") == mtime:
+            return _TAG_CACHE
+        
+        with open(_TAG_FILE, 'r', encoding='utf-8') as f:
+            data = _json.load(f)
+        
+        aliases: dict[str, str] = {}
+        decay: dict[str, int] = {}
+        
+        for category_name, category in data.get("categories", {}).items():
+            for tag_name, tag_def in category.get("tags", {}).items():
+                # Canonical always maps to itself
+                aliases[tag_name.lower()] = tag_name
+                # Aliases map to canonical
+                for alias in tag_def.get("aliases", []):
+                    aliases[alias.lower()] = tag_name
+                # Decay
+                decay[tag_name] = tag_def.get("decay_days", 180)
+        
+        _TAG_CACHE = {
+            "aliases": aliases,
+            "decay": decay,
+            "version": data.get("_meta", {}).get("version", 1),
+            "mtime": mtime,
+        }
+        return _TAG_CACHE
+    except Exception:
+        # Fallback: if JSON missing/broken, return last cached or empty
+        if _TAG_CACHE:
+            return _TAG_CACHE
+        return {"aliases": {}, "decay": {}, "version": 0, "mtime": 0}
+
+
+def _get_all_canonical_tags() -> list[str]:
+    """Return sorted list of all canonical tag names."""
+    cache = _load_tags()
+    decay = cache.get("decay", {})
+    return sorted(decay.keys())
+
 
 
 # ── Region detection (Waterfall: URL → explicit → Global) ───
-
-# TLD to ISO country code mapping
 TLD_REGION_MAP = {
     ".jp": "JP", ".co.jp": "JP", ".ne.jp": "JP",
     ".hk": "HK", ".com.hk": "HK", ".org.hk": "HK", ".gov.hk": "HK",
@@ -455,13 +459,13 @@ def detect_region(source_url: str) -> str:
 
 def normalize_tags(tags: list[str]) -> list[str]:
     """Map user-provided tags to canonical tags. Returns deduplicated canonical list."""
+    cache = _load_tags()
+    alias_map = cache.get("aliases", {})
     canonical_set = set()
     for tag in tags:
         tag_lower = tag.strip().lower()
-        if tag_lower in TAG_ALIASES:
-            canonical_set.add(TAG_ALIASES[tag_lower])
-        elif tag_lower in CANONICAL_TAGS:
-            canonical_set.add(tag_lower)
+        if tag_lower in alias_map:
+            canonical_set.add(alias_map[tag_lower])
         # Unknown tags are silently dropped (not added)
     return sorted(canonical_set)
 
@@ -506,28 +510,14 @@ def validate_contribution(req, clean_content: str) -> list[str]:
 
 # ── TRUST SCORING ──────────────────────────────────────────
 
-# Domain decay periods in days (how fast freshness decays per domain)
-DOMAIN_DECAY = {
-    "finance": 1,        # Stock prices
-    "policy": 90,        # Government circulars
-    "tax": 365,          # Annual budget changes
-    "welfare": 730,      # 2-3 year policy cycles
-    "education": 365,    # Annual admission cycles
-    "law": 1095,         # 3-5 year ordinance changes
-    "medical": 730,      # Clinical guidelines
-    "tech-creative": 1460,  # 3D printing, design
-    "tech-dev": 365,     # API versions
-    "ai-ml": 90,         # AI/ML moves FAST
-    "gaming": 365,       # Game patches, mods, new releases
-    "health": 365,       # Nutrition science, fitness trends
-    "hobby": 730,        # Movies, anime, crafts — stable
-    "family": 365,       # Parenting advice, school-year cycles
-    "travel": 730,       # Travel info relatively stable
-    "food": 365,         # Restaurant info, cuisine
-    "shopping": 365,     # Retail, mall info
-    "lifestyle": 730,    # General culture
-    "evergreen": 365000, # Basically never
-}
+# Domain decay: loaded from canonical_tags.json (each tag has decay_days).
+# Use this function instead of a static dict to stay in sync with tag config.
+
+def get_domain_decay(domain: str) -> int:
+    """Return decay period in days for a domain tag. Pulls from canonical_tags.json."""
+    cache = _load_tags()
+    return cache.get("decay", {}).get(domain, 180)  # 6 months default for unknown
+
 DEFAULT_DECAY = 180  # 6 months for unknown domains
 
 # Source authority by domain
@@ -575,11 +565,6 @@ def infer_domain(tags: list[str]) -> str:
     return "unknown"
 
 
-# Conservative fallback: when we can't determine domain, assume it decays fast
-# Better to underestimate freshness than overestimate it
-UNKNOWN_DOMAIN_DECAY = 90  # 3 months for truly unknown content
-
-
 def calculate_trust(
     reproductions: int,
     source_url: str,
@@ -594,7 +579,7 @@ def calculate_trust(
         age_days = 365
 
     domain = infer_domain(tags)
-    decay_period = DOMAIN_DECAY.get(domain, UNKNOWN_DOMAIN_DECAY)
+    decay_period = get_domain_decay(domain)
     freshness = max(1.0 - (age_days / decay_period), 0.0)
     repro_weight = min(int(reproductions) / 5, 1.0)
     authority = source_authority(source_url)

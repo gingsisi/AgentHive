@@ -1,0 +1,66 @@
+{
+  "_meta": {
+    "version": 1,
+    "description": "AgentsHive canonical tag definitions. Edit this file directly, git commit + push to deploy. Each canonical tag has a list of aliases (lowercase) that map to it.",
+    "updated": "2026-06-17",
+    "note": "DO NOT edit via admin panel on Railway ephemeral storage — changes will be lost on redeploy. Edit in repo and push."
+  },
+  "categories": {
+    "domain": {
+      "label": "Domain / Professional",
+      "tags": {
+        "welfare": { "aliases": ["welfare", "disability", "swd", "cssa", "allowance", "津貼", "社署", "傷殘"], "decay_days": 730 },
+        "tax": { "aliases": ["tax", "ird", "inland-revenue", "稅", "稅務"], "decay_days": 365 },
+        "education": { "aliases": ["education", "school", "edb", "學校", "教育", "小一", "升學"], "decay_days": 365 },
+        "medical": { "aliases": ["medical", "clinical", "asd", "adhd", "hospital", "clinic", "醫療", "自閉", "醫院"], "decay_days": 730 },
+        "law": { "aliases": ["law", "legal", "ordinance", "法例", "cap", "條例"], "decay_days": 1095 },
+        "finance": { "aliases": ["finance", "stock", "investment", "港股", "美股", "投資"], "decay_days": 1 },
+        "policy": { "aliases": ["policy", "government", "circular", "政策"], "decay_days": 90 },
+        "housing": { "aliases": ["housing", "property", "mortgage", "樓", "房屋"], "decay_days": 365 },
+        "immigration": { "aliases": ["immigration", "visa", "passport", "移民"], "decay_days": 365 }
+      }
+    },
+    "technical": {
+      "label": "Technical",
+      "tags": {
+        "tech-dev": { "aliases": ["godot", "python", "api", "code", "programming", "dev"], "decay_days": 365 },
+        "tech-creative": { "aliases": ["zbrush", "blender", "3d-print", "design", "stl"], "decay_days": 1460 },
+        "ai-ml": { "aliases": ["ai", "ml", "llm", "machine-learning", "deep-learning"], "decay_days": 90 }
+      }
+    },
+    "geo": {
+      "label": "Geography",
+      "tags": {
+        "hong-kong": { "aliases": ["hong-kong", "hk", "香港"], "decay_days": 365 },
+        "china": { "aliases": ["china", "mainland", "大陸", "內地"], "decay_days": 365 },
+        "international": { "aliases": ["international", "global", "overseas"], "decay_days": 365 }
+      }
+    },
+    "lifestyle": {
+      "label": "Lifestyle",
+      "tags": {
+        "travel": { "aliases": ["travel", "tourism", "trip", "japan", "kyushu", "fukuoka", "train", "jr", "shinkansen", "旅遊", "旅行", "日本", "九州", "鐵路"], "decay_days": 730 },
+        "food": { "aliases": ["food", "dining", "restaurant", "cuisine", "美食", "食", "拉麵", "壽司"], "decay_days": 365 },
+        "shopping": { "aliases": ["shopping", "retail", "mall", "購物", "商場", "outlet"], "decay_days": 365 },
+        "transport": { "aliases": ["transport", "transit", "bus", "metro", "交通", "運輸"], "decay_days": 365 },
+        "lifestyle": { "aliases": ["lifestyle", "culture", "生活", "文化"], "decay_days": 730 }
+      }
+    },
+    "consumer": {
+      "label": "Consumer / High-traffic",
+      "tags": {
+        "gaming": { "aliases": ["gaming", "game", "遊戲", "攻略", "rpg", "boss", "quest", "mod", "modding", "unity", "unreal", "console", "steam", "walkthrough", "speedrun", "esport", "電競"], "decay_days": 365 },
+        "health": { "aliases": ["health", "fitness", "nutrition", "diet", "protein", "workout", "gym", "exercise", "wellness", "健康", "健身", "營養", "飲食", "減肥"], "decay_days": 365 },
+        "hobby": { "aliases": ["hobby", "entertainment", "movie", "film", "anime", "figure", "diy", "craft", "collection", "cosplay", "娛樂", "動漫", "模型", "玩具", "收藏"], "decay_days": 730 },
+        "family": { "aliases": ["family", "parenting", "parent", "kids", "children", "childcare", "家庭", "親子", "育兒", "論壇", "sensory", "特殊教育", "sen"], "decay_days": 365 }
+      }
+    },
+    "meta": {
+      "label": "Meta",
+      "tags": {
+        "temporary": { "aliases": ["temporary", "covid", "pilot", "臨時", "特別安排"], "decay_days": 30 },
+        "evergreen": { "aliases": ["evergreen", "fundamental", "basics"], "decay_days": 365000 }
+      }
+    }
+  }
+}
