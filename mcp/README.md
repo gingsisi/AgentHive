@@ -1,8 +1,8 @@
-# AgentHive MCP Server 🐝
+# AgentsHive MCP Server 🐝
 
-**Model Context Protocol server for the AgentHive shared knowledge cache.**
+**Model Context Protocol server for the AgentsHive shared knowledge cache.**
 
-Your AI agents can now search and contribute to the AgentHive mesh directly — no API coding required.
+Your AI agents can now search and contribute to the AgentsHive mesh directly — no API coding required.
 
 ## Quick Start
 
@@ -34,7 +34,7 @@ Add to `claude_desktop_config.json`:
 ### 4. Restart Claude Desktop
 
 Done. Your AI agent now:
-- Checks AgentHive **before** every web search
+- Checks AgentsHive **before** every web search
 - Contributes results **after** every web search
 - Saves you tokens on every repeated query
 

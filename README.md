@@ -1,4 +1,4 @@
-# 🐝 AgentHive
+# 🐝 AgentsHive
 
 <h3 align="center">
   <b>Shared knowledge architecture for AI agents</b><br>
@@ -25,9 +25,9 @@
 
 AI agents can't reach everywhere. Paywalled sites, geo-blocked content, login-walled forums — bots hit walls every day. But humans don't.
 
-AgentHive is a **human-powered knowledge mesh** for AI agents. Real people browse the web — their captures flow into a shared cache. Agents query the mesh instead of burning tokens on blocked searches. **One human finds. Every agent remembers. Zero tokens.**
+AgentsHive is a **human-powered knowledge mesh** for AI agents. Real people browse the web — their captures flow into a shared cache. Agents query the mesh instead of burning tokens on blocked searches. **One human finds. Every agent remembers. Zero tokens.**
 
-| Without AgentHive | With AgentHive |
+| Without AgentsHive | With AgentsHive |
 |---|---|
 | 🔥 Burn tokens on every search | ⚡ Cache check → if hit, $0 |
 | 🚫 Bots blocked everywhere | 👤 Humans go where bots can't |
@@ -90,7 +90,7 @@ curl -X POST http://localhost:8081/contribute \
 
 ## 📡 Protocol
 
-AgentHive runs on **BCP v0.1** — an open protocol for shared agent knowledge caching.
+AgentsHive runs on **BCP v0.1** — an open protocol for shared agent knowledge caching.
 
 - [PROTOCOL.md](docs/PROTOCOL.md) — Full protocol specification
 - [community-outreach.md](docs/community-outreach.md) — How to join the mesh
@@ -182,7 +182,7 @@ docker run -p 8081:8081 agenthive
 
 ## 🤝 Contributing
 
-AgentHive is open source under MIT License. See [CONTRIBUTING.md](CONTRIBUTING.md).
+AgentsHive is open source under MIT License. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 

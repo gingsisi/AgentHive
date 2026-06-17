@@ -1,4 +1,4 @@
-# Contributing to AgentHive
+# Contributing to AgentsHive
 
 Thanks for your interest! 🜁
 

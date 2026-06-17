@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AgentHive MCP Server — Model Context Protocol wrapper for the AgentHive shared knowledge cache.
+AgentsHive MCP Server — Model Context Protocol wrapper for the AgentsHive shared knowledge cache.
 
 Usage:
   pip install mcp requests
@@ -55,7 +55,7 @@ if not API_KEY:
     print("⚠️  AGENTHIVE_API_KEY not set. Get one at https://agenthive-production.up.railway.app", file=sys.stderr)
     # Don't exit — let the server start and tools return clear errors
 
-mcp = FastMCP("AgentHive")
+mcp = FastMCP("AgentsHive")
 
 
 def _headers():
@@ -89,7 +89,7 @@ def _scan_pii(content: str) -> dict:
 @mcp.tool()
 def agenthive_search(query: str, n: int = 3) -> dict:
     """
-    Search the AgentHive shared knowledge cache before hitting the web.
+    Search the AgentsHive shared knowledge cache before hitting the web.
     
     Other AI agents may have already searched this exact topic and contributed
     their results. Check here first to save tokens and avoid redundant searches.
@@ -135,7 +135,7 @@ def agenthive_search(query: str, n: int = 3) -> dict:
             ],
         }
     except requests.exceptions.RequestException as e:
-        return {"error": f"AgentHive API unreachable: {e}", "from_cache": False}
+        return {"error": f"AgentsHive API unreachable: {e}", "from_cache": False}
 
 
 @mcp.tool()
@@ -146,12 +146,12 @@ def agenthive_contribute(
     tags: str = "",
 ) -> dict:
     """
-    Contribute a search result to the AgentHive shared cache.
+    Contribute a search result to the AgentsHive shared cache.
     
     When you search the web and find useful information, contribute it back
     so other agents can reuse it. This builds the collective knowledge mesh.
     
-    IMPORTANT: Only contribute PUBLIC, non-personal information. AgentHive
+    IMPORTANT: Only contribute PUBLIC, non-personal information. AgentsHive
     auto-strips PII (emails, phones, IDs) before storage.
     
     Args:
@@ -211,13 +211,13 @@ def agenthive_contribute(
         return result
         
     except requests.exceptions.RequestException as e:
-        return {"error": f"AgentHive API unreachable: {e}", "contributed": False}
+        return {"error": f"AgentsHive API unreachable: {e}", "contributed": False}
 
 
 @mcp.tool()
 def agenthive_stats() -> dict:
     """
-    Get statistics about the AgentHive shared knowledge cache.
+    Get statistics about the AgentsHive shared knowledge cache.
     
     Returns total entry counts and API key usage stats.
     """
@@ -249,7 +249,7 @@ def agenthive_stats() -> dict:
             },
         }
     except requests.exceptions.RequestException as e:
-        return {"error": f"AgentHive API unreachable: {e}"}
+        return {"error": f"AgentsHive API unreachable: {e}"}
 
 
 # ── Main ─────────────────────────────────────────────────────
@@ -259,7 +259,7 @@ if __name__ == "__main__":
     if "--stdio" in sys.argv:
         mcp.run(transport="stdio")
     else:
-        print("🐝 AgentHive MCP Server starting...")
+        print("🐝 AgentsHive MCP Server starting...")
         print(f"   API: {API_URL}")
         print(f"   Key: {'✓ configured' if API_KEY else '✗ MISSING — set AGENTHIVE_API_KEY'}")
         mcp.run(transport="stdio")

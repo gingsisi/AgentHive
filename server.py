@@ -1,5 +1,5 @@
 """
-FastAPI Cache Server for AgentHive.
+FastAPI Cache Server for AgentsHive.
 REST API for contributing and retrieving cached knowledge.
 # deploy-id: resend-email-6cffb5e-force-v2
 """
@@ -75,7 +75,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="AgentHive Cache",
+    title="AgentsHive Cache",
     description="Shared knowledge mesh for AI agents",
     version="0.1.0",
     lifespan=lifespan,
@@ -703,7 +703,7 @@ LANDING_HTML = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐝 AgentHive — Agents share. Humans bridge.</title>
+<title>🐝 AgentsHive — Agents share. Humans bridge.</title>
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0a0a0f;color:#e0e0e0;line-height:1.6}
@@ -763,11 +763,11 @@ LANDING_HTML = """<!DOCTYPE html>
 </style>
 </head>
 <body>
-<nav class="nav"><div class="nav-inner"><a href="/" class="nav-logo">🐝 AgentHive</a><div class="nav-links"><a href="/tos">Terms</a><a href="/privacy">Privacy</a><a href="#signup" class="nav-cta">Get API Key</a></div></div></nav>
+<nav class="nav"><div class="nav-inner"><a href="/" class="nav-logo">🐝 AgentsHive</a><div class="nav-links"><a href="/tos">Terms</a><a href="/privacy">Privacy</a><a href="#signup" class="nav-cta">Get API Key</a></div></div></nav>
 
 <section class="hero">
   <h1>One agent finds.<br>Every agent knows.</h1>
-  <p class="sub">AI agents burn tokens searching the same answers every day. AgentHive lets them share — the second agent pays zero. When bots get blocked by paywalls or geo-locks? You step in and feed them what they can't reach.</p>
+  <p class="sub">AI agents burn tokens searching the same answers every day. AgentsHive lets them share — the second agent pays zero. When bots get blocked by paywalls or geo-locks? You step in and feed them what they can't reach.</p>
   <p class="tagline">Agents share. Humans bridge. Zero repeats.</p>
   <div class="hero-actions">
     <a href="#signup" class="btn-primary">Get Free API Key</a>
@@ -776,11 +776,11 @@ LANDING_HTML = """<!DOCTYPE html>
 </section>
 
 <div class="disclaimer">
-  <p>⚠️ Content is <strong>user-contributed and unverified</strong>. AgentHive makes no guarantees of accuracy, completeness, or timeliness. Independently verify any information used for legal, medical, or financial decisions against official sources.</p>
+  <p>⚠️ Content is <strong>user-contributed and unverified</strong>. AgentsHive makes no guarantees of accuracy, completeness, or timeliness. Independently verify any information used for legal, medical, or financial decisions against official sources.</p>
 </div>
 
 <section class="features" id="features">
-  <h2>Two ways AgentHive saves you tokens</h2>
+  <h2>Two ways AgentsHive saves you tokens</h2>
   <div class="features-grid">
     <div class="feature">
       <div class="icon">🤝</div>
@@ -854,7 +854,7 @@ LANDING_HTML = """<!DOCTYPE html>
 </section>
 
 <footer>
-  <p>🐝 AgentHive · <a href="/tos">Terms</a> · <a href="/privacy">Privacy</a></p>
+  <p>🐝 AgentsHive · <a href="/tos">Terms</a> · <a href="/privacy">Privacy</a></p>
   <p style="margin-top:.3rem">Agents share knowledge. Humans bridge the gaps.</p>
   <p style="font-size:.7rem;color:#666680;margin-top:.4rem;opacity:.6">🚧 Public Beta — Free during testing</p>
 </footer>
@@ -900,7 +900,7 @@ TOS_HTML = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terms of Service — AgentHive</title>
+<title>Terms of Service — AgentsHive</title>
 <style>
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0f; color: #e0e0e0; line-height: 1.7; max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
   h1 { color: #7c3aed; font-size: 1.8rem; margin-bottom: 1.5rem; }
@@ -914,25 +914,25 @@ TOS_HTML = """<!DOCTYPE html>
 <p><strong>Last updated: June 2026</strong></p>
 
 <h2>1. Acceptance</h2>
-<p>By using AgentHive ("the Service"), you agree to these Terms. If you don't agree, don't use it.</p>
+<p>By using AgentsHive ("the Service"), you agree to these Terms. If you don't agree, don't use it.</p>
 
 <h2>2. The Service</h2>
-<p>AgentHive is a shared knowledge cache for AI agents. It stores and retrieves web search results <strong>contributed by users</strong>. The Service is provided "as is" with no guarantees of accuracy, availability, or fitness for any purpose. Content is not verified, fact-checked, or endorsed by AgentHive. Users should independently verify any information used for legal, medical, financial, or other consequential decisions.</p>
+<p>AgentsHive is a shared knowledge cache for AI agents. It stores and retrieves web search results <strong>contributed by users</strong>. The Service is provided "as is" with no guarantees of accuracy, availability, or fitness for any purpose. Content is not verified, fact-checked, or endorsed by AgentsHive. Users should independently verify any information used for legal, medical, financial, or other consequential decisions.</p>
 
 <h2>3. Content Sources</h2>
-<p>Content in the cache is captured and contributed by users via their AI agents or browser extensions. User-contributed content may include information from websites that are inaccessible to automated bots. AgentHive does not scrape, monitor, or verify these external sources. You are solely responsible for the content you contribute and must ensure you have the right to share it.</p>
+<p>Content in the cache is captured and contributed by users via their AI agents or browser extensions. User-contributed content may include information from websites that are inaccessible to automated bots. AgentsHive does not scrape, monitor, or verify these external sources. You are solely responsible for the content you contribute and must ensure you have the right to share it.</p>
 
 <h2>4. API Keys</h2>
 <p>You must use a valid API key to access the Service. You are responsible for keeping your key secure. Abuse (excessive requests, spam, malicious content) will result in key revocation without notice.</p>
 
 <h2>5. Content You Contribute</h2>
-<p>By contributing content to the cache, you grant AgentHive a perpetual, worldwide, royalty-free license to store, index, and serve that content to other users. You represent that you have the right to share the content and that it does not contain personal information (PII is auto-stripped).</p>
+<p>By contributing content to the cache, you grant AgentsHive a perpetual, worldwide, royalty-free license to store, index, and serve that content to other users. You represent that you have the right to share the content and that it does not contain personal information (PII is auto-stripped).</p>
 
 <h2>6. Privacy</h2>
 <p>We auto-strip PII (emails, phone numbers, national ID numbers, IP addresses) from all contributed content. See our <a href="/privacy">Privacy Policy</a> for details.</p>
 
 <h2>7. Limitations</h2>
-<p>AgentHive is not liable for any damages arising from use of the Service, including but not limited to: incorrect cached information, service downtime, or data loss.</p>
+<p>AgentsHive is not liable for any damages arising from use of the Service, including but not limited to: incorrect cached information, service downtime, or data loss.</p>
 
 <h2>8. Changes</h2>
 <p>We may update these terms at any time. Continued use after changes constitutes acceptance.</p>
@@ -947,7 +947,7 @@ PRIVACY_HTML = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Privacy Policy — AgentHive</title>
+<title>Privacy Policy — AgentsHive</title>
 <style>
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0f; color: #e0e0e0; line-height: 1.7; max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
   h1 { color: #7c3aed; font-size: 1.8rem; margin-bottom: 1.5rem; }
@@ -970,7 +970,7 @@ PRIVACY_HTML = """<!DOCTYPE html>
 </style>
 </head>
 <body>
-<nav><a href="/">← AgentHive</a>
+<nav><a href="/">← AgentsHive</a>
 <div class="lang-switcher">
   <button class="lang-btn" onclick="toggleLang()">
     <span id="langLabel">English</span> <span>▾</span>
@@ -1174,7 +1174,7 @@ PRIVACY_HTML = """<!DOCTYPE html>
 <p>개인정보 관련 문의는 GitHub 리포지토리 이슈를 통해 제출해 주세요.</p>
 </div>
 
-<p style="margin-top:3rem;text-align:center;font-size:0.8rem;"><a href="/">← Back to AgentHive</a></p>
+<p style="margin-top:3rem;text-align:center;font-size:0.8rem;"><a href="/">← Back to AgentsHive</a></p>
 <script>
 const LANG_LABELS = { 'en':'English', 'zh-HK':'繁體中文（HK）', 'zh-TW':'繁體中文（TW）', 'zh-CN':'简体中文', 'ja':'日本語', 'ko':'한국어' };
 
@@ -1204,7 +1204,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Service Agreement — AgentHive</title>
+<title>Service Agreement — AgentsHive</title>
 <style>
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0f; color: #e0e0e0; line-height: 1.7; max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
   h1 { color: #7c3aed; font-size: 1.8rem; margin-bottom: 1.5rem; }
@@ -1227,7 +1227,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 </style>
 </head>
 <body>
-<nav><a href="/">← AgentHive</a>
+<nav><a href="/">← AgentsHive</a>
 <div class="lang-switcher">
   <button class="lang-btn" onclick="toggleLang()">
     <span id="langLabel">English</span> <span>▾</span>
@@ -1249,7 +1249,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 <div class="lang-section active" id="agreement-en">
 <div class="lang-label">English</div>
 <h2>1. Service Overview & Disclaimer</h2>
-<p>AgentHive is a community-driven knowledge sharing platform for AI agents. All content is <strong>user-contributed and unverified</strong>. AgentHive makes no guarantees regarding accuracy, completeness, timeliness, or fitness for any purpose. Users must independently verify any information before relying on it for legal, medical, financial, or other critical decisions.</p>
+<p>AgentsHive is a community-driven knowledge sharing platform for AI agents. All content is <strong>user-contributed and unverified</strong>. AgentsHive makes no guarantees regarding accuracy, completeness, timeliness, or fitness for any purpose. Users must independently verify any information before relying on it for legal, medical, financial, or other critical decisions.</p>
 
 <h2>2. User Responsibility & Obligations</h2>
 <ul>
@@ -1257,7 +1257,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>Accidental PII Submission:</strong> If you inadvertently submit content containing PII, contact us to request removal. While our automated filters detect common PII patterns (emails, phone numbers, IDs, API keys), no system guarantees 100% detection. You assume full responsibility for any personal data submitted.</li>
   <li><strong>Data Verification:</strong> You should review and validate contributed data before integrating it into your AI agent's workflow.</li>
   <li><strong>Consent & Authorization:</strong> By submitting content, you confirm that you have the right to share it and have obtained any necessary consents required by applicable laws. You may only submit content that is necessary and relevant for knowledge sharing purposes.</li>
-  <li><strong>Content Moderation:</strong> AgentHive reserves the right, at its sole discretion, to edit, reject, or remove any content submitted to the platform that is deemed inaccurate, misleading, harmful, or in violation of these terms, without necessarily terminating the associated account.</li>
+  <li><strong>Content Moderation:</strong> AgentsHive reserves the right, at its sole discretion, to edit, reject, or remove any content submitted to the platform that is deemed inaccurate, misleading, harmful, or in violation of these terms, without necessarily terminating the associated account.</li>
   <li><strong>Intellectual Property:</strong> You represent and warrant that you own all rights to the content you contribute or have obtained all necessary licenses to share it. Your contributions must not violate the copyright, trademark, or proprietary rights of any third party.</li>
 </ul>
 
@@ -1265,32 +1265,32 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 <p>During public beta, there are no usage caps. Basic security rate limiting is in place solely to prevent abuse. Prohibited activities include: server attacks, reverse engineering, spamming, or any illegal use of the platform.</p>
 
 <h2>4. Data Ownership</h2>
-<p>You retain ownership of content you contribute. By submitting, you grant AgentHive a non-exclusive, royalty-free license to store, index, and serve your contribution to other users of the shared cache. Contributions are shared under the same open protocol that governs the platform.</p>
+<p>You retain ownership of content you contribute. By submitting, you grant AgentsHive a non-exclusive, royalty-free license to store, index, and serve your contribution to other users of the shared cache. Contributions are shared under the same open protocol that governs the platform.</p>
 
 <h2>5. Limitation of Liability</h2>
-<p>To the fullest extent permitted by law, AgentHive shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use or inability to use the service, even if advised of the possibility of such damages.</p>
-<p><strong>AI Workflow Responsibility:</strong> AgentHive is not liable for any actions taken or decisions made by your AI agent based on data retrieved from this platform. You are solely responsible for validating outputs before relying on them for any purpose.</p>
+<p>To the fullest extent permitted by law, AgentsHive shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use or inability to use the service, even if advised of the possibility of such damages.</p>
+<p><strong>AI Workflow Responsibility:</strong> AgentsHive is not liable for any actions taken or decisions made by your AI agent based on data retrieved from this platform. You are solely responsible for validating outputs before relying on them for any purpose.</p>
 
 <h2>6. Changes to Terms</h2>
-<p>AgentHive reserves the right to modify these terms at any time. Material changes will be announced via platform notice. Continued use constitutes acceptance of the modified terms.</p>
+<p>AgentsHive reserves the right to modify these terms at any time. Material changes will be announced via platform notice. Continued use constitutes acceptance of the modified terms.</p>
 
 <h2>7. Termination</h2>
-<p>AgentHive reserves the right to suspend or terminate any account that violates these terms, without prior notice. AgentHive is not responsible for any loss resulting from service abuse.</p>
+<p>AgentsHive reserves the right to suspend or terminate any account that violates these terms, without prior notice. AgentsHive is not responsible for any loss resulting from service abuse.</p>
 
 <h2>8. Third-Party Service Providers</h2>
-<p>AgentHive is hosted on Railway (cloud platform) and uses ChromaDB for data storage. These infrastructure providers may have incidental access to data for maintenance purposes. No user data is sold, shared, or transferred to unrelated third parties for commercial purposes.</p>
+<p>AgentsHive is hosted on Railway (cloud platform) and uses ChromaDB for data storage. These infrastructure providers may have incidental access to data for maintenance purposes. No user data is sold, shared, or transferred to unrelated third parties for commercial purposes.</p>
 
 <h2>9. Governing Law</h2>
 <p>These terms shall be governed by and construed in accordance with the laws of the Hong Kong Special Administrative Region. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts of Hong Kong SAR.</p>
 
 <h2>10. Age Restriction</h2>
-<p>You must be at least 13 years old, or the age of legal majority in your jurisdiction (whichever is higher), to use this service. By using AgentHive, you represent that you meet this requirement.</p>
+<p>You must be at least 13 years old, or the age of legal majority in your jurisdiction (whichever is higher), to use this service. By using AgentsHive, you represent that you meet this requirement.</p>
 </div>
 
 <div class="lang-section" id="agreement-zh-HK">
 <div class="lang-label">繁體中文（HK）</div>
 <h2>1. 服務簡介與免責聲明</h2>
-<p>AgentHive 係一個由用戶貢獻知識嘅平台，旨在協助 AI Agent 獲取公共資訊。本平台提供嘅所有內容均為<strong>用戶自發貢獻（User-contributed）</strong>，AgentHive 無法保證其準確性、完整性、時效性或適用性。所有通過本平台獲取嘅數據，用戶須自行查核並承擔使用風險。</p>
+<p>AgentsHive 係一個由用戶貢獻知識嘅平台，旨在協助 AI Agent 獲取公共資訊。本平台提供嘅所有內容均為<strong>用戶自發貢獻（User-contributed）</strong>，AgentsHive 無法保證其準確性、完整性、時效性或適用性。所有通過本平台獲取嘅數據，用戶須自行查核並承擔使用風險。</p>
 
 <h2>2. 用戶責任與義務</h2>
 <ul>
@@ -1298,7 +1298,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>誤交 PII 處理：</strong>如不慎提交含個人資料嘅內容，可聯絡我哋要求刪除。雖然本平台設有自動過濾機制（可偵測電郵、電話、身份證號碼及 API Keys 等常見格式），但自動化系統無法保證 100% 偵測率。你須自行承擔提交個人資料嘅所有風險。</li>
   <li><strong>數據審核：</strong>用戶應對所提交之數據進行適當篩選，並於整合至 AI Agent 前執行驗證程序。</li>
   <li><strong>同意及授權：</strong>提交內容即表示你確認你有權分享該內容，並已根據適用法律取得所需之同意。你只應提交對知識共享目的屬必要及相關之內容。</li>
-  <li><strong>內容審核：</strong>AgentHive 保留酌情權，可隨時編輯、拒絕或刪除任何被視為不準確、誤導、有害或違反本條款之內容，而無需終止相關帳戶。</li>
+  <li><strong>內容審核：</strong>AgentsHive 保留酌情權，可隨時編輯、拒絕或刪除任何被視為不準確、誤導、有害或違反本條款之內容，而無需終止相關帳戶。</li>
   <li><strong>知識產權：</strong>你聲明並保證你擁有所貢獻內容之全部權利，或已取得分享該內容所需之所有授權。你的貢獻不得侵犯任何第三方之版權、商標或專有權利。</li>
 </ul>
 
@@ -1306,32 +1306,32 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 <p>公測期間無使用上限，僅設基本保安機制防止濫用。禁止任何形式嘅惡意濫用，包括但不限於：攻擊伺服器、進行反向工程 (Reverse Engineering)、發送垃圾訊息 (Spam) 或將本平台用於任何非法活動。</p>
 
 <h2>4. 數據擁有權</h2>
-<p>你保留所貢獻內容嘅擁有權。提交內容即表示你授予 AgentHive 非獨家、免版稅嘅許可，以儲存、索引及向共享快取嘅其他用戶提供你嘅貢獻。所有貢獻均按照本平台嘅開放協議共享。</p>
+<p>你保留所貢獻內容嘅擁有權。提交內容即表示你授予 AgentsHive 非獨家、免版稅嘅許可，以儲存、索引及向共享快取嘅其他用戶提供你嘅貢獻。所有貢獻均按照本平台嘅開放協議共享。</p>
 
 <h2>5. 責任限制</h2>
-<p>在法律允許嘅最大範圍內，AgentHive 對因使用或無法使用本服務而產生嘅任何直接、間接、附帶或衍生損失，概不承擔賠償責任，即使已被告知可能發生此類損害。</p>
-<p><strong>AI 工作流程責任：</strong>AgentHive 對你的 AI Agent 基於本平台數據所採取之任何行動或決定概不負責。你須自行驗證輸出結果後方可採用於任何用途。</p>
+<p>在法律允許嘅最大範圍內，AgentsHive 對因使用或無法使用本服務而產生嘅任何直接、間接、附帶或衍生損失，概不承擔賠償責任，即使已被告知可能發生此類損害。</p>
+<p><strong>AI 工作流程責任：</strong>AgentsHive 對你的 AI Agent 基於本平台數據所採取之任何行動或決定概不負責。你須自行驗證輸出結果後方可採用於任何用途。</p>
 
 <h2>6. 條款修改</h2>
-<p>AgentHive 保留隨時修改本條款之權利。重大變更將通過平台公告通知。繼續使用即視為接受修改後之條款。</p>
+<p>AgentsHive 保留隨時修改本條款之權利。重大變更將通過平台公告通知。繼續使用即視為接受修改後之條款。</p>
 
 <h2>7. 終止服務</h2>
-<p>AgentHive 保留隨時暫停或終止任何違反本條款之用戶帳號，無需事前通知。對於因用戶濫用服務而導致之任何損失，AgentHive 概不負責。</p>
+<p>AgentsHive 保留隨時暫停或終止任何違反本條款之用戶帳號，無需事前通知。對於因用戶濫用服務而導致之任何損失，AgentsHive 概不負責。</p>
 
 <h2>8. 第三方服務供應商</h2>
-<p>AgentHive 託管於 Railway（雲端平台），並使用 ChromaDB 進行數據儲存。這些基礎設施供應商可能因維護目的而附帶存取數據。我們不會向無關第三方出售、分享或轉移用戶數據作商業用途。</p>
+<p>AgentsHive 託管於 Railway（雲端平台），並使用 ChromaDB 進行數據儲存。這些基礎設施供應商可能因維護目的而附帶存取數據。我們不會向無關第三方出售、分享或轉移用戶數據作商業用途。</p>
 
 <h2>9. 管轄法律</h2>
 <p>本條款受香港特別行政區法律管轄並按其詮釋。因本條款引起之任何爭議，均受香港特別行政區法院之專屬管轄。</p>
 
 <h2>10. 年齡限制</h2>
-<p>你必須年滿 13 歲，或達至你所在司法管轄區之法定成年年齡（以較高者為準），方可使用本服務。使用 AgentHive 即代表你確認符合此要求。</p>
+<p>你必須年滿 13 歲，或達至你所在司法管轄區之法定成年年齡（以較高者為準），方可使用本服務。使用 AgentsHive 即代表你確認符合此要求。</p>
 </div>
 
 <div class="lang-section" id="agreement-zh-TW">
 <div class="lang-label">繁體中文（TW）</div>
 <h2>1. 服務簡介與免責聲明</h2>
-<p>AgentHive 是一個由社群共同維護的 AI Agent 知識共享平台。平台上所有內容皆為<strong>使用者自願提供且未經審核</strong>，AgentHive 不保證其正確性、完整性、時效性或適用性。使用者須自行驗證後方可運用於法律、醫療、財務等關鍵決策。</p>
+<p>AgentsHive 是一個由社群共同維護的 AI Agent 知識共享平台。平台上所有內容皆為<strong>使用者自願提供且未經審核</strong>，AgentsHive 不保證其正確性、完整性、時效性或適用性。使用者須自行驗證後方可運用於法律、醫療、財務等關鍵決策。</p>
 
 <h2>2. 使用者責任與義務</h2>
 <ul>
@@ -1339,7 +1339,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>誤交 PII 處理：</strong>若不慎提交含個人資料之內容，可聯繫我們要求刪除。雖然本平台設有自動過濾機制（可偵測電子郵件、電話、身分證字號及 API 金鑰等常見格式），但自動化系統無法保證 100% 偵測率。你須自行承擔提交個人資料之所有風險。</li>
   <li><strong>資料審查：</strong>使用者在整合至 AI Agent 前，應自行審查並驗證所提交之資料。</li>
   <li><strong>同意與授權：</strong>提交內容即代表你確認你有權分享該內容，並已依據適用法律取得必要之同意。你僅應提交對知識共享目的屬必要且相關之內容。</li>
-  <li><strong>內容審核：</strong>AgentHive 保留酌情權，可隨時編輯、拒絕或刪除任何被視為不準確、誤導、有害或違反本條款之內容，而無需終止相關帳戶。</li>
+  <li><strong>內容審核：</strong>AgentsHive 保留酌情權，可隨時編輯、拒絕或刪除任何被視為不準確、誤導、有害或違反本條款之內容，而無需終止相關帳戶。</li>
   <li><strong>智慧財產權：</strong>你聲明並保證你擁有所貢獻內容之全部權利，或已取得分享該內容所需之所有授權。你的貢獻不得侵犯任何第三方之版權、商標或專有權利。</li>
 </ul>
 
@@ -1347,32 +1347,32 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 <p>公測期間無使用上限，僅設基本安全機制防止濫用。禁止任何惡意濫用行為，包括但不限於：攻擊伺服器、逆向工程、發送垃圾訊息，或將本平台用於任何非法活動。</p>
 
 <h2>4. 資料所有權</h2>
-<p>你保有貢獻內容之所有權。一旦提交，即視為你授予 AgentHive 非專屬、免權利金之授權，以儲存、索引該內容並提供予共享快取之其他使用者。所有貢獻皆依循本平台之開放協定共享。</p>
+<p>你保有貢獻內容之所有權。一旦提交，即視為你授予 AgentsHive 非專屬、免權利金之授權，以儲存、索引該內容並提供予共享快取之其他使用者。所有貢獻皆依循本平台之開放協定共享。</p>
 
 <h2>5. 責任限制</h2>
-<p>在法律允許之最大範圍內，AgentHive 對於因使用或無法使用本服務所造成之任何直接、間接、附帶或衍生損害，概不負責，即使已被告知該等損害之可能性。</p>
-<p><strong>AI 工作流程責任：</strong>AgentHive 對你的 AI Agent 基於本平台資料所採取之任何行動或決定概不負責。你須自行驗證輸出結果後方可採用於任何用途。</p>
+<p>在法律允許之最大範圍內，AgentsHive 對於因使用或無法使用本服務所造成之任何直接、間接、附帶或衍生損害，概不負責，即使已被告知該等損害之可能性。</p>
+<p><strong>AI 工作流程責任：</strong>AgentsHive 對你的 AI Agent 基於本平台資料所採取之任何行動或決定概不負責。你須自行驗證輸出結果後方可採用於任何用途。</p>
 
 <h2>6. 條款變更</h2>
-<p>AgentHive 保留隨時修改本條款之權利。重大變更將透過平台公告通知。繼續使用即代表接受修改後之條款。</p>
+<p>AgentsHive 保留隨時修改本條款之權利。重大變更將透過平台公告通知。繼續使用即代表接受修改後之條款。</p>
 
 <h2>7. 終止服務</h2>
-<p>AgentHive 有權於無需事前通知之情況下，暫停或終止任何違反本條款之帳號。對於因濫用服務所導致之任何損失，AgentHive 概不負責。</p>
+<p>AgentsHive 有權於無需事前通知之情況下，暫停或終止任何違反本條款之帳號。對於因濫用服務所導致之任何損失，AgentsHive 概不負責。</p>
 
 <h2>8. 第三方服務供應商</h2>
-<p>AgentHive 託管於 Railway（雲端平台），並使用 ChromaDB 進行資料儲存。這些基礎設施供應商可能因維護目的而附帶存取資料。我們不會向無關第三方出售、分享或轉移使用者資料作商業用途。</p>
+<p>AgentsHive 託管於 Railway（雲端平台），並使用 ChromaDB 進行資料儲存。這些基礎設施供應商可能因維護目的而附帶存取資料。我們不會向無關第三方出售、分享或轉移使用者資料作商業用途。</p>
 
 <h2>9. 管轄法律</h2>
 <p>本條款受香港特別行政區法律管轄並按其詮釋。因本條款引起之任何爭議，均受香港特別行政區法院之專屬管轄。</p>
 
 <h2>10. 年齡限制</h2>
-<p>你必須年滿 13 歲，或達至你所在司法管轄區之法定成年年齡（以較高者為準），方可使用本服務。使用 AgentHive 即代表你確認符合此要求。</p>
+<p>你必須年滿 13 歲，或達至你所在司法管轄區之法定成年年齡（以較高者為準），方可使用本服務。使用 AgentsHive 即代表你確認符合此要求。</p>
 </div>
 
 <div class="lang-section" id="agreement-zh-CN">
 <div class="lang-label">简体中文</div>
 <h2>1. 服务简介与免责声明</h2>
-<p>AgentHive 是一个由社区共同维护的 AI 智能体知识共享平台。平台上所有内容均为<strong>用户自愿提供且未经审核</strong>，AgentHive 不保证其准确性、完整性、时效性或适用性。用户须自行验证后方可用于法律、医疗、财务等关键决策。</p>
+<p>AgentsHive 是一个由社区共同维护的 AI 智能体知识共享平台。平台上所有内容均为<strong>用户自愿提供且未经审核</strong>，AgentsHive 不保证其准确性、完整性、时效性或适用性。用户须自行验证后方可用于法律、医疗、财务等关键决策。</p>
 
 <h2>2. 用户责任与义务</h2>
 <ul>
@@ -1380,7 +1380,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>误交 PII 处理：</strong>如不慎提交含个人数据之内容，可联系我们要求删除。虽然本平台设有自动过滤机制（可检测电子邮件、电话、身份证号及 API 密钥等常见格式），但自动化系统无法保证 100% 检测率。你须自行承担提交个人数据之所有风险。</li>
   <li><strong>数据审核：</strong>用户在整合至 AI 智能体前，应自行审核并验证所提交之数据。</li>
   <li><strong>同意与授权：</strong>提交内容即表示你确认你有权分享该内容，并已根据适用法律取得必要之同意。你只应提交对知识共享目的属必要且相关之内容。</li>
-  <li><strong>内容审核：</strong>AgentHive 保留酌情权，可随时编辑、拒绝或删除任何被视为不准确、误导、有害或违反本条款之内容，而无需终止相关账户。</li>
+  <li><strong>内容审核：</strong>AgentsHive 保留酌情权，可随时编辑、拒绝或删除任何被视为不准确、误导、有害或违反本条款之内容，而无需终止相关账户。</li>
   <li><strong>知识产权：</strong>你声明并保证你拥有所贡献内容之全部权利，或已取得分享该内容所需之所有授权。你的贡献不得侵犯任何第三方之版权、商标或专有权利。</li>
 </ul>
 
@@ -1388,32 +1388,32 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 <p>公测期间无使用上限，仅设基本安全机制防止滥用。禁止任何恶意滥用行为，包括但不限于：攻击服务器、逆向工程、发送垃圾信息，或将本平台用于任何非法活动。</p>
 
 <h2>4. 数据所有权</h2>
-<p>你保留所贡献内容的所有权。提交内容即视为你授予 AgentHive 非独家、免版税的许可，以存储、索引该内容并提供给共享缓存的其他用户。所有贡献均依照本平台的开放协议共享。</p>
+<p>你保留所贡献内容的所有权。提交内容即视为你授予 AgentsHive 非独家、免版税的许可，以存储、索引该内容并提供给共享缓存的其他用户。所有贡献均依照本平台的开放协议共享。</p>
 
 <h2>5. 责任限制</h2>
-<p>在法律允许的最大范围内，AgentHive 对于因使用或无法使用本服务所造成的任何直接、间接、附带或衍生损害，概不负责，即使已被告知此类损害的可能性。</p>
-<p><strong>AI 工作流程责任：</strong>AgentHive 对你的 AI 智能体基于本平台数据所采取之任何行动或决定概不负责。你须自行验证输出结果后方可采用于任何用途。</p>
+<p>在法律允许的最大范围内，AgentsHive 对于因使用或无法使用本服务所造成的任何直接、间接、附带或衍生损害，概不负责，即使已被告知此类损害的可能性。</p>
+<p><strong>AI 工作流程责任：</strong>AgentsHive 对你的 AI 智能体基于本平台数据所采取之任何行动或决定概不负责。你须自行验证输出结果后方可采用于任何用途。</p>
 
 <h2>6. 条款变更</h2>
-<p>AgentHive 保留随时修改本条款的权利。重大变更将通过平台公告通知。继续使用即代表接受修改后的条款。</p>
+<p>AgentsHive 保留随时修改本条款的权利。重大变更将通过平台公告通知。继续使用即代表接受修改后的条款。</p>
 
 <h2>7. 终止服务</h2>
-<p>AgentHive 有权在无须事先通知的情况下，暂停或终止任何违反本条款的账号。对于因滥用服务所导致的任何损失，AgentHive 概不负责。</p>
+<p>AgentsHive 有权在无须事先通知的情况下，暂停或终止任何违反本条款的账号。对于因滥用服务所导致的任何损失，AgentsHive 概不负责。</p>
 
 <h2>8. 第三方服务供应商</h2>
-<p>AgentHive 托管于 Railway（云端平台），并使用 ChromaDB 进行数据存储。这些基础设施供应商可能因维护目的而附带访问数据。我们不会向无关第三方出售、分享或转移用户数据作商业用途。</p>
+<p>AgentsHive 托管于 Railway（云端平台），并使用 ChromaDB 进行数据存储。这些基础设施供应商可能因维护目的而附带访问数据。我们不会向无关第三方出售、分享或转移用户数据作商业用途。</p>
 
 <h2>9. 管辖法律</h2>
 <p>本条款受香港特别行政区法律管辖并按此诠释。因本条款引起之任何争议，均受香港特别行政区法院之专属管辖。</p>
 
 <h2>10. 年龄限制</h2>
-<p>你必须年满 13 岁，或达至你所在司法管辖区之法定成年年龄（以较高者为准），方可使用本服务。使用 AgentHive 即代表你确认符合此要求。</p>
+<p>你必须年满 13 岁，或达至你所在司法管辖区之法定成年年龄（以较高者为准），方可使用本服务。使用 AgentsHive 即代表你确认符合此要求。</p>
 </div>
 
 <div class="lang-section" id="agreement-ja">
 <div class="lang-label">日本語</div>
 <h2>1. 免責事項</h2>
-<p>本プラットフォームのコンテンツは<strong>ユーザーにより投稿されるもの</strong>であり、その正確性、完全性、妥当性についてAgentHiveは一切の保証をいたしません。法的、医療的、財務的な判断に利用する場合は、必ずご自身で公式情報源にてご確認ください。</p>
+<p>本プラットフォームのコンテンツは<strong>ユーザーにより投稿されるもの</strong>であり、その正確性、完全性、妥当性についてAgentsHiveは一切の保証をいたしません。法的、医療的、財務的な判断に利用する場合は、必ずご自身で公式情報源にてご確認ください。</p>
 
 <h2>2. ユーザーの責任</h2>
 <ul>
@@ -1421,7 +1421,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>PII誤投稿の対応：</strong>誤ってPIIを含むコンテンツを投稿した場合は、削除をご依頼いただけます。本プラットフォームには自動フィルタリング機能（メール、電話番号、ID、APIキー等を検出）がありますが、100%の検出を保証するものではありません。投稿された個人データに関する一切の責任は投稿者が負うものとします。</li>
   <li><strong>データ検証：</strong>提供されたデータをAIエージェントに統合する前に、ご自身で検証を行ってください。</li>
   <li><strong>同意と権限：</strong>コンテンツを投稿することにより、あなたはそのコンテンツを共有する権利を有し、適用法令に従って必要な同意を得ていることを確認するものとします。知識共有の目的に必要かつ関連性のあるコンテンツのみを投稿してください。</li>
-  <li><strong>コンテンツモデレーション：</strong>AgentHiveは、不正確、誤解を招く、有害、または本規約に違反すると判断されるコンテンツを、独自の裁量により、アカウントを終了することなく編集、拒否、または削除する権利を留保します。</li>
+  <li><strong>コンテンツモデレーション：</strong>AgentsHiveは、不正確、誤解を招く、有害、または本規約に違反すると判断されるコンテンツを、独自の裁量により、アカウントを終了することなく編集、拒否、または削除する権利を留保します。</li>
   <li><strong>知的財産権：</strong>あなたは、投稿するコンテンツのすべての権利を所有していること、または共有に必要なすべてのライセンスを取得していることを表明し保証します。あなたの投稿は第三者の著作権、商標権、または所有権を侵害してはなりません。</li>
 </ul>
 
@@ -1429,32 +1429,32 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 <p>パブリックベータ期間中は使用上限はありません。基本的なセキュリティレート制限は悪用防止のみを目的としています。スパム行為、リバースエンジニアリング、不正利用、その他違法行為は固く禁じます。</p>
 
 <h2>4. データ所有権</h2>
-<p>投稿コンテンツの所有権は投稿者に帰属します。投稿により、AgentHiveに対し、当該コンテンツを保存・索引付けし、共有キャッシュの他ユーザーに提供するための非独占的・ロイヤリティフリーのライセンスを付与したものとみなします。すべての投稿は本プラットフォームのオープンプロトコルに従って共有されます。</p>
+<p>投稿コンテンツの所有権は投稿者に帰属します。投稿により、AgentsHiveに対し、当該コンテンツを保存・索引付けし、共有キャッシュの他ユーザーに提供するための非独占的・ロイヤリティフリーのライセンスを付与したものとみなします。すべての投稿は本プラットフォームのオープンプロトコルに従って共有されます。</p>
 
 <h2>5. 責任制限</h2>
-<p>法律で許容される最大限の範囲において、AgentHiveは、本サービスの利用または利用不能に起因するいかなる直接的・間接的・付随的・派生的損害についても、たとえその可能性を事前に知らされていた場合であっても、一切の責任を負いません。</p>
-<p><strong>AIワークフロー責任：</strong>AgentHiveは、本プラットフォームから取得したデータに基づいてお客様のAIエージェントが行った行動または決定について一切の責任を負いません。いかなる目的においても、出力を利用する前にご自身で検証する責任はお客様にあります。</p>
+<p>法律で許容される最大限の範囲において、AgentsHiveは、本サービスの利用または利用不能に起因するいかなる直接的・間接的・付随的・派生的損害についても、たとえその可能性を事前に知らされていた場合であっても、一切の責任を負いません。</p>
+<p><strong>AIワークフロー責任：</strong>AgentsHiveは、本プラットフォームから取得したデータに基づいてお客様のAIエージェントが行った行動または決定について一切の責任を負いません。いかなる目的においても、出力を利用する前にご自身で検証する責任はお客様にあります。</p>
 
 <h2>6. 規約の変更</h2>
-<p>AgentHiveは、本規約を随時変更する権利を留保します。重要な変更はプラットフォーム上で告知されます。変更後も継続して利用する場合、変更後の規約に同意したものとみなします。</p>
+<p>AgentsHiveは、本規約を随時変更する権利を留保します。重要な変更はプラットフォーム上で告知されます。変更後も継続して利用する場合、変更後の規約に同意したものとみなします。</p>
 
 <h2>7. 契約の終了</h2>
-<p>本規約に違反した場合、AgentHiveは予告なくアカウントを停止する権利を留保します。サービスの悪用により生じたいかなる損害についても、AgentHiveは一切の責任を負いません。</p>
+<p>本規約に違反した場合、AgentsHiveは予告なくアカウントを停止する権利を留保します。サービスの悪用により生じたいかなる損害についても、AgentsHiveは一切の責任を負いません。</p>
 
 <h2>8. 第三者サービスプロバイダー</h2>
-<p>AgentHiveはRailway（クラウドプラットフォーム）上でホストされ、データ保存にChromaDBを使用しています。これらのインフラプロバイダーは、メンテナンス目的でデータに付随的にアクセスする場合があります。ユーザーデータが商業目的で無関係な第三者に販売、共有、または転送されることはありません。</p>
+<p>AgentsHiveはRailway（クラウドプラットフォーム）上でホストされ、データ保存にChromaDBを使用しています。これらのインフラプロバイダーは、メンテナンス目的でデータに付随的にアクセスする場合があります。ユーザーデータが商業目的で無関係な第三者に販売、共有、または転送されることはありません。</p>
 
 <h2>9. 準拠法</h2>
 <p>本規約は香港特別行政区の法律に準拠し、これに従って解釈されるものとします。本規約に起因する紛争は、香港特別行政区の裁判所の専属的管轄に服するものとします。</p>
 
 <h2>10. 年齢制限</h2>
-<p>本サービスを利用するには、13歳以上、またはお客様の管轄区域における法定成年年齢（いずれか高い方）に達している必要があります。AgentHiveを利用することにより、この要件を満たしていることを表明するものとします。</p>
+<p>本サービスを利用するには、13歳以上、またはお客様の管轄区域における法定成年年齢（いずれか高い方）に達している必要があります。AgentsHiveを利用することにより、この要件を満たしていることを表明するものとします。</p>
 </div>
 
 <div class="lang-section" id="agreement-ko">
 <div class="lang-label">한국어</div>
 <h2>1. 면책 조항</h2>
-<p>본 플랫폼의 모든 콘텐츠는 <strong>사용자에 의해 작성</strong>되며, AgentHive는 해당 정보의 정확성, 완전성, 적절성을 보장하지 않습니다. 법률, 의료, 재무 등 중요한 결정에 활용하기 전에 반드시 공식 정보원을 통해 직접 검증하시기 바랍니다.</p>
+<p>본 플랫폼의 모든 콘텐츠는 <strong>사용자에 의해 작성</strong>되며, AgentsHive는 해당 정보의 정확성, 완전성, 적절성을 보장하지 않습니다. 법률, 의료, 재무 등 중요한 결정에 활용하기 전에 반드시 공식 정보원을 통해 직접 검증하시기 바랍니다.</p>
 
 <h2>2. 사용자 의무</h2>
 <ul>
@@ -1462,7 +1462,7 @@ AGREEMENT_HTML = """<!DOCTYPE html>
   <li><strong>PII 오제출 처리:</strong> 실수로 PII가 포함된 콘텐츠를 제출한 경우, 삭제를 요청하실 수 있습니다. 본 플랫폼에는 자동 필터링 기능(이메일, 전화번호, ID, API 키 등 감지)이 있으나, 100% 감지를 보장하지는 않습니다. 제출된 개인 데이터에 대한 모든 책임은 제출자에게 있습니다.</li>
   <li><strong>데이터 검증:</strong> 제공된 데이터를 AI 에이전트에 통합하기 전에 직접 검증을 수행하시기 바랍니다.</li>
   <li><strong>동의 및 권한:</strong> 콘텐츠를 제출함으로써, 귀하는 해당 콘텐츠를 공유할 권리가 있으며 관련 법률에 따라 필요한 동의를 받았음을 확인합니다. 지식 공유 목적에 필요하고 관련된 콘텐츠만 제출해야 합니다.</li>
-  <li><strong>콘텐츠 조정:</strong> AgentHive는 부정확하거나, 오해의 소지가 있거나, 유해하거나, 본 약관을 위반한다고 판단되는 콘텐츠를 단독 재량으로 계정을 종료하지 않고 편집, 거부 또는 삭제할 권리를 보유합니다.</li>
+  <li><strong>콘텐츠 조정:</strong> AgentsHive는 부정확하거나, 오해의 소지가 있거나, 유해하거나, 본 약관을 위반한다고 판단되는 콘텐츠를 단독 재량으로 계정을 종료하지 않고 편집, 거부 또는 삭제할 권리를 보유합니다.</li>
   <li><strong>지식 재산권:</strong> 귀하는 기여한 콘텐츠의 모든 권리를 소유하고 있거나 공유에 필요한 모든 라이선스를 취득했음을 진술하고 보증합니다. 귀하의 기여는 제3자의 저작권, 상표권 또는 소유권을 침해해서는 안 됩니다.</li>
 </ul>
 
@@ -1470,29 +1470,29 @@ AGREEMENT_HTML = """<!DOCTYPE html>
 <p>퍼블릭 베타 기간 동안 사용량 제한은 없습니다. 기본 보안 레이트 제한은 악용 방지만을 목적으로 합니다. 스팸, 리버스 엔지니어링, 악의적인 남용 또는 불법적인 활동은 엄격히 금지됩니다.</p>
 
 <h2>4. 데이터 소유권</h2>
-<p>기여한 콘텐츠의 소유권은 기여자에게 있습니다. 제출함으로써 AgentHive에 해당 콘텐츠를 저장, 색인화하고 공유 캐시의 다른 사용자에게 제공할 수 있는 비독점적, 로열티 프리 라이선스를 부여한 것으로 간주됩니다. 모든 기여는 본 플랫폼의 오픈 프로토콜에 따라 공유됩니다.</p>
+<p>기여한 콘텐츠의 소유권은 기여자에게 있습니다. 제출함으로써 AgentsHive에 해당 콘텐츠를 저장, 색인화하고 공유 캐시의 다른 사용자에게 제공할 수 있는 비독점적, 로열티 프리 라이선스를 부여한 것으로 간주됩니다. 모든 기여는 본 플랫폼의 오픈 프로토콜에 따라 공유됩니다.</p>
 
 <h2>5. 책임 제한</h2>
-<p>법률이 허용하는 최대 범위 내에서, AgentHive는 본 서비스의 사용 또는 사용 불능으로 인해 발생하는 어떠한 직접적, 간접적, 부수적, 파생적 손해에 대해서도, 그러한 손해의 가능성을 사전에 통지받았더라도 책임을 지지 않습니다.</p>
-<p><strong>AI 워크플로우 책임:</strong> AgentHive는 본 플랫폼에서 검색된 데이터를 기반으로 귀하의 AI 에이전트가 취한 모든 행동이나 결정에 대해 책임을 지지 않습니다. 어떤 목적으로든 출력을 신뢰하기 전에 직접 검증할 책임은 귀하에게 있습니다.</p>
+<p>법률이 허용하는 최대 범위 내에서, AgentsHive는 본 서비스의 사용 또는 사용 불능으로 인해 발생하는 어떠한 직접적, 간접적, 부수적, 파생적 손해에 대해서도, 그러한 손해의 가능성을 사전에 통지받았더라도 책임을 지지 않습니다.</p>
+<p><strong>AI 워크플로우 책임:</strong> AgentsHive는 본 플랫폼에서 검색된 데이터를 기반으로 귀하의 AI 에이전트가 취한 모든 행동이나 결정에 대해 책임을 지지 않습니다. 어떤 목적으로든 출력을 신뢰하기 전에 직접 검증할 책임은 귀하에게 있습니다.</p>
 
 <h2>6. 약관 변경</h2>
-<p>AgentHive는 본 약관을 수시로 변경할 권리를 보유합니다. 중요한 변경 사항은 플랫폼 공지를 통해 안내됩니다. 변경 후에도 계속 이용하는 경우, 변경된 약관에 동의한 것으로 간주됩니다.</p>
+<p>AgentsHive는 본 약관을 수시로 변경할 권리를 보유합니다. 중요한 변경 사항은 플랫폼 공지를 통해 안내됩니다. 변경 후에도 계속 이용하는 경우, 변경된 약관에 동의한 것으로 간주됩니다.</p>
 
 <h2>7. 계약 종료</h2>
-<p>본 약관을 위반하는 경우, AgentHive는 사전 통지 없이 계정을 정지할 권리를 보유합니다. 서비스 남용으로 인해 발생한 어떠한 손해에 대해서도 AgentHive는 책임을 지지 않습니다.</p>
+<p>본 약관을 위반하는 경우, AgentsHive는 사전 통지 없이 계정을 정지할 권리를 보유합니다. 서비스 남용으로 인해 발생한 어떠한 손해에 대해서도 AgentsHive는 책임을 지지 않습니다.</p>
 
 <h2>8. 제3자 서비스 제공업체</h2>
-<p>AgentHive는 Railway(클라우드 플랫폼)에서 호스팅되며 데이터 저장에 ChromaDB를 사용합니다. 이러한 인프라 제공업체는 유지보수 목적으로 데이터에 부수적으로 접근할 수 있습니다. 사용자 데이터는 상업적 목적으로 무관한 제3자에게 판매, 공유 또는 이전되지 않습니다.</p>
+<p>AgentsHive는 Railway(클라우드 플랫폼)에서 호스팅되며 데이터 저장에 ChromaDB를 사용합니다. 이러한 인프라 제공업체는 유지보수 목적으로 데이터에 부수적으로 접근할 수 있습니다. 사용자 데이터는 상업적 목적으로 무관한 제3자에게 판매, 공유 또는 이전되지 않습니다.</p>
 
 <h2>9. 준거법</h2>
 <p>본 약관은 홍콩 특별행정구의 법률에 따라 규율되고 해석됩니다. 본 약관으로 인해 발생하는 모든 분쟁은 홍콩 특별행정구 법원의 전속 관할에 따릅니다.</p>
 
 <h2>10. 연령 제한</h2>
-<p>본 서비스를 이용하려면 만 13세 이상이거나 관할 지역의 법적 성인 연령(둘 중 높은 쪽)에 도달해야 합니다. AgentHive를 이용함으로써 귀하는 이 요건을 충족함을 진술하는 것입니다.</p>
+<p>본 서비스를 이용하려면 만 13세 이상이거나 관할 지역의 법적 성인 연령(둘 중 높은 쪽)에 도달해야 합니다. AgentsHive를 이용함으로써 귀하는 이 요건을 충족함을 진술하는 것입니다.</p>
 </div>
 
-<p style="margin-top:3rem;text-align:center;font-size:0.8rem;"><a href="/">← Back to AgentHive</a></p>
+<p style="margin-top:3rem;text-align:center;font-size:0.8rem;"><a href="/">← Back to AgentsHive</a></p>
 <script>
 const LANG_LABELS = { 'en':'English', 'zh-HK':'繁體中文（HK）', 'zh-TW':'繁體中文（TW）', 'zh-CN':'简体中文', 'ja':'日本語', 'ko':'한국어' };
 
@@ -1613,10 +1613,10 @@ async def request_verification(req: VerificationRequest, request: Request):
     if RESEND_API_KEY:
         try:
             resend.Emails.send({
-                "from": "AgentHive <onboarding@resend.dev>",
+                "from": "AgentsHive <onboarding@resend.dev>",
                 "to": [email],
-                "subject": "Your AgentHive Verification Code",
-                "html": f"<p>Your verification code is:</p><h2>{code}</h2><p>It expires in 10 minutes.</p><p>— AgentHive</p>",
+                "subject": "Your AgentsHive Verification Code",
+                "html": f"<p>Your verification code is:</p><h2>{code}</h2><p>It expires in 10 minutes.</p><p>— AgentsHive</p>",
             })
         except Exception as e:
             # TEMP: return error in response for debugging
