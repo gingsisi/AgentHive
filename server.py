@@ -1,7 +1,7 @@
 """
 FastAPI Cache Server for AgentsHive.
 REST API for contributing and retrieving cached knowledge.
-# deploy-id: agentshive-org-verified-20260617
+# deploy-id: 2026-06-17-v3-schema-region-tags-upgrade
 """
 
 from contextlib import asynccontextmanager
