@@ -1613,13 +1613,14 @@ async def request_verification(req: VerificationRequest, request: Request):
     if RESEND_API_KEY:
         try:
             resend.Emails.send({
-                "from": "AgentHive <noreply@agenthive.dev>",
+                "from": "AgentHive <onboarding@resend.dev>",
                 "to": email,
                 "subject": "Your AgentHive Verification Code",
-                "text": f"Your verification code is: {code}\n\nIt expires in 10 minutes.\n\n— AgentHive 🐝",
+                "text": f"Your verification code is: {code}\n\nIt expires in 10 minutes.\n\n— AgentHive",
             })
         except Exception as e:
-            print(f"Resend send failed for {email}: {e}")
+            # Log the actual error for debugging
+            print(f"Resend send failed for {email}: {type(e).__name__}: {e}")
             # Fall through to dev mode — will return code in response
         else:
             return VerificationResponse(
