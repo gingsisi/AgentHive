@@ -1,5 +1,4 @@
-"""
-ChromaDB Manager for Bot Collective Cache.
+"""ChromaDB Manager for Bot Collective Cache.
 Handles all vector storage, retrieval, and expiration.
 """
 
@@ -7,10 +6,33 @@ import hashlib
 import os
 import time
 import uuid
+import re
 from typing import Optional
 
 import chromadb
 from chromadb.config import Settings
+
+
+# ── Content helpers ────────────────────────────────────────
+
+def _detect_language(text: str) -> str:
+    """Simple heuristic: count CJK vs ASCII. Returns 'zh' or 'en'."""
+    cjk = sum(1 for c in text if '\u4e00' <= c <= '\u9fff' or '\u3400' <= c <= '\u4dbf')
+    ascii_chars = sum(1 for c in text if c.isascii() and c.isalpha())
+    total = cjk + ascii_chars
+    if total == 0:
+        return "en"
+    return "zh" if cjk / total > 0.5 else "en"
+
+def _estimate_tokens(text: str) -> int:
+    """Rough token estimation: ~1.5 chars/token for CJK, ~4 for English."""
+    cjk = sum(1 for c in text if '\u4e00' <= c <= '\u9fff')
+    en = max(len(text) - cjk, 0)
+    return max(1, int(cjk / 1.5 + en / 4))
+
+def _compute_hash(text: str) -> str:
+    """SHA-256 hex of content (first 32 chars)."""
+    return hashlib.sha256(text.encode()).hexdigest()[:32]
 
 
 class ChromaManager:
@@ -55,8 +77,6 @@ class ChromaManager:
                 pass
             
             # Tier 2: ONNX MiniLM (fast, pre-downloaded, ~80MB)
-            # Note: English-only, but combined with query-in-document
-            # and keyword pre-filter, delivers usable Chinese results
             self._embedder = embedding_functions.DefaultEmbeddingFunction()
         return self._embedder
 
@@ -71,6 +91,11 @@ class ChromaManager:
         privacy_class: str = "public",
         resolve_action: str = "",
         target_id: str = "",
+        language: str = "",
+        region: str = "",
+        filtration_status: str = "scanned",
+        contributor_id: str = "",
+        is_human_bridged: bool = False,
     ) -> str:
         """Add a web search result to the cache.
         
@@ -106,22 +131,18 @@ class ChromaManager:
             return target_id
         
         if resolve_action == "keep_both":
-            return self._create_entry(collection, query, content, source_url, tags, privacy_class)
+            return self._create_entry(collection, query, content, source_url, tags, privacy_class,
+                                     language=language, region=region, filtration_status=filtration_status,
+                                     contributor_id=contributor_id, is_human_bridged=is_human_bridged)
         
         # ── Normal dedup (default) ──
-        
-        # Method 1: Embedding similarity with query-text guard.
-        # Two entries are only merged if BOTH embedding AND query text are similar.
-        # This prevents merging different questions about the same domain
-        # (e.g., "長者津貼" vs "傷殘津貼" — both welfare, but different questions).
-        DEDUP_EMBED_THRESHOLD = 0.15  # Conservative: only near-identical content
+        DEDUP_EMBED_THRESHOLD = 0.15
         dedup_text = f"{query} {content[:500]}"
         try:
             existing = collection.query(query_texts=[dedup_text], n_results=3)
             if existing["ids"] and existing["ids"][0] and existing["distances"][0]:
                 for i, dist in enumerate(existing["distances"][0]):
                     if dist < DEDUP_EMBED_THRESHOLD:
-                        # Check query text similarity — don't merge different questions
                         existing_meta = existing["metadatas"][0][i] if existing.get("metadatas") else {}
                         existing_query = existing_meta.get("query", "")
                         if self._query_similar(query, existing_query):
@@ -129,10 +150,9 @@ class ChromaManager:
         except Exception:
             pass
         
-        # Method 2: Same source URL + semantic query overlap (fallback for non-English embeddings)
+        # Method 2: Same source URL + semantic query overlap
         if source_url:
             try:
-                # Search by metadata: find entries from same source
                 all_data = collection.get()
                 for i, eid in enumerate(all_data["ids"]):
                     meta = all_data["metadatas"][i] if all_data["metadatas"] else {}
@@ -149,7 +169,9 @@ class ChromaManager:
                 pass
         
         # ── New entry ──
-        return self._create_entry(collection, query, content, source_url, tags, privacy_class)
+        return self._create_entry(collection, query, content, source_url, tags, privacy_class,
+                                 language=language, region=region, filtration_status=filtration_status,
+                                 contributor_id=contributor_id, is_human_bridged=is_human_bridged)
 
     def _create_entry(
         self,
@@ -159,20 +181,41 @@ class ChromaManager:
         source_url: str = "",
         tags: list[str] = None,
         privacy_class: str = "public",
+        language: str = "",
+        region: str = "",
+        filtration_status: str = "scanned",
+        contributor_id: str = "",
+        is_human_bridged: bool = False,
     ) -> str:
         item_id = f"wr_{uuid.uuid4().hex[:12]}"
         now = int(time.time())
         expiry = now + 30 * 86400
 
+        # Auto-detect language if not provided
+        if not language:
+            language = _detect_language(content)
+
         metadata = {
+            # Core
             "type": "web_cache",
             "query": query,
             "source_url": source_url,
+            "content_hash": _compute_hash(content),
+            # Context
+            "language": language,
+            "region": region or "Global",
+            "token_size": str(_estimate_tokens(content)),
+            # Classification
             "tags": ",".join(tags or []),
             "privacy_class": privacy_class,
+            "filtration_status": filtration_status,
+            "verification": "unverified",
+            # Attribution
+            "contributor_id": contributor_id,
+            "is_human_bridged": str(is_human_bridged).lower(),
+            # Lifecycle
             "created": str(now),
             "expires": str(expiry),
-            "verification": "unverified",
             "reproductions": "0",
         }
 
@@ -215,11 +258,7 @@ class ChromaManager:
         content: str,
         threshold: float = 0.15,
     ) -> list[dict]:
-        """Lightweight conflict detection. Returns potential matching entries
-        WITHOUT modifying data. The contributor's bot does the heavy judgment.
-        
-        Returns list of dicts: {id, query, content_preview, distance, verification}
-        """
+        """Lightweight conflict detection. Returns potential matching entries."""
         collection = self.client.get_collection("web_cache")
         dedup_text = f"{query} {content[:500]}"
         conflicts = []
@@ -256,12 +295,10 @@ class ChromaManager:
         try:
             collection = self.client.get_collection("web_cache")
             
-            # Detect if query is predominantly Chinese/CJK
             cjk_count = sum(1 for c in query if '\u4e00' <= c <= '\u9fff' or '\u3000' <= c <= '\u303f')
-            is_chinese = cjk_count >= 2  # At least 2 CJK chars = Chinese query
+            is_chinese = cjk_count >= 2
             
             if is_chinese:
-                # Keyword-first: fetch all, rank by character overlap
                 all_data = collection.get()
                 hits = self._format_results(
                     {"ids": [all_data["ids"]], "documents": [all_data.get("documents", [])],
@@ -281,7 +318,6 @@ class ChromaManager:
                 hits.sort(key=lambda h: -h["_keyword_score"])
                 return hits[:n_results]
             else:
-                # Embedding search for English/other queries
                 results = collection.query(
                     query_texts=[query],
                     n_results=n_results,
@@ -304,7 +340,6 @@ class ChromaManager:
             except Exception:
                 continue
 
-        # Sort by distance (lower = more similar)
         all_hits.sort(key=lambda h: h.get("distance", 1.0))
         return all_hits[:n_results]
 
@@ -332,7 +367,15 @@ class ChromaManager:
                     "query": metadatas[i].get("query", ""),
                     "source_url": metadatas[i].get("source_url", ""),
                     "tags": metadatas[i].get("tags", ""),
+                    "language": metadatas[i].get("language", ""),
+                    "region": metadatas[i].get("region", "Global"),
+                    "token_size": int(metadatas[i].get("token_size", "0")),
+                    "content_hash": metadatas[i].get("content_hash", ""),
+                    "filtration_status": metadatas[i].get("filtration_status", ""),
+                    "is_human_bridged": metadatas[i].get("is_human_bridged", "false"),
+                    "contributor_id": metadatas[i].get("contributor_id", ""),
                     "verification": metadatas[i].get("verification", "unverified"),
+                    "reproductions": int(metadatas[i].get("reproductions", "0")),
                 })
             hits.append(hit)
         return hits
@@ -363,24 +406,20 @@ class ChromaManager:
         return count
 
     def _query_similar(self, q1: str, q2: str) -> bool:
-        """Query similarity check. Handles both English (word split) and Chinese (character overlap)."""
+        """Query similarity check."""
         if not q1 or not q2:
             return False
         q1l = q1.strip().lower()
         q2l = q2.strip().lower()
-        # Exact match
         if q1l == q2l:
             return True
-        # Substring (one contains the other)
         if q1l in q2l or q2l in q1l:
             return True
-        # Word overlap (English)
         words1 = set(q1l.split())
         words2 = set(q2l.split())
         shared = words1 & words2
         if len(shared) >= 2:
             return True
-        # Character overlap (Chinese) — 80% chars in common
         chars1 = set(q1l.replace(" ", ""))
         chars2 = set(q2l.replace(" ", ""))
         if chars1 and chars2:
@@ -389,7 +428,7 @@ class ChromaManager:
         return False
 
     def _merge_entry(self, collection, existing_results, idx: int) -> str:
-        """Merge a new contribution into an existing entry. Returns the existing ID."""
+        """Merge a new contribution into an existing entry."""
         existing_id = existing_results["ids"][0][idx]
         existing_meta = existing_results["metadatas"][0][idx] if existing_results.get("metadatas") else {}
         old_repro = int(existing_meta.get("reproductions", 0))

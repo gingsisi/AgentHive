@@ -147,6 +147,9 @@ class ContributeRequest(BaseModel):
     tool_name: str = "web_search"
     resolve_action: str = ""   # "" | "update" | "keep_both"
     resolve_id: str = ""        # target entry ID for "update"
+    region: str = ""            # geo context: "HK", "JP", "US", "Global"
+    language: str = ""          # auto-detect if empty, or "en"/"zh"/"ja"
+    is_human_bridged: bool = False  # True if contributed via browser plugin
 
 
 class ContributeResponse(BaseModel):
@@ -156,6 +159,7 @@ class ContributeResponse(BaseModel):
     contributed: bool
     conflicts: list[dict] = []   # potential duplicate entries
     needs_review: bool = False   # True if bot should review conflicts
+    errors: list[str] = []       # validation error messages (when contributed=False)
 
 
 class SearchResponse(BaseModel):
@@ -234,6 +238,7 @@ async def contribute(
             classification="rejected_validation",
             pii_stripped=had_pii,
             contributed=False,
+            errors=validation_errors,
         )
 
     # Normalize tags to canonical form
@@ -242,8 +247,13 @@ async def contribute(
     # Auto-fill empty source_url for web_cache
     source_url = req.source_url.strip() if req.source_url else ""
 
+    # Auto-detect region from URL if not explicitly provided
+    region = req.region.strip() if req.region else detect_region(source_url)
+
     # ── Handle resolve actions ──
     if req.resolve_action in ("update", "keep_both"):
+        contributor_id = auth.get('key_id', '') if not auth.get('bypass') else 'system'
+        filt_status = "redacted" if had_pii else "scanned"
         try:
             item_id = db.contribute_web_result(
                 query=req.query.strip(),
@@ -253,6 +263,11 @@ async def contribute(
                 privacy_class=req.privacy_class,
                 resolve_action=req.resolve_action,
                 target_id=req.resolve_id.strip(),
+                language=req.language,
+                region=region,
+                filtration_status=filt_status,
+                contributor_id=contributor_id,
+                is_human_bridged=req.is_human_bridged,
             )
         except ValueError as e:
             return ContributeResponse(
@@ -282,12 +297,19 @@ async def contribute(
         )
 
     # ── No conflicts → contribute normally ──
+    contributor_id = auth.get('key_id', '') if not auth.get('bypass') else 'system'
+    filt_status = "redacted" if had_pii else "scanned"
     item_id = db.contribute_web_result(
         query=req.query.strip(),
         content=clean_content,
         source_url=source_url,
         tags=normalized_tags,
         privacy_class=req.privacy_class,
+        language=req.language,
+        region=region,
+        filtration_status=filt_status,
+        contributor_id=contributor_id,
+        is_human_bridged=req.is_human_bridged,
     )
 
     # Record contribution for trust scoring
@@ -336,7 +358,7 @@ CANONICAL_TAGS = {
     "welfare": ["welfare", "disability", "swd", "cssa", "allowance", "津貼", "社署", "傷殘"],
     "tax": ["tax", "ird", "inland-revenue", "稅", "稅務"],
     "education": ["education", "school", "edb", "學校", "教育", "小一", "升學"],
-    "medical": ["medical", "health", "clinical", "asd", "adhd", "醫療", "自閉"],
+    "medical": ["medical", "clinical", "asd", "adhd", "hospital", "clinic", "醫療", "自閉", "醫院"],
     "law": ["law", "legal", "ordinance", "法例", "cap", "條例"],
     "finance": ["finance", "stock", "investment", "港股", "美股", "投資"],
     "policy": ["policy", "government", "circular", "政策"],
@@ -354,11 +376,17 @@ CANONICAL_TAGS = {
     "international": ["international", "global", "overseas"],
     
     # Lifestyle tags
-    "travel": ["travel", "tourism", "trip", "japan", "kyushu", "fukuoka", "旅遊", "旅行", "日本", "九州"],
+    "travel": ["travel", "tourism", "trip", "japan", "kyushu", "fukuoka", "train", "jr", "shinkansen", "旅遊", "旅行", "日本", "九州", "鐵路"],
     "food": ["food", "dining", "restaurant", "cuisine", "美食", "食", "拉麵", "壽司"],
     "shopping": ["shopping", "retail", "mall", "購物", "商場", "outlet"],
-    "transport": ["transport", "train", "jr", "shinkansen", "transit", "交通", "鐵路", "新幹線"],
-    "lifestyle": ["lifestyle", "hobby", "culture", "生活", "文化"],
+    "transport": ["transport", "transit", "bus", "metro", "交通", "運輸"],
+    "lifestyle": ["lifestyle", "culture", "生活", "文化"],
+    
+    # High-traffic consumer tags (AI agent hotspot queries)
+    "gaming": ["gaming", "game", "遊戲", "攻略", "rpg", "boss", "quest", "mod", "modding", "unity", "unreal", "console", "steam", "walkthrough", "speedrun", "esport", "電競"],
+    "health": ["health", "fitness", "nutrition", "diet", "protein", "workout", "gym", "exercise", "wellness", "健康", "健身", "營養", "飲食", "減肥"],
+    "hobby": ["hobby", "entertainment", "movie", "film", "anime", "figure", "diy", "craft", "collection", "cosplay", "娛樂", "動漫", "模型", "玩具", "收藏"],
+    "family": ["family", "parenting", "parent", "kids", "children", "childcare", "家庭", "親子", "育兒", "論壇", "sensory", "特殊教育", "sen"],
     
     # Meta
     "temporary": ["temporary", "covid", "pilot", "臨時", "特別安排"],
@@ -371,6 +399,58 @@ for canonical, aliases in CANONICAL_TAGS.items():
     TAG_ALIASES[canonical.lower()] = canonical
     for alias in aliases:
         TAG_ALIASES[alias.lower()] = canonical
+
+
+# ── Region detection (Waterfall: URL → explicit → Global) ───
+
+# TLD to ISO country code mapping
+TLD_REGION_MAP = {
+    ".jp": "JP", ".co.jp": "JP", ".ne.jp": "JP",
+    ".hk": "HK", ".com.hk": "HK", ".org.hk": "HK", ".gov.hk": "HK",
+    ".uk": "UK", ".co.uk": "UK", ".org.uk": "UK", ".gov.uk": "UK",
+    ".cn": "CN", ".com.cn": "CN",
+    ".tw": "TW", ".com.tw": "TW",
+    ".kr": "KR", ".co.kr": "KR",
+    ".sg": "SG", ".com.sg": "SG",
+    ".au": "AU", ".com.au": "AU",
+    ".ca": "CA",
+    ".de": "DE",
+    ".fr": "FR",
+    ".us": "US",
+}
+
+# URL subdirectory to ISO code
+SUBDIR_REGION_MAP = {
+    "/en-us/": "US", "/en-gb/": "UK", "/en-au/": "AU", "/en-ca/": "CA",
+    "/zh-tw/": "TW", "/zh-hk/": "HK", "/zh-cn/": "CN",
+    "/ja-jp/": "JP", "/ja/": "JP",
+    "/ko-kr/": "KR", "/ko/": "KR",
+    "/fr-fr/": "FR", "/de-de/": "DE",
+}
+
+def detect_region(source_url: str) -> str:
+    """Waterfall region detection from URL.
+    Step 1: Check TLD (.co.jp, .com.hk, etc.)
+    Step 2: Check subdirectory (/en-us/, /zh-tw/, etc.)
+    Step 3: Fallback to 'Global'
+    """
+    if not source_url:
+        return "Global"
+    
+    url_lower = source_url.lower()
+    
+    # Step 1: TLD pattern (longest match first)
+    for tld, region in sorted(TLD_REGION_MAP.items(), key=lambda x: -len(x[0])):
+        if tld in url_lower:
+            return region
+    
+    # Step 2: Subdirectory pattern
+    for subdir, region in SUBDIR_REGION_MAP.items():
+        if subdir in url_lower:
+            return region
+    
+    # Step 3: Global fallback
+    return "Global"
 
 
 def normalize_tags(tags: list[str]) -> list[str]:
@@ -437,6 +517,15 @@ DOMAIN_DECAY = {
     "medical": 730,      # Clinical guidelines
     "tech-creative": 1460,  # 3D printing, design
     "tech-dev": 365,     # API versions
+    "ai-ml": 90,         # AI/ML moves FAST
+    "gaming": 365,       # Game patches, mods, new releases
+    "health": 365,       # Nutrition science, fitness trends
+    "hobby": 730,        # Movies, anime, crafts — stable
+    "family": 365,       # Parenting advice, school-year cycles
+    "travel": 730,       # Travel info relatively stable
+    "food": 365,         # Restaurant info, cuisine
+    "shopping": 365,     # Retail, mall info
+    "lifestyle": 730,    # General culture
     "evergreen": 365000, # Basically never
 }
 DEFAULT_DECAY = 180  # 6 months for unknown domains
@@ -470,6 +559,15 @@ def infer_domain(tags: list[str]) -> str:
         "law": ["law", "法例", "ordinance", "cap", "條例"],
         "tech-dev": ["godot", "python", "api", "programming"],
         "tech-creative": ["zbrush", "blender", "3d print", "stl"],
+        "ai-ml": ["ai", "ml", "llm", "deep-learning"],
+        "gaming": ["game", "gaming", "遊戲", "攻略", "rpg", "mod", "unity", "unreal"],
+        "health": ["health", "fitness", "nutrition", "diet", "健康", "健身"],
+        "hobby": ["hobby", "movie", "anime", "figure", "diy", "娛樂", "動漫"],
+        "family": ["family", "parenting", "kids", "parent", "家庭", "親子", "育兒"],
+        "travel": ["travel", "japan", "旅遊", "旅行"],
+        "food": ["food", "cuisine", "restaurant", "美食", "拉麵"],
+        "shopping": ["shopping", "retail", "mall", "購物"],
+        "lifestyle": ["lifestyle", "culture", "生活", "文化"],
     }
     for domain, keywords in domain_map.items():
         if any(kw in tag_lower for kw in keywords):
@@ -673,6 +771,8 @@ async def bridge_capture(req: BridgeCaptureRequest, auth: dict = Depends(require
     
     # ── Contribute to ChromaDB ──
     try:
+        contributor_id = auth.get('key_id', '') if not auth.get('bypass') else 'system'
+        filt_status = "redacted" if pii_stripped else "scanned"
         item_id = db.contribute_web_result(
             query=req.query.strip() or req.source_url,
             content=clean_content,
@@ -680,6 +780,9 @@ async def bridge_capture(req: BridgeCaptureRequest, auth: dict = Depends(require
             tags=req.tags + ["human-bridge"],
             privacy_class=req.privacy_class,
             resolve_action="keep_both" if conflicts else "",  # Auto-keep_both on conflict, never silent merge
+            is_human_bridged=True,
+            contributor_id=contributor_id,
+            filtration_status=filt_status,
         )
     except Exception as e:
         return {
