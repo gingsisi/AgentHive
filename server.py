@@ -1697,6 +1697,16 @@ async def key_stats(auth: dict = Depends(require_api_key)):
 #  PUBLIC STATS
 # ══════════════════════════════════════════════════════════════
 
+@app.get("/api/debug/env")
+async def debug_env():
+    """TEMP: check if RESEND_API_KEY is set in production."""
+    key = os.getenv("RESEND_API_KEY", "")
+    return {
+        "resend_key_set": bool(key),
+        "resend_key_prefix": key[:8] + "..." if key else "(empty)",
+        "all_env_keys": [k for k in os.environ.keys() if "KEY" in k.upper() or "RESEND" in k.upper()],
+    }
+
 @app.get("/api/stats")
 async def public_stats():
     """Public stats: total API keys issued (for landing page counter)."""
