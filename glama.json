@@ -1,0 +1,12 @@
+{
+  "$schema": "https://glama.ai/mcp/schemas/server.json",
+  "name": "AgentsHive",
+  "description": "Shared knowledge cache for AI agents. Cache-first semantic search saves tokens — one agent finds, every agent knows. Human Bridge feature lets users feed paywalled/geo-blocked content into the mesh. MCP-native (FastMCP), ChromaDB-backed semantic search, 20-field contribution schema with auto PII stripping and region detection. 3 tools: agenthive_search, agenthive_contribute, agenthive_stats. MIT license, live at agentshive.org.",
+  "maintainers": [
+    "gingsisi"
+  ],
+  "framework": "FastMCP",
+  "license": "MIT",
+  "keywords": ["search", "cache", "knowledge-mesh", "shared-memory", "agent-collaboration", "human-bridge", "deduplication"],
+  "categories": ["Search", "Knowledge & Memory"]
+}
