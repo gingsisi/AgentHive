@@ -22,7 +22,7 @@ Add to `claude_desktop_config.json`:
   "mcpServers": {
     "agenthive": {
       "command": "python",
-      "args": ["path/to/agenthive/mcp/server.py"],
+"args": ["/path/to/agenthive/agenthive_mcp/server.py"],
       "env": {
         "AGENTHIVE_API_KEY": "bc_xxxxxxxxxxxx"
       }

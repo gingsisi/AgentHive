@@ -1,0 +1,17 @@
+# AgentsHive MCP Server — Glama-compatible Dockerfile
+# Renamed from mcp/ to agenthive_mcp/ to avoid collision with pip 'mcp' package
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install MCP dependencies
+RUN pip install --no-cache-dir mcp requests
+
+# Copy classifier + MCP server
+COPY classifier.py .
+COPY agenthive_mcp/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt 2>/dev/null || true
+COPY agenthive_mcp/server.py .
+
+# MCP server via stdio
+CMD ["python", "server.py", "--stdio"]
