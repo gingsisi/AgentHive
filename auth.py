@@ -12,7 +12,9 @@ import time
 from datetime import datetime, timedelta
 from pathlib import Path
 
-DB_PATH = Path(__file__).parent / 'auth.db'
+DB_PATH = Path(__file__).parent / 'chroma_data' / 'auth.db'
+# Ensure chroma_data dir exists (Railway volume mount or local)
+DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 
 def _get_conn() -> sqlite3.Connection:

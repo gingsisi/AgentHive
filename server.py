@@ -1803,7 +1803,7 @@ async def public_stats():
     """Public stats: total API keys issued (for landing page counter)."""
     import sqlite3
     try:
-        conn = sqlite3.connect(os.path.join(os.path.dirname(__file__), "auth.db"))
+        conn = sqlite3.connect(os.path.join(os.path.dirname(__file__), "chroma_data", "auth.db"))
         count = conn.execute("SELECT COUNT(*) FROM api_keys").fetchone()[0]
         conn.close()
         return {"total_keys": count}
