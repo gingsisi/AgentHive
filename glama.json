@@ -7,6 +7,9 @@
   ],
   "framework": "FastMCP",
   "license": "MIT",
+  "build": {
+    "steps": ["pip install --break-system-packages mcp requests"]
+  },
   "keywords": ["search", "cache", "knowledge-mesh", "shared-memory", "agent-collaboration", "human-bridge", "deduplication"],
   "categories": ["Search", "Knowledge & Memory"]
 }
