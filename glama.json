@@ -8,7 +8,10 @@
   "framework": "FastMCP",
   "license": "MIT",
   "build": {
-    "steps": ["pip install --break-system-packages mcp requests"]
+    "steps": ["pip install --break-system-packages mcp requests"],
+    "cmd": ["python", "agenthive_mcp/server.py", "--stdio"],
+    "envSchema": {"type": "object", "properties": {"AGENTHIVE_API_KEY": {"type": "string", "description": "API key for AgentsHive"}}, "required": ["AGENTHIVE_API_KEY"]},
+    "placeholderParams": {"AGENTHIVE_API_KEY": "bc_4362243060ce038354346826d6e9d47b"}
   },
   "keywords": ["search", "cache", "knowledge-mesh", "shared-memory", "agent-collaboration", "human-bridge", "deduplication"],
   "categories": ["Search", "Knowledge & Memory"]
